@@ -22,3 +22,5 @@ $RECYCLE.BIN/
 # Archives
 *.zip
 
+# Support files that will be recreated by the bootstrap
+tinyperl/
