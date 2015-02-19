@@ -10,7 +10,7 @@ rem ****************************************************************************
 
 rem note that there is limited error checking or idiot-proofing in the file at this time.
 
-SETLOCAL
+
 echo dev-shell bootstrap v0.1 (c) seapagan 2015
 echo.
 echo Downloading the 'TinyPerl' distribution ...
@@ -34,5 +34,9 @@ if NOT EXIST "%~dp0support\tinyperl\" (
 	pause
 	exit /b 254
 )
-ENDLOCAL
+
+rem now run the perl script to continue...
+cd %~dp0support\bootstrap
+%~dp0support\tinyperl\tinyperl bootstrap.pl
+
 pause
