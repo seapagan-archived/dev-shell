@@ -28,7 +28,6 @@ print "\nStage 3 : Download and MSYS packages to local cache.\n\n";
 my $path_to_urls = $package_directory."/msys-urls";
 my @msysurls = geturls($path_to_urls);
 
-
 # Download these URL's ..
 my $msys_cache = $package_directory."/msys";
 my $url;
@@ -72,7 +71,8 @@ foreach $url (@msysurls) {
 
 
 
-# user functions
+# support functions
+
 sub geturls() {
   # when provided with a file containing URLS, will return an array containing them.
   # 1 parameter - $path_to_urls
