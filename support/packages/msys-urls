@@ -1,4 +1,4 @@
-# Base
+#Base
 http://sourceforge.net/projects/mingw/files/MSYS/Base/bash/bash-3.1.23-1/bash-3.1.23-1-msys-1.0.18-bin.tar.xz/download
 http://sourceforge.net/projects/mingw/files/MSYS/Base/msys-core/msys-1.0.18-1/msysCORE-1.0.18-1-msys-1.0.18-ext.tar.lzma/download
 http://sourceforge.net/projects/mingw/files/MSYS/Base/msys-core/msys-1.0.18-1/msysCORE-1.0.18-1-msys-1.0.18-bin.tar.lzma/download
@@ -25,7 +25,7 @@ http://sourceforge.net/projects/mingw/files/MSYS/Base/termcap/termcap-0.20050421
 http://sourceforge.net/projects/mingw/files/MSYS/Base/termcap/termcap-0.20050421_1-2/libtermcap-0.20050421_1-2-msys-1.0.13-dll-0.tar.lzma/download
 http://sourceforge.net/projects/mingw/files/MSYS/Base/termcap/termcap-0.20050421_1-2/libtermcap-0.20050421_1-2-msys-1.0.13-dev.tar.lzma/download
 
-# Extension
+#Extension
 http://sourceforge.net/projects/mingw/files/MSYS/Extension/m4/m4-1.4.16-2/m4-1.4.16-2-msys-1.0.17-bin.tar.lzma/download
 http://sourceforge.net/projects/mingw/files/MSYS/Extension/perl/perl-5.8.8-1/perl-5.8.8-1-msys-1.0.17-bin.tar.lzma/download
 http://sourceforge.net/projects/mingw/files/MSYS/Extension/autogen/autogen-5.10.1-1/libopts-5.10.1-1-msys-1.0.15-dll-25.tar.lzma/download
@@ -36,7 +36,6 @@ http://sourceforge.net/projects/mingw/files/MSYS/Extension/guile/guile-1.8.7-2/l
 http://sourceforge.net/projects/mingw/files/MSYS/Extension/guile/guile-1.8.7-2/guile-1.8.7-2-msys-1.0.15-bin.tar.lzma/download
 http://sourceforge.net/projects/mingw/files/MSYS/Extension/cvs/cvs-1.12.13-2/cvs-1.12.13-2-msys-1.0.13-bin.tar.lzma/download
 http://sourceforge.net/projects/mingw/files/MSYS/Extension/man/man-1.6f-2/man-1.6f-2-msys-1.0.13-bin.tar.lzma/download
-http://sourceforge.net/projects/mingw/files/MSYS/Extension/groff/groff-1.20.1-2/groff-1.20.1-2-msys-1.0.13-smp.tar.lzma/download
 http://sourceforge.net/projects/mingw/files/MSYS/Extension/groff/groff-1.20.1-2/groff-1.20.1-2-msys-1.0.13-ext.tar.lzma/download
 http://sourceforge.net/projects/mingw/files/MSYS/Extension/groff/groff-1.20.1-2/groff-1.20.1-2-msys-1.0.13-bin.tar.lzma/download
 http://sourceforge.net/projects/mingw/files/MSYS/Extension/patch/patch-2.6.1-1/patch-2.6.1-1-msys-1.0.13-bin.tar.lzma/download
