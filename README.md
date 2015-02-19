@@ -37,10 +37,14 @@ There are 5 major directories, each of which is mapped to a specific mount point
 ## Progress.
 - [x] Populate the basic folder structure and support files.
 - [x] Set up the SourceForge repository to store compiled binaries and libraries
-- [x] __Bootstrap (CMD)__ -> download and unpack the TinyPerl packages to enable the Perl-based bootstrap to run.
-- [ ] __Bootstrap (Perl)__ -> download, install and configure the base MSYS installation.
-- [ ] __Bootstrap (Perl)__ -> download, install and configure the TDM GCC distribution.
-- [ ] __Bootstrap (Perl)__ -> download, install and configure the base MinGW installation.
+- [ ] Set up the bootstrap to create the base system.
+  - **CMD File Phase.**
+    - [x] Download and unpack the TinyPerl packages to enable the Perl-based bootstrap to run.
+  - **Perl Script Phase**
+    - [ ] Download, install and configure the base MSYS installation.
+    - [ ] Download, install and configure the TDM GCC distribution.
+    - [ ] Download, install and configure the base MinGW installation.
+    - [ ] Copy over skeleton files, tweak configuration files and finalize base development system.
 
 ## Caveat!
 *This system as it stands on GitHub is __incomplete__ compared to my local development system*, and as such is currently unusable for any purpose. This project is for the development of the automatic bootstrap system, which will in time become a fully usable development system mirroring the manual setup I have locally.
