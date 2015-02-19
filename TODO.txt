@@ -1,0 +1,9 @@
+TO-DO and random thought list.
+==============================
+
+
+
+
+After base system complete :
+----------------------------
+Change over from running the dev system using a cmd file to a compiled TinyPerl script, with configuration file for tweaking -adding env variables and path editions, etc.
