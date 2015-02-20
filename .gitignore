@@ -26,3 +26,4 @@ $RECYCLE.BIN/
 
 # Support files that will be recreated by the bootstrap
 tinyperl/
+support/7za.exe
