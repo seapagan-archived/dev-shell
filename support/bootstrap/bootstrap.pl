@@ -11,7 +11,6 @@ use Cwd 'abs_path';
 
 # Get our base path...
 my $base_directory = abs_path();
-print $base_directory;
 # Build other useful directories from this...
 my $msys_directory = abs_path($base_directory."/../../msys");
 my $mingw_directory = abs_path($base_directory."/../../mingw32");
@@ -20,10 +19,24 @@ my $support_directory = abs_path($base_directory."/../../support");
 
 # We need a few support utilities, this will also include Console and ANSICON eventually.
 print "\nStage 2 : Download and unpack assorted support utilities.\n\n";
-#TODO
+# load the Support tools URL's into an array from the file 'msys-urls'...
+my $url;
+my $path_to_urls = $package_directory."/support-urls";
+my @toolsurls = geturls($path_to_urls);
 
+foreach $url (@toolsurls) {
+  #get the actual filename, from the last part of the URL, removing the SorceForge '/download' text...
+  my $filename = basename(substr($url, 0, -9));
+  my $filewithpath = $package_directory."/".$filename;
+  #if this does not exist in cache then we will download. In future versions we will compare to a checksum too...
+  if (-e $filewithpath) {
+    print "$filename already exists, skipping.\n";
+  } else {
+    my $result = `$mingw_directory/wget -q --show-progress -c --trust-server-names -c --directory-prefix=$package_directory $url`;
+  }
+}
 
-print "\nStage 3 : Download and MSYS packages to local cache.\n\n";
+print "\nStage 3 : Download and unpack MSYS packages to local cache.\n\n";
 # load the MSYS URL's into an array from the file 'msys-urls'...
 my $path_to_urls = $package_directory."/msys-urls";
 my @msysurls = geturls($path_to_urls);
@@ -77,9 +90,9 @@ sub geturls() {
   # when provided with a file containing URLS, will return an array containing them.
   # 1 parameter - $path_to_urls
   ($path_to_urls) = @_;
-  open my $handle, '<', $path_to_urls;
+  open my $handle, '<', $path_to_urls or die "Cant open $path_to_urls";
   chomp(my @urls = <$handle>);
   close $handle;
-  # Remove empty lines and headings then return ...
-  return grep(/S/, @urls);
+  # Return the array of URLs ...
+  return @urls;
 }
