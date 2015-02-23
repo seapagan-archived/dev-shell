@@ -50,6 +50,8 @@ There are 5 major directories, each of which is mapped to a specific mount point
 *This system as it stands on GitHub is __incomplete__ compared to my local development system*, and as such is currently unusable for any purpose. This project is for the development of the automatic bootstrap system, which will in time become a fully usable development system mirroring the manual setup I have locally.
 
 ## Links.
-Below are some links to software used in this project, other than the ones linked above.
+Below are some links to software used in this project, in addition to the ones linked above.
 
-[A precompiled static version of wget 1.16.1](https://eternallybored.org/misc/wget/) - Used during the original bootstrap until the system was able to compile its own.
+[A precompiled static version of wget 1.16.1](https://eternallybored.org/misc/wget/) - Used during the original bootstrap until the system was able to compile its own.  
+[Unzip 6.0 from info-zip](http://www.info-zip.org/UnZip.html) - Used during bootstrap to unzip the TinyPerl and others. Self-compiled from source using this completed development system.  
+[7za920.zip](http://sourceforge.net/projects/sevenzip/files/7-Zip/9.20/7za920.zip/download) - For the standalone 7-zip utility '7za.exe' which was used to unpack the MSYS / MinGW and TDM distributions along with the project-specific compiles of libraries and executables.
