@@ -17,51 +17,36 @@ my $mingw_directory = abs_path($base_directory."/../../mingw32");
 my $package_directory = abs_path($base_directory."/../packages");
 my $support_directory = abs_path($base_directory."/../../support");
 
-# We need a few support utilities, this will also include Console and ANSICON eventually.
+# Cache directories to store MSYS / MinGW packages...
+my $msys_cache = $package_directory."/msys";
+
+# ------------------------------------------------------------------------------
+# We need a few support utilities, this will also include Console and ANSICON.
 print "\nStage 2 : Download and unpack assorted support utilities.\n\n";
 # load the Support tools URL's into an array from the file 'msys-urls'...
-my $url;
 my $path_to_urls = $package_directory."/support-urls";
 my @toolsurls = geturls($path_to_urls);
 
-foreach $url (@toolsurls) {
-  #get the actual filename, from the last part of the URL, removing the SorceForge '/download' text...
-  my $filename = basename(substr($url, 0, -9));
-  my $filewithpath = $package_directory."/".$filename;
-  #if this does not exist in cache then we will download. In future versions we will compare to a checksum too...
-  if (-e $filewithpath) {
-    print "$filename already exists, skipping.\n";
-  } else {
-    my $result = `$mingw_directory/wget -q --show-progress -c --trust-server-names -c --directory-prefix=$package_directory $url`;
-  }
-}
+getfiles($support_directory, @toolsurls);
 
+# Now we need to unpack these. Can all (currently) be done using unzip.
+# TODO
+
+# ------------------------------------------------------------------------------
 print "\nStage 3 : Download and unpack MSYS packages to local cache.\n\n";
 # load the MSYS URL's into an array from the file 'msys-urls'...
 my $path_to_urls = $package_directory."/msys-urls";
 my @msysurls = geturls($path_to_urls);
 
-# Download these URL's ..
-my $msys_cache = $package_directory."/msys";
-my $url;
-
 # create the MSYS Cache directory if it does not exist...
 if (!-d $msys_cache) {
   mkdir $msys_cache or die "Cannot create Cache directory for MSYS!";
 }
+# get all the MSYS packages we need...
+getfiles($msys_cache, @msysurls);
 
-foreach $url (@msysurls) {
-  #get the actual filename, from the last part of the URL, removing the SorceForge '/download' text...
-  my $filename = basename(substr($url, 0, -9));
-  my $filewithpath = $msys_cache."/".$filename;
-  #if this does not exist in cache then we will download. In future versions we will compare to a checksum too...
-  if (-e $filewithpath) {
-    print "$filename already exists, skipping.\n";
-  } else {
-    my $result = `$mingw_directory/wget -q --show-progress -c --trust-server-names -c --directory-prefix=$msys_cache $url`;
-  }
-}
-
+# commented out for now...
+=pod
 # now unpack these. We will do an unconditional over-write for all existing files, so any customisations will be overwritten.
 foreach $url (@msysurls) {
   #get the actual filename, from the last part of the URL, removing the SorceForge '/download' text...
@@ -80,19 +65,52 @@ foreach $url (@msysurls) {
     }
   }
 }
+=cut
 
 
-
-
+# ------------------------------------------------------------------------------
 # support functions
 
 sub geturls() {
   # when provided with a file containing URLS, will return an array containing them.
-  # 1 parameter - $path_to_urls
-  ($path_to_urls) = @_;
+  # 1 parameter - $path_to_urls, filepath to text file containing the URL's
+  my ($path_to_urls) = @_;
+
   open my $handle, '<', $path_to_urls or die "Cant open $path_to_urls";
   chomp(my @urls = <$handle>);
   close $handle;
   # Return the array of URLs ...
   return @urls;
+}
+
+sub getfiles() {
+  # will take an array of URL's and a destination folder and proceed to download them all using wget...
+  # Parameter 1 : $dest_dir, directory to store them in.
+  # Parameter 2 : @url_list, an array of URL's
+  # ERROR CHECKING STILL TO BE ADDED!
+  my ($dest_dir, @url_list) = @_;
+  
+  foreach my $url (@url_list) {
+    # get the actual filename from the last part of the URL, removing the SorceForge '/download' text if it exists ...
+    # we also need a different flag for sorceforge, which would probably confuse other sites (certainly github anyway)
+
+    # pre-define the variables otherwise not valid outside the if statement..
+    my $filename="";
+    my $dl_flag ="";
+
+    if ( $url =~ /\/download$/) {
+      $filename = basename(substr($url, 0, -9));
+      $dl_flag= "--trust-server-names";
+    } else {
+      $filename = basename($url);
+      $dl_flag= "--no-check-certificate";
+    }
+    my $filewithpath = $dest_dir."/".$filename;
+    #if this does not exist in cache then we will download. In future versions we will compare to a checksum too...
+    if (-e $filewithpath) {
+      print "$filename already exists, skipping.\n";
+    } else {
+      my $result = `$mingw_directory/wget -q --show-progress -c $dl_flag --directory-prefix=$dest_dir $url`;
+    }
+  }
 }
