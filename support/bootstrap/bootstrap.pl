@@ -29,21 +29,19 @@ my $support_directory = abs_path($root_directory."/support");
 
 # Cache directories to store MSYS / MinGW packages...
 my $msys_cache = $package_directory."/msys";
+my $mingw_cache = $package_directory."/mingw";
 
 # ------------------------------------------------------------------------------
 # We need a few support utilities, this will also include Console and ANSICON.
-print "\nStage 2 : Download and unpack assorted support utilities.\n\n";
+print "\nStage 2 : Download assorted support utilities.\n\n";
 # load the Support tools URL's into an array from the file 'msys-urls'...
 my $path_to_urls = $base_directory."/urls/support-urls";
 my @toolsurls = geturls($path_to_urls);
 
 getfiles($package_directory, @toolsurls);
 
-# Now we need to unpack these. Can all (currently) be done using unzip.
-# TODO
-
 # ------------------------------------------------------------------------------
-print "\nStage 3 : Download and unpack MSYS packages to local cache.\n\n";
+print "\nStage 3 : Download MSYS packages to local cache.\n\n";
 # load the MSYS URL's into an array from the file 'msys-urls'...
 my $path_to_urls = $base_directory."/urls//msys-urls";
 my @msysurls = geturls($path_to_urls);
@@ -54,6 +52,19 @@ if (!-d $msys_cache) {
 }
 # get all the MSYS packages we need...
 getfiles($msys_cache, @msysurls);
+
+# ------------------------------------------------------------------------------
+print "\nStage 4 : Download MinGW packages to local cache.\n\n";
+# load the minGW URL's into an array from the file 'mingw-urls'...
+my $path_to_urls = $base_directory."/urls//mingw-urls";
+my @mingwurls = geturls($path_to_urls);
+
+# create the MinGW Cache directory if it does not exist...
+if (!-d $msys_cache) {
+  mkdir $msys_cache or die "Cannot create Cache directory for MinGW!";
+}
+# get all the minGW packages we need...
+getfiles($mingw_cache, @mingwurls);
 
 # commented out for now...
 =pod
