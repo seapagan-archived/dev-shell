@@ -14,12 +14,10 @@ rem note that there is limited error checking or idiot-proofing in the file at t
 echo dev-shell bootstrap v0.1 (c) seapagan 2015
 echo.
 echo Stage 1 : Download and unpack the 'TinyPerl' distribution ...
-%~dp0mingw32\wget -q --show-progress -c --trust-server-names -c --directory-prefix=%~dp0support\packages http://sourceforge.net/projects/tinyperl/files/tinyperl/2.0/tinyperl-2.0-580-win32.zip/download
 if NOT EXIST %~dp0support\packages\tinyperl-2.0-580-win32.zip (
-	echo Failure to download tinyperl distribution, please check your internet connection and report as a bug otherwise!
-	echo.
-	pause
-	exit /b 255
+  %~dp0mingw32\wget -q --show-progress -c --trust-server-names -c --directory-prefix=%~dp0support\packages http://sourceforge.net/projects/tinyperl/files/tinyperl/2.0/tinyperl-2.0-580-win32.zip/download
+) ELSE (
+	ECHO TinyPerl package already exists, skipping download.
 )
 echo.
 rem erase TinyPerl directory first if exists ...
@@ -29,7 +27,7 @@ RD /S /Q %~dp0support\tinyperl
 %~dp0support\bootstrap\unzip.exe -q %~dp0support\packages\tinyperl-2.0-580-win32.zip -d %~dp0support
 move %~dp0support\tinyperl* %~dp0support\tinyperl > NUL
 if NOT EXIST "%~dp0support\tinyperl\" (
-	echo "Failure to unpack the TinyPerl distribution, please report any error messages, thanks."
+	echo Failure to unpack the TinyPerl distribution, please report any error messages, thanks.
 	pause
 	exit /b 254
 )
