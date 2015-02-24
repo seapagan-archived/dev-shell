@@ -11,11 +11,21 @@ use Cwd 'abs_path';
 
 # Get our base path...
 my $base_directory = abs_path();
+my $root_directory = abs_path($base_directory."/../..");
+
+# create the MSYS & MinGW directories if they do not exist...
+if (!-d $root_directory."/msys") {
+  mkdir $root_directory."/msys" or die "Cannot create MSYS directory!";
+}
+if (!-d $root_directory."/mingw32") {
+  mkdir $root_directory."/mingw32" or die "Cannot create MinGW directory!";
+}
+
 # Build other useful directories from this...
-my $msys_directory = abs_path($base_directory."/../../msys");
-my $mingw_directory = abs_path($base_directory."/../../mingw32");
-my $package_directory = abs_path($base_directory."/../packages");
-my $support_directory = abs_path($base_directory."/../../support");
+my $msys_directory = abs_path($root_directory."/msys");
+my $mingw_directory = abs_path($root_directory."/mingw32");
+my $package_directory = abs_path($root_directory."/support/packages");
+my $support_directory = abs_path($root_directory."/support");
 
 # Cache directories to store MSYS / MinGW packages...
 my $msys_cache = $package_directory."/msys";
