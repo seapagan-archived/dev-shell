@@ -24,7 +24,7 @@ my $msys_cache = $package_directory."/msys";
 # We need a few support utilities, this will also include Console and ANSICON.
 print "\nStage 2 : Download and unpack assorted support utilities.\n\n";
 # load the Support tools URL's into an array from the file 'msys-urls'...
-my $path_to_urls = $package_directory."/support-urls";
+my $path_to_urls = $base_directory."/urls/support-urls";
 my @toolsurls = geturls($path_to_urls);
 
 getfiles($package_directory, @toolsurls);
@@ -35,7 +35,7 @@ getfiles($package_directory, @toolsurls);
 # ------------------------------------------------------------------------------
 print "\nStage 3 : Download and unpack MSYS packages to local cache.\n\n";
 # load the MSYS URL's into an array from the file 'msys-urls'...
-my $path_to_urls = $package_directory."/msys-urls";
+my $path_to_urls = $base_directory."/urls//msys-urls";
 my @msysurls = geturls($path_to_urls);
 
 # create the MSYS Cache directory if it does not exist...

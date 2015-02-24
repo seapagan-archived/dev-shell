@@ -26,7 +26,7 @@ rem erase TinyPerl directory first if exists ...
 if EXIST "%~dp0support\tinyperl\" (
 RD /S /Q %~dp0support\tinyperl
 )
-%~dp0support\unzip.exe -q %~dp0support\packages\tinyperl-2.0-580-win32.zip -d %~dp0support
+%~dp0support\bootstrap\unzip.exe -q %~dp0support\packages\tinyperl-2.0-580-win32.zip -d %~dp0support
 move %~dp0support\tinyperl* %~dp0support\tinyperl > NUL
 if NOT EXIST "%~dp0support\tinyperl\" (
 	echo "Failure to unpack the TinyPerl distribution, please report any error messages, thanks."
