@@ -110,7 +110,7 @@ sub getfiles() {
     if (-e $filewithpath) {
       print "$filename already exists, skipping.\n";
     } else {
-      my $result = `$mingw_directory/wget -q --show-progress -c $dl_flag --directory-prefix=$dest_dir $url`;
+      my $result = `$base_directory/wget -q --show-progress -c $dl_flag --directory-prefix=$dest_dir $url`;
     }
   }
 }

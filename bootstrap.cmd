@@ -15,7 +15,7 @@ echo dev-shell bootstrap v0.1 (c) seapagan 2015
 echo.
 echo Stage 1 : Download and unpack the 'TinyPerl' distribution ...
 if NOT EXIST %~dp0support\packages\tinyperl-2.0-580-win32.zip (
-  %~dp0mingw32\wget -q --show-progress -c --trust-server-names -c --directory-prefix=%~dp0support\packages http://sourceforge.net/projects/tinyperl/files/tinyperl/2.0/tinyperl-2.0-580-win32.zip/download
+  %~dp0support\bootstrap\wget -q --show-progress -c --trust-server-names -c --directory-prefix=%~dp0support\packages http://sourceforge.net/projects/tinyperl/files/tinyperl/2.0/tinyperl-2.0-580-win32.zip/download
 ) ELSE (
 	ECHO TinyPerl package already exists, skipping download.
 )
