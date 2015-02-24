@@ -1,6 +1,13 @@
 http://sourceforge.net/projects/tdm-gcc/files/TDM-GCC%204.9%20series/4.9.2-tdm-1%20SJLJ/gcc-4.9.2-tdm-1-core.tar.lzma/download
 http://sourceforge.net/projects/mingw/files/MinGW/Base/binutils/binutils-2.24/binutils-2.24-1-mingw32-bin.tar.xz/download
 http://sourceforge.net/projects/mingw/files/MinGW/Base/gettext/gettext-0.18.3.2-1/libintl-0.18.3.2-1-mingw32-dll-8.tar.xz/download
-http://sourceforge.net/projects/mingw/files/MinGW/Base/mingw-rt/mingwrt-3.20/mingwrt-3.20-2-mingw32-dev.tar.lzma/download
-http://sourceforge.net/projects/mingw/files/MinGW/Base/mingw-rt/mingwrt-3.20/mingwrt-3.20-2-mingw32-dll.tar.lzma/download
+http://sourceforge.net/projects/mingw/files/MinGW/Base/mingwrt/mingwrt-3.20/mingwrt-3.20-2-mingw32-dev.tar.lzma/download
+http://sourceforge.net/projects/mingw/files/MinGW/Base/mingwrt/mingwrt-3.20/mingwrt-3.20-2-mingw32-dll.tar.lzma/download
 http://sourceforge.net/projects/mingw/files/MinGW/Base/w32api/w32api-3.17/w32api-3.17-2-mingw32-dev.tar.lzma/download
+http://sourceforge.net/projects/tdm-gcc/files/TDM-GCC%204.9%20series/4.9.2-tdm-1%20SJLJ/gcc-4.9.2-tdm-1-c++.tar.lzma/download
+http://sourceforge.net/projects/tdm-gcc/files/TDM-GCC%204.9%20series/4.9.2-tdm-1%20SJLJ/gcc-4.9.2-tdm-1-openmp.tar.lzma/download
+http://sourceforge.net/projects/tdm-gcc/files/TDM-GCC%204.9%20series/4.9.2-tdm-1%20SJLJ/gcc-4.9.2-tdm-1-ada.tar.lzma/download
+http://sourceforge.net/projects/tdm-gcc/files/TDM-GCC%204.9%20series/4.9.2-tdm-1%20SJLJ/gcc-4.9.2-tdm-1-fortran.tar.lzma/download
+http://sourceforge.net/projects/tdm-gcc/files/TDM-GCC%204.9%20series/4.9.2-tdm-1%20SJLJ/gcc-4.9.2-tdm-1-objc.tar.lzma/download
+http://sourceforge.net/projects/mingw/files/MinGW/Extension/gdb/gdb-7.6.1-1/gdb-7.6.1-1-mingw32-bin.tar.lzma/download
+http://sourceforge.net/projects/mingw/files/MinGW/Base/zlib/zlib-1.2.8/zlib-1.2.8-1-mingw32-dll.tar.lzma/download
