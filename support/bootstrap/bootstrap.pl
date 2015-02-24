@@ -30,6 +30,7 @@ my $support_directory = abs_path($root_directory."/support");
 # Cache directories to store MSYS / MinGW packages...
 my $msys_cache = $package_directory."/msys";
 my $mingw_cache = $package_directory."/mingw";
+my $tdm_cache = $package_directory."/tdm";
 
 # ------------------------------------------------------------------------------
 # We need a few support utilities, this will also include Console and ANSICON.
@@ -43,7 +44,7 @@ getfiles($package_directory, @toolsurls);
 # ------------------------------------------------------------------------------
 print "\nStage 3 : Download MSYS packages to local cache.\n\n";
 # load the MSYS URL's into an array from the file 'msys-urls'...
-my $path_to_urls = $base_directory."/urls//msys-urls";
+my $path_to_urls = $base_directory."/urls/msys-urls";
 my @msysurls = geturls($path_to_urls);
 
 # create the MSYS Cache directory if it does not exist...
@@ -56,7 +57,7 @@ getfiles($msys_cache, @msysurls);
 # ------------------------------------------------------------------------------
 print "\nStage 4 : Download MinGW packages to local cache.\n\n";
 # load the minGW URL's into an array from the file 'mingw-urls'...
-my $path_to_urls = $base_directory."/urls//mingw-urls";
+my $path_to_urls = $base_directory."/urls/mingw-urls";
 my @mingwurls = geturls($path_to_urls);
 
 # create the MinGW Cache directory if it does not exist...
@@ -65,6 +66,18 @@ if (!-d $msys_cache) {
 }
 # get all the minGW packages we need...
 getfiles($mingw_cache, @mingwurls);
+
+print "\nStage 4 : Download TDM GCC Compiler packages to local cache.\n\n";
+# load the GCC URL's into an array from the file 'tdm-gcc-urls'...
+my $path_to_urls = $base_directory."/urls/tdm-gcc-urls";
+my @gccurls = geturls($path_to_urls);
+
+# create the MinGW Cache directory if it does not exist...
+if (!-d $tdm_cache) {
+  mkdir $tdm_cache or die "Cannot create Cache directory for TDM GCC!";
+}
+# get all the GCC packages we need...
+getfiles($tdm_cache, @gccurls);
 
 # commented out for now...
 =pod
