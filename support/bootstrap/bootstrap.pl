@@ -27,7 +27,7 @@ print "\nStage 2 : Download and unpack assorted support utilities.\n\n";
 my $path_to_urls = $package_directory."/support-urls";
 my @toolsurls = geturls($path_to_urls);
 
-getfiles($support_directory, @toolsurls);
+getfiles($package_directory, @toolsurls);
 
 # Now we need to unpack these. Can all (currently) be done using unzip.
 # TODO
@@ -89,7 +89,7 @@ sub getfiles() {
   # Parameter 2 : @url_list, an array of URL's
   # ERROR CHECKING STILL TO BE ADDED!
   my ($dest_dir, @url_list) = @_;
-  
+
   foreach my $url (@url_list) {
     # get the actual filename from the last part of the URL, removing the SorceForge '/download' text if it exists ...
     # we also need a different flag for sorceforge, which would probably confuse other sites (certainly github anyway)
