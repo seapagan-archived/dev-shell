@@ -41,9 +41,11 @@ There are 5 major directories, each of which is mapped to a specific mount point
   - **CMD File Phase.**
     - [x] Download and unpack the TinyPerl packages to enable the Perl-based bootstrap to run.
   - **Perl Script Phase**
-    - [ ] Download, install and configure the base MSYS installation.
-    - [ ] Download, install and configure the TDM GCC distribution.
-    - [ ] Download, install and configure the base MinGW installation.
+    - [x] Download and Unpack the supporting tools.
+    - [x] Download and Unpack the base MSYS installation.
+    - [x] Download and Unpack the TDM GCC distribution.
+    - [x] Download and Unpack the base MinGW installation.
+    - [ ] Remove un-needed files from the above unpacked packages.
     - [ ] Copy over skeleton files, tweak configuration files and finalize base development system.
 
 ## Caveat!
