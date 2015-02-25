@@ -129,6 +129,7 @@ $result = unpack_file($tdm_cache, $mingw_directory, @gcc_filenames);
 sub geturls() {
   # when provided with a file containing URLS, will return an array containing them.
   # 1 parameter - $path_to_urls, filepath to text file containing the URL's
+  # RETURNS : Array containing all download URLs
   my ($path_to_urls) = @_;
 
   open my $handle, '<', $path_to_urls or die "Cant open $path_to_urls";
@@ -204,10 +205,10 @@ sub unpack_file() {
         # However 7za.exe does not support reading from a pipe so we need to unpack the envelope, unpack the tar, and then delete the tar.
 
         `$support_directory/7za x -y $location/$file -o$destination`;
-        my $tarfile = basename(substr($file, 0, -5));
+        my $tarfile = basename(substr($file, 0, -length($ext)));
         `$support_directory/7za x -y $destination/$tarfile -o$destination`;
         if ($? == 0) {
-          print "Package : \"$file\" Unpacked succesfully\n";
+          print "Package : \"$file\" Unpacked succesfully ($tarfile)\n";
           # now delete the tar file...
           unlink $destination."/".$tarfile;
         } else {
@@ -218,10 +219,10 @@ sub unpack_file() {
       elsif (/xz/) {
         #Basically a direct copy of the lzma part...
         `$support_directory/7za x -y $location/$file -o$destination`;
-        my $tarfile = basename(substr($file, 0, -3));
+        my $tarfile = basename(substr($file, 0, -length($ext)));
         `$support_directory/7za x -y $destination/$tarfile -o$destination`;
         if ($? == 0) {
-          print "Package : \"$file\" Unpacked succesfully\n";
+          print "Package : \"$file\" Unpacked succesfully ($tarfile)\n";
           # now delete the tar file...
           unlink $destination."/".$tarfile;
         } else {
