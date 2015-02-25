@@ -132,6 +132,14 @@ sub getfiles() {
     my $filename="";
     my $dl_flag ="";
 
+    # Trim spaces from start and end of URL...
+    $url =~  s/^\s+|\s+$//g;
+    # break out if $url is blank...
+    if ($url eq "") {
+      next;
+    }
+
+    # different wget flags depending on source of package, also remove '/download' from end or SourceForge URL.
     if ( $url =~ /\/download$/) {
       $filename = basename(substr($url, 0, -9));
       $dl_flag= "--trust-server-names";
@@ -139,6 +147,7 @@ sub getfiles() {
       $filename = basename($url);
       $dl_flag= "--no-check-certificate";
     }
+
     my $filewithpath = $dest_dir."/".$filename;
     #if this does not exist in cache then we will download. In future versions we will compare to a checksum too...
     if (-e $filewithpath) {
