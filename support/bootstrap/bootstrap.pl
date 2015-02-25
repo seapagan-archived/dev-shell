@@ -96,14 +96,23 @@ $result = unpack_file($package_directory, $support_directory, @util_filenames);
 
 # ------------------------------------------------------------------------------
 print "\nStage 6 : Unpack MSYS.\n\n";
-# Unpack 7za, console, ANSICON etc.
+# Unpack MSYS distribution.
 # ------------------------------------------------
-# : Source path is $package_directory
-# : Destination Path will be $support_directory
-# : Filenames are stored in @util_filenames
+# : Source path is $msys_cache
+# : Destination Path will be $msys_directory
+# : Filenames are stored in @msys_filenames
 # ------------------------------------------------
 $result = unpack_file($msys_cache, $msys_directory, @msys_filenames);
 
+# ------------------------------------------------------------------------------
+print "\nStage 6 : Unpack MinGW.\n\n";
+# Unpack MinGW distribution.
+# ------------------------------------------------
+# : Source path is $mingw_cache
+# : Destination Path will be $mingw_directory
+# : Filenames are stored in @mingw_filenames
+# ------------------------------------------------
+$result = unpack_file($mingw_cache, $mingw_directory, @mingw_filenames);
 
 # ------------------------------------------------------------------------------
 # support functions
