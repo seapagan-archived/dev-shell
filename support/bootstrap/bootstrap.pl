@@ -32,6 +32,9 @@ my $msys_cache = $package_directory."/msys";
 my $mingw_cache = $package_directory."/mingw";
 my $tdm_cache = $package_directory."/tdm";
 
+# Generic result variable
+my $result;
+
 # ------------------------------------------------------------------------------
 # We need a few support utilities, this will also include Console and ANSICON.
 print "\nStage 2 : Download assorted support utilities.\n\n";
@@ -79,27 +82,27 @@ if (!-d $tdm_cache) {
 # get all the GCC packages we need...
 my @gcc_filenames = getfiles($tdm_cache, @gccurls);
 
-# commented out for now...
-=pod
-# now unpack these. We will do an unconditional over-write for all existing files, so any customisations will be overwritten.
-foreach $url (@msysurls) {
-  #get the actual filename, from the last part of the URL, removing the SorceForge '/download' text...
-  my $filename = basename(substr($url, 0, -9));
-  my $filewithpath = $msys_cache."/".$filename;
-  # these come in a couple of archive types so we need to use a different utility to unpack depending on the extension
-  my @exts = qw(.lzma .xz);
-  my ($dir, $name, $ext) = fileparse($filename, @exts);
+# ------------------------------------------------------------------------------
+print "\nStage 5 : Unpack support utilities.\n\n";
+# Unpack 7za, console, ANSICON etc.
+# ------------------------------------------------
+# : Source path is $package_directory
+# : Destination Path will be $support_directory
+# : Filenames are stored in @util_filenames
+# ------------------------------------------------
+$result = unpack_file($package_directory, $support_directory, @util_filenames);
+# TODO - remove all unneeded files, or use a specific unpack routine to only unpack what we need #
 
-  for ($ext) {
-    if (/lzma/) {
-      #print "$filename is an LZMA file! ($ext)\n";
-    }
-    elsif (/xz/) {
-      #print "$filename is an XZ file! ($ext)\n";
-    }
-  }
-}
-=cut
+
+# ------------------------------------------------------------------------------
+print "\nStage 6 : Unpack MSYS.\n\n";
+# Unpack 7za, console, ANSICON etc.
+# ------------------------------------------------
+# : Source path is $package_directory
+# : Destination Path will be $support_directory
+# : Filenames are stored in @util_filenames
+# ------------------------------------------------
+$result = unpack_file($msys_cache, $msys_directory, @msys_filenames);
 
 
 # ------------------------------------------------------------------------------
@@ -163,4 +166,67 @@ sub getfiles() {
     }
   }
   return @filearray;
+}
+
+sub unpack_file() {
+  # will unpack the filenames in the passed array using the correct tool depending on archive type.
+  # Parameter 1 : $location, directory to find the packages.
+  # Parameter 2 : $destination, where to unpack these files.
+  # Parameter 3 : @filenames, array of the actual filenames to be unpacked.
+  # RETURNS : TRUE if no errors, FALSE and break on any error.
+
+  my ($location, $destination, @filenames) = @_;
+
+  foreach my $file (@filenames) {
+    my @exts = qw(.lzma .xz .zip);
+    my ($dir, $name, $ext) = fileparse($file, @exts);
+    for ($ext) {
+      if (/lzma/) {
+        # Note that so far all non-zip files are tar.lzma (or whatever) so we need a 2-stage operation to unpack them properly
+        # However 7za.exe does not support reading from a pipe so we need to unpack the envelope, unpack the tar, and then delete the tar.
+
+        `$support_directory/7za x -y $location/$file -o$destination`;
+        my $tarfile = basename(substr($file, 0, -5));
+        `$support_directory/7za x -y $destination/$tarfile -o$destination`;
+        if ($? == 0) {
+          print "Package : \"$file\" Unpacked succesfully\n";
+          # now delete the tar file...
+          unlink $destination."/".$tarfile;
+        } else {
+          print "\nError when trying to unpack $file, aborting all processing\n";
+          exit 1; # error 1, failure to unpack a package.
+        }
+      }
+      elsif (/xz/) {
+        #Basically a direct copy of the lzma part...
+        `$support_directory/7za x -y $location/$file -o$destination`;
+        my $tarfile = basename(substr($file, 0, -3));
+        `$support_directory/7za x -y $destination/$tarfile -o$destination`;
+        if ($? == 0) {
+          print "Package : \"$file\" Unpacked succesfully\n";
+          # now delete the tar file...
+          unlink $destination."/".$tarfile;
+        } else {
+          print "\nError when trying to unpack $file, aborting all processing\n";
+          exit 1; # error 1, failure to unpack a package.
+        }
+      }
+      elsif (/zip/) {
+        #print "$file is a Zip file! ($ext)\n";
+        `$base_directory/unzip.exe -o $location/$file -d $destination `;
+        if ($? == 0) {
+          print "Package : \"$file\" Unpacked succesfully\n";
+        } else {
+          print "\nError when trying to unpack $file, aborting all processing\n";
+          exit 1; # error 1, failure to unpack a package.
+        }
+      }
+      else {
+        print "$file is an UNSUPPORTED extension!! Aborting until reality is resumed.\n";
+        exit 2; # error 2, Unknown archive type.
+      }
+    }
+  }
+  # if we get here, there must have been no errors, so return TRUE (well, we would if this was not Perl....).
+  return 1;
 }
