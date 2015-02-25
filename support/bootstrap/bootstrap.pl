@@ -39,7 +39,7 @@ print "\nStage 2 : Download assorted support utilities.\n\n";
 my $path_to_urls = $base_directory."/urls/support-urls";
 my @toolsurls = geturls($path_to_urls);
 
-getfiles($package_directory, @toolsurls);
+my @util_filenames = getfiles($package_directory, @toolsurls);
 
 # ------------------------------------------------------------------------------
 print "\nStage 3 : Download MSYS packages to local cache.\n\n";
@@ -52,7 +52,7 @@ if (!-d $msys_cache) {
   mkdir $msys_cache or die "Cannot create Cache directory for MSYS!";
 }
 # get all the MSYS packages we need...
-getfiles($msys_cache, @msysurls);
+my @msys_filenames = getfiles($msys_cache, @msysurls);
 
 # ------------------------------------------------------------------------------
 print "\nStage 4 : Download MinGW packages to local cache.\n\n";
@@ -65,7 +65,7 @@ if (!-d $msys_cache) {
   mkdir $msys_cache or die "Cannot create Cache directory for MinGW!";
 }
 # get all the minGW packages we need...
-getfiles($mingw_cache, @mingwurls);
+my @mingw_filenames = getfiles($mingw_cache, @mingwurls);
 
 print "\nStage 4 : Download TDM GCC Compiler packages to local cache.\n\n";
 # load the GCC URL's into an array from the file 'tdm-gcc-urls'...
@@ -77,7 +77,7 @@ if (!-d $tdm_cache) {
   mkdir $tdm_cache or die "Cannot create Cache directory for TDM GCC!";
 }
 # get all the GCC packages we need...
-getfiles($tdm_cache, @gccurls);
+my @gcc_filenames = getfiles($tdm_cache, @gccurls);
 
 # commented out for now...
 =pod
@@ -121,8 +121,11 @@ sub getfiles() {
   # will take an array of URL's and a destination folder and proceed to download them all using wget...
   # Parameter 1 : $dest_dir, directory to store them in.
   # Parameter 2 : @url_list, an array of URL's
+  # RETURNS : Array containing all the sanitized filenames
   # ERROR CHECKING STILL TO BE ADDED!
   my ($dest_dir, @url_list) = @_;
+
+  my @filearray;
 
   foreach my $url (@url_list) {
     # get the actual filename from the last part of the URL, removing the SorceForge '/download' text if it exists ...
@@ -148,6 +151,9 @@ sub getfiles() {
       $dl_flag= "--no-check-certificate";
     }
 
+    # Add the filename to the array we will return...
+    push(@filearray, $filename);
+
     my $filewithpath = $dest_dir."/".$filename;
     #if this does not exist in cache then we will download. In future versions we will compare to a checksum too...
     if (-e $filewithpath) {
@@ -156,4 +162,5 @@ sub getfiles() {
       my $result = `$base_directory/wget -q --show-progress -c $dl_flag --directory-prefix=$dest_dir $url`;
     }
   }
+  return @filearray;
 }
