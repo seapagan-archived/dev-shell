@@ -26,3 +26,7 @@ $RECYCLE.BIN/
 
 # Support files that will be recreated by the bootstrap
 tinyperl/
+
+# Ignore the MSYS dir etc as they will be created frmo scratch...
+msys/
+mingw32/
