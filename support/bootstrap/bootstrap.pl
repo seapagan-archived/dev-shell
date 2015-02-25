@@ -139,7 +139,7 @@ sub getfiles() {
       next;
     }
 
-    # different wget flags depending on source of package, also remove '/download' from end or SourceForge URL.
+    # different wget flags depending on source of package, also remove '/download' from end of SourceForge URL.
     if ( $url =~ /\/download$/) {
       $filename = basename(substr($url, 0, -9));
       $dl_flag= "--trust-server-names";
