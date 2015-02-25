@@ -200,24 +200,9 @@ sub unpack_file() {
     my @exts = qw(.lzma .xz .zip);
     my ($dir, $name, $ext) = fileparse($file, @exts);
     for ($ext) {
-      if (/lzma/) {
+      if (/lzma/ || /xz/) {
         # Note that so far all non-zip files are tar.lzma (or whatever) so we need a 2-stage operation to unpack them properly
         # However 7za.exe does not support reading from a pipe so we need to unpack the envelope, unpack the tar, and then delete the tar.
-
-        `$support_directory/7za x -y $location/$file -o$destination`;
-        my $tarfile = basename(substr($file, 0, -length($ext)));
-        `$support_directory/7za x -y $destination/$tarfile -o$destination`;
-        if ($? == 0) {
-          print "Package : \"$file\" Unpacked succesfully ($tarfile)\n";
-          # now delete the tar file...
-          unlink $destination."/".$tarfile;
-        } else {
-          print "\nError when trying to unpack $file, aborting all processing\n";
-          exit 1; # error 1, failure to unpack a package.
-        }
-      }
-      elsif (/xz/) {
-        #Basically a direct copy of the lzma part...
         `$support_directory/7za x -y $location/$file -o$destination`;
         my $tarfile = basename(substr($file, 0, -length($ext)));
         `$support_directory/7za x -y $destination/$tarfile -o$destination`;
@@ -231,7 +216,6 @@ sub unpack_file() {
         }
       }
       elsif (/zip/) {
-        #print "$file is a Zip file! ($ext)\n";
         `$base_directory/unzip.exe -o $location/$file -d $destination `;
         if ($? == 0) {
           print "Package : \"$file\" Unpacked succesfully\n";
