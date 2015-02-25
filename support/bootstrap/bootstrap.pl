@@ -105,7 +105,7 @@ print "\nStage 6 : Unpack MSYS.\n\n";
 $result = unpack_file($msys_cache, $msys_directory, @msys_filenames);
 
 # ------------------------------------------------------------------------------
-print "\nStage 6 : Unpack MinGW.\n\n";
+print "\nStage 7 : Unpack MinGW.\n\n";
 # Unpack MinGW distribution.
 # ------------------------------------------------
 # : Source path is $mingw_cache
@@ -113,6 +113,15 @@ print "\nStage 6 : Unpack MinGW.\n\n";
 # : Filenames are stored in @mingw_filenames
 # ------------------------------------------------
 $result = unpack_file($mingw_cache, $mingw_directory, @mingw_filenames);
+
+print "\nStage 8 : Unpack GCC Packages.\n\n";
+# Unpack GCC distribution.
+# ------------------------------------------------
+# : Source path is $mingw_cache
+# : Destination Path will be $mingw_directory
+# : Filenames are stored in @mingw_filenames
+# ------------------------------------------------
+$result = unpack_file($tdm_cache, $mingw_directory, @gcc_filenames);
 
 # ------------------------------------------------------------------------------
 # support functions
