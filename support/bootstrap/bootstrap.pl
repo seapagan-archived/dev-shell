@@ -69,8 +69,8 @@ my $path_to_urls = $base_directory."/urls/mingw-urls";
 my ($mingwurls, $mingwfiles) = geturls($path_to_urls);
 
 # create the MinGW Cache directory if it does not exist...
-if (!-d $msys_cache) {
-  mkdir $msys_cache or die "Cannot create Cache directory for MinGW!";
+if (!-d $mingw_cache) {
+  mkdir $mingw_cache or die "Cannot create Cache directory for MinGW!";
 }
 # get all the minGW packages we need...
 my @mingw_filenames = getfiles($mingw_cache, @$mingwurls);
