@@ -35,6 +35,7 @@ my $tdm_cache = $package_directory."/tdm";
 # Generic result variable
 my $result;
 
+
 # ------------------------------------------------------------------------------
 # We need a few support utilities, this will also include Console and ANSICON.
 print "\nStage 2 : Download assorted support utilities.\n\n";
@@ -45,47 +46,51 @@ my ($toolsurls, $toolsfiles) = geturls($path_to_urls);
 my @util_filenames = getfiles($package_directory, @$toolsurls);
 my @util_filespecs = @$toolsfiles;
 
-=Pod
 
 # ------------------------------------------------------------------------------
 print "\nStage 3 : Download MSYS packages to local cache.\n\n";
 # load the MSYS URL's into an array from the file 'msys-urls'...
 my $path_to_urls = $base_directory."/urls/msys-urls";
-my @msysurls = geturls($path_to_urls);
+my ($msysurls, $msysfiles) = geturls($path_to_urls);
 
 # create the MSYS Cache directory if it does not exist...
 if (!-d $msys_cache) {
   mkdir $msys_cache or die "Cannot create Cache directory for MSYS!";
 }
 # get all the MSYS packages we need...
-my @msys_filenames = getfiles($msys_cache, @msysurls);
+my @msys_filenames = getfiles($msys_cache, @$msysurls);
+my @msys_filespecs = @$msysfiles;
+
 
 # ------------------------------------------------------------------------------
 print "\nStage 4 : Download MinGW packages to local cache.\n\n";
 # load the minGW URL's into an array from the file 'mingw-urls'...
 my $path_to_urls = $base_directory."/urls/mingw-urls";
-my @mingwurls = geturls($path_to_urls);
+my ($mingwurls, $mingwfiles) = geturls($path_to_urls);
 
 # create the MinGW Cache directory if it does not exist...
 if (!-d $msys_cache) {
   mkdir $msys_cache or die "Cannot create Cache directory for MinGW!";
 }
 # get all the minGW packages we need...
-my @mingw_filenames = getfiles($mingw_cache, @mingwurls);
+my @mingw_filenames = getfiles($mingw_cache, @$mingwurls);
+my @mingw_filespecs = @$mingwfiles;
 
+
+# ------------------------------------------------------------------------------
 print "\nStage 4 : Download TDM GCC Compiler packages to local cache.\n\n";
 # load the GCC URL's into an array from the file 'tdm-gcc-urls'...
 my $path_to_urls = $base_directory."/urls/tdm-gcc-urls";
-my @gccurls = geturls($path_to_urls);
+my ($gccurls, $gccfiles) = geturls($path_to_urls);
 
 # create the MinGW Cache directory if it does not exist...
 if (!-d $tdm_cache) {
   mkdir $tdm_cache or die "Cannot create Cache directory for TDM GCC!";
 }
 # get all the GCC packages we need...
-my @gcc_filenames = getfiles($tdm_cache, @gccurls);
+my @gcc_filenames = getfiles($tdm_cache, @$gccurls);
+my @gcc_filespecs = @$gccfiles;
 
-=cut
 
 # ------------------------------------------------------------------------------
 print "\nStage 5 : Unpack support utilities.\n\n";
@@ -98,7 +103,6 @@ print "\nStage 5 : Unpack support utilities.\n\n";
 # ------------------------------------------------
 $result = unpack_file($package_directory, $support_directory, \@util_filenames, \@util_filespecs);
 
-=Pod
 
 # ------------------------------------------------------------------------------
 print "\nStage 6 : Unpack MSYS.\n\n";
@@ -108,7 +112,8 @@ print "\nStage 6 : Unpack MSYS.\n\n";
 # : Destination Path will be $msys_directory
 # : Filenames are stored in @msys_filenames
 # ------------------------------------------------
-$result = unpack_file($msys_cache, $msys_directory, @msys_filenames);
+$result = unpack_file($msys_cache, $msys_directory, \@msys_filenames, \@msys_filespecs);
+
 
 # ------------------------------------------------------------------------------
 print "\nStage 7 : Unpack MinGW.\n\n";
@@ -118,8 +123,10 @@ print "\nStage 7 : Unpack MinGW.\n\n";
 # : Destination Path will be $mingw_directory
 # : Filenames are stored in @mingw_filenames
 # ------------------------------------------------
-$result = unpack_file($mingw_cache, $mingw_directory, @mingw_filenames);
+$result = unpack_file($mingw_cache, $mingw_directory, \@mingw_filenames, \@mingw_filespecs);
 
+
+# ------------------------------------------------------------------------------
 print "\nStage 8 : Unpack GCC Packages.\n\n";
 # Unpack GCC distribution.
 # ------------------------------------------------
@@ -127,9 +134,8 @@ print "\nStage 8 : Unpack GCC Packages.\n\n";
 # : Destination Path will be $mingw_directory
 # : Filenames are stored in @mingw_filenames
 # ------------------------------------------------
-$result = unpack_file($tdm_cache, $mingw_directory, @gcc_filenames);
+$result = unpack_file($tdm_cache, $mingw_directory, \@gcc_filenames, \@gcc_filespecs);
 
-=cut
 
 # ------------------------------------------------------------------------------
 # support functions
@@ -227,7 +233,7 @@ sub unpack_file() {
 
 my @filenames = @$filenamesref;
 my @filespecs = @$filespecsref;
-#
+
 # print join("\n", @filenames)."\n";
 # print join("\n", @filespecs)."\n";
 
