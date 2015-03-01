@@ -78,7 +78,7 @@ my @mingw_filespecs = @$mingwfiles;
 
 
 # ------------------------------------------------------------------------------
-print "\nStage 4 : Download TDM GCC Compiler packages to local cache.\n\n";
+print "\nStage 5 : Download TDM GCC Compiler packages to local cache.\n\n";
 # load the GCC URL's into an array from the file 'tdm-gcc-urls'...
 my $path_to_urls = $base_directory."/urls/tdm-gcc-urls";
 my ($gccurls, $gccfiles) = geturls($path_to_urls);
@@ -93,7 +93,7 @@ my @gcc_filespecs = @$gccfiles;
 
 
 # ------------------------------------------------------------------------------
-print "\nStage 5 : Unpack support utilities.\n\n";
+print "\nStage 6 : Unpack support utilities.\n\n";
 # Unpack 7za, console, ANSICON etc.
 # ------------------------------------------------
 # : Source path is $package_directory
@@ -105,7 +105,7 @@ $result = unpack_file($package_directory, $support_directory, \@util_filenames, 
 
 
 # ------------------------------------------------------------------------------
-print "\nStage 6 : Unpack MSYS.\n\n";
+print "\nStage 7 : Unpack MSYS.\n\n";
 # Unpack MSYS distribution.
 # ------------------------------------------------
 # : Source path is $msys_cache
@@ -116,7 +116,7 @@ $result = unpack_file($msys_cache, $msys_directory, \@msys_filenames, \@msys_fil
 
 
 # ------------------------------------------------------------------------------
-print "\nStage 7 : Unpack MinGW.\n\n";
+print "\nStage 8 : Unpack MinGW.\n\n";
 # Unpack MinGW distribution.
 # ------------------------------------------------
 # : Source path is $mingw_cache
@@ -127,7 +127,7 @@ $result = unpack_file($mingw_cache, $mingw_directory, \@mingw_filenames, \@mingw
 
 
 # ------------------------------------------------------------------------------
-print "\nStage 8 : Unpack GCC Packages.\n\n";
+print "\nStage 9 : Unpack GCC Packages.\n\n";
 # Unpack GCC distribution.
 # ------------------------------------------------
 # : Source path is $mingw_cache
