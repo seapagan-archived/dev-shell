@@ -40,9 +40,12 @@ my $result;
 print "\nStage 2 : Download assorted support utilities.\n\n";
 # load the Support tools URL's into an array from the file 'msys-urls'...
 my $path_to_urls = $base_directory."/urls/support-urls";
-my @toolsurls = geturls($path_to_urls);
+my ($toolsurls, $toolsfiles) = geturls($path_to_urls);
 
-my @util_filenames = getfiles($package_directory, @toolsurls);
+my @util_filenames = getfiles($package_directory, @$toolsurls);
+my @util_filespecs = @$toolsfiles;
+
+=Pod
 
 # ------------------------------------------------------------------------------
 print "\nStage 3 : Download MSYS packages to local cache.\n\n";
@@ -82,6 +85,8 @@ if (!-d $tdm_cache) {
 # get all the GCC packages we need...
 my @gcc_filenames = getfiles($tdm_cache, @gccurls);
 
+=cut
+
 # ------------------------------------------------------------------------------
 print "\nStage 5 : Unpack support utilities.\n\n";
 # Unpack 7za, console, ANSICON etc.
@@ -89,10 +94,11 @@ print "\nStage 5 : Unpack support utilities.\n\n";
 # : Source path is $package_directory
 # : Destination Path will be $support_directory
 # : Filenames are stored in @util_filenames
+# : FileSpecs (those to be unpacked) are stored in @util_filespecs.
 # ------------------------------------------------
-$result = unpack_file($package_directory, $support_directory, @util_filenames);
-# TODO - remove all unneeded files, or use a specific unpack routine to only unpack what we need #
+$result = unpack_file($package_directory, $support_directory, \@util_filenames, \@util_filespecs);
 
+=Pod
 
 # ------------------------------------------------------------------------------
 print "\nStage 6 : Unpack MSYS.\n\n";
@@ -123,20 +129,42 @@ print "\nStage 8 : Unpack GCC Packages.\n\n";
 # ------------------------------------------------
 $result = unpack_file($tdm_cache, $mingw_directory, @gcc_filenames);
 
+=cut
+
 # ------------------------------------------------------------------------------
 # support functions
 
 sub geturls() {
-  # when provided with a file containing URLS, will return an array containing them.
+  # when provided with a file containing URLS, will return 2 arrays.
   # 1 parameter - $path_to_urls, filepath to text file containing the URL's
-  # RETURNS : Array containing all download URLs
+  # RETURNS : **REFERENCE TO ARRAYS**
+    # 1st Array : each URL from the input file.
+    # 2nd Array : the list of Files to be unpacked for this URL, if any.
   my ($path_to_urls) = @_;
 
   open my $handle, '<', $path_to_urls or die "Cant open $path_to_urls";
-  chomp(my @urls = <$handle>);
+  chomp(my @url_line = <$handle>);
   close $handle;
+  # At this point we have an array of full lines that may contain file spec as well as URL's
+  # The $url_line as read from the file may contain a list of files at the end in a specific format.
+  # We need to split this into 2 arrays if present.
+  my @urls; my @unpacklist;
+  my $count = 0;
+  foreach my $line (@url_line) {
+    # locate out the unpack spec if we have one. We will use the start location to trim the URL out also.
+    if ( $line =~ /\s\*[+|-]\((.*)\)/ ) {
+      # there is an unpack spec so we store this in the @unpacklist array...
+      $unpacklist[$count]=$1;
+      $urls[$count]=substr $line, 0, $-[0];
+    } else {
+      # there is no unpack spec so just assign an empty string to it and take the whole line as the URL...
+      $unpacklist[$count]="";
+      $urls[$count]=$line;
+    }
+    $count++;
+  }
   # Return the array of URLs ...
-  return @urls;
+  return (\@urls, \@unpacklist);
 }
 
 sub getfiles() {
@@ -191,18 +219,32 @@ sub unpack_file() {
   # will unpack the filenames in the passed array using the correct tool depending on archive type.
   # Parameter 1 : $location, directory to find the packages.
   # Parameter 2 : $destination, where to unpack these files.
-  # Parameter 3 : @filenames, array of the actual filenames to be unpacked.
+  # Parameter 3 : $filenamesref, REFERENCE to an array of the actual packages to be unpacked.
+  # Paramater 4 : $filespecsref, REFERENCE to an array of colon separated filenames to be unpacked.
   # RETURNS : TRUE if no errors, FALSE and break on any error.
 
-  my ($location, $destination, @filenames) = @_;
+  my ($location, $destination, $filenamesref, $filespecsref) = @_;
 
+my @filenames = @$filenamesref;
+my @filespecs = @$filespecsref;
+#
+# print join("\n", @filenames)."\n";
+# print join("\n", @filespecs)."\n";
+
+  my $count = 0;
   foreach my $file (@filenames) {
     my @exts = qw(.lzma .xz .zip);
     my ($dir, $name, $ext) = fileparse($file, @exts);
+
+    # get the filespec if it exists and replace colon with spaces...
+    $filespecs[$count] =~ s/^\s+|\s+$//g;;
+    $filespecs[$count] =~ s/:/ /g;
+
     for ($ext) {
       if (/lzma/ || /xz/) {
         # Note that so far all non-zip files are tar.lzma (or whatever) so we need a 2-stage operation to unpack them properly
         # However 7za.exe does not support reading from a pipe so we need to unpack the envelope, unpack the tar, and then delete the tar.
+        # we assume that all files are tar.<whatever> for the moment, checking for this will be added later in case of exceptions.
         `$support_directory/7za x -y $location/$file -o$destination`;
         my $tarfile = basename(substr($file, 0, -length($ext)));
         `$support_directory/7za x -y $destination/$tarfile -o$destination`;
@@ -216,7 +258,8 @@ sub unpack_file() {
         }
       }
       elsif (/zip/) {
-        `$base_directory/unzip.exe -o $location/$file -d $destination `;
+
+        `$base_directory/unzip.exe -j -o $location/$file $filespecs[$count]  -d $destination `;
         if ($? == 0) {
           print "Package : \"$file\" Unpacked succesfully\n";
         } else {
@@ -229,6 +272,7 @@ sub unpack_file() {
         exit 2; # error 2, Unknown archive type.
       }
     }
+    $count++;
   }
   # if we get here, there must have been no errors, so return TRUE (well, we would if this was not Perl....).
   return 1;
