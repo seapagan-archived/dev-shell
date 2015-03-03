@@ -137,6 +137,7 @@ print "\nStage 9 : Unpack GCC Packages.\n\n";
 # ------------------------------------------------
 $result = unpack_file($tdm_cache, $mingw_directory, \@gcc_filenames, \@gcc_filespecs);
 
+
 # ------------------------------------------------------------------------------
 print "\nStage 10 : Tidy up base system, removing unneeded files.\n\n";
 # There are a few files in the standard MSYS distro that are not needed in this particular system...
@@ -154,6 +155,7 @@ print "Done.\n";
 
 # ------------------------------------------------------------------------------
 # support functions
+
 
 sub geturls() {
   # when provided with a file containing URLS, will return 2 arrays.
@@ -187,6 +189,7 @@ sub geturls() {
   # Return the array of URLs ...
   return (\@urls, \@unpacklist);
 }
+
 
 sub getfiles() {
   # will take an array of URL's and a destination folder and proceed to download them all using wget...
@@ -235,6 +238,7 @@ sub getfiles() {
   }
   return @filearray;
 }
+
 
 sub unpack_file() {
   # will unpack the filenames in the passed array using the correct tool depending on archive type.
