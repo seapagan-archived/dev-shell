@@ -1,5 +1,6 @@
 use strict;
 use File::Basename;
+use File::Path 'rmtree';
 use Cwd 'abs_path';
 
 # NOTE : We need to get the base path of the system, but in TinyPerl $0 does not work so it is difficult
@@ -136,6 +137,20 @@ print "\nStage 9 : Unpack GCC Packages.\n\n";
 # ------------------------------------------------
 $result = unpack_file($tdm_cache, $mingw_directory, \@gcc_filenames, \@gcc_filespecs);
 
+# ------------------------------------------------------------------------------
+print "\nStage 10 : Tidy up base system, removing unneeded files.\n\n";
+# There are a few files in the standard MSYS distro that are not needed in this particular system...
+# note that as of now there is no error checking ...
+
+print "MSYS : ";
+my @unwanted_msys = qw(m.ico msys.bat msys.ico);
+# now delete these...
+foreach my $unwanted (@unwanted_msys) {
+  unlink $msys_directory."/".$unwanted;
+}
+# also remove the postinstall directory as we will do this manually ourselves...
+rmtree($msys_directory."/postinstall");
+print "Done.\n";
 
 # ------------------------------------------------------------------------------
 # support functions
