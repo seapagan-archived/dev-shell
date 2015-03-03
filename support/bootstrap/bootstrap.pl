@@ -112,6 +112,7 @@ print "\nStage 7 : Unpack MSYS.\n\n";
 # : Source path is $msys_cache
 # : Destination Path will be $msys_directory
 # : Filenames are stored in @msys_filenames
+# : FileSpecs (those to be unpacked) are stored in @msys_filespecs.
 # ------------------------------------------------
 $result = unpack_file($msys_cache, $msys_directory, \@msys_filenames, \@msys_filespecs);
 
@@ -123,6 +124,7 @@ print "\nStage 8 : Unpack MinGW.\n\n";
 # : Source path is $mingw_cache
 # : Destination Path will be $mingw_directory
 # : Filenames are stored in @mingw_filenames
+# : FileSpecs (those to be unpacked) are stored in @mingw_filespecs.
 # ------------------------------------------------
 $result = unpack_file($mingw_cache, $mingw_directory, \@mingw_filenames, \@mingw_filespecs);
 
@@ -131,9 +133,10 @@ $result = unpack_file($mingw_cache, $mingw_directory, \@mingw_filenames, \@mingw
 print "\nStage 9 : Unpack GCC Packages.\n\n";
 # Unpack GCC distribution.
 # ------------------------------------------------
-# : Source path is $mingw_cache
+# : Source path is $tdm_cache
 # : Destination Path will be $mingw_directory
-# : Filenames are stored in @mingw_filenames
+# : Filenames are stored in @gcc_filenames
+# : FileSpecs (those to be unpacked) are stored in @gcc_filespecs.
 # ------------------------------------------------
 $result = unpack_file($tdm_cache, $mingw_directory, \@gcc_filenames, \@gcc_filespecs);
 
