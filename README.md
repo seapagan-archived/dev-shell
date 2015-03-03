@@ -21,7 +21,7 @@ As the design progresses, all additional libraries and utilities that are not pr
 ## Directory Layout
 The file / folder layout is quite specific and chosen to allow the most versatility along with easy maintenance and division of standard and additional libraries etc.
 
-There are 5 major directories, each of which is mapped to a specific mount point within the MSYS bash shell system.
+There are 5 major directories, each of which is mapped to a specific mount point within the MSYS bash shell system. *Note that the first 4 are not in the git repository, and are created automatically each time by the bootstrap scripts. As a result of this, any customizations to these directories will be **LOST** after each run of the bootstrap script. There will be functionality to have user-created skeleton files and patches that will be applied each time the bootstrap is run (TODO)*
 
 - **home**
   - This will be the user $HOME directory, mounted under bash as **/home**
@@ -45,7 +45,7 @@ There are 5 major directories, each of which is mapped to a specific mount point
     - [x] Download and Unpack the base MSYS installation.
     - [x] Download and Unpack the TDM GCC distribution.
     - [x] Download and Unpack the base MinGW installation.
-    - [ ] Remove un-needed files from the above unpacked packages.
+    - [x] Remove un-needed files from the above unpacked packages.
     - [ ] Copy over skeleton files, tweak configuration files and finalize base development system.
 
 ## Caveat!
