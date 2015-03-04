@@ -177,17 +177,20 @@ sub geturls() {
   my @urls; my @unpacklist;
   my $count = 0;
   foreach my $line (@url_line) {
-    # locate out the unpack spec if we have one. We will use the start location to trim the URL out also.
-    if ( $line =~ /\s\*[+|-]\((.*)\)/ ) {
-      # there is an unpack spec so we store this in the @unpacklist array...
-      $unpacklist[$count]=$1;
-      $urls[$count]=substr $line, 0, $-[0];
-    } else {
-      # there is no unpack spec so just assign an empty string to it and take the whole line as the URL...
-      $unpacklist[$count]="";
-      $urls[$count]=$line;
+    # first, if this is a comment then ignore it completely...
+    if (not $line =~ /^\s*\#/) {
+      # locate out the unpack spec if we have one. We will use the start location to trim the URL out also.
+      if ( $line =~ /\s\*[+|-]\((.*)\)/ ) {
+        # there is an unpack spec so we store this in the @unpacklist array...
+        $unpacklist[$count]=$1;
+        $urls[$count]=substr $line, 0, $-[0];
+      } else {
+        # there is no unpack spec so just assign an empty string to it and take the whole line as the URL...
+        $unpacklist[$count]="";
+        $urls[$count]=$line;
+      }
+      $count++;
     }
-    $count++;
   }
   # Return the array of URLs ...
   return (\@urls, \@unpacklist);
