@@ -23,6 +23,8 @@ $RECYCLE.BIN/
 *.zip
 *.lzma
 *.xz
+*.gz
+*.bz2
 
 # Support files that will be recreated by the bootstrap
 tinyperl/
