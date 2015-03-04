@@ -48,6 +48,8 @@ There are 5 major directories, each of which is mapped to a specific mount point
     - [x] Remove un-needed files from the above unpacked packages.
     - [ ] Copy over skeleton files, tweak configuration files and finalize base development system.
 
+## TODO.
+See the file [TODO.txt](TODO.txt) in the root of repository for thoughts, plans and progress.
 ## Caveat!
 *This system as it stands on GitHub is __incomplete__ compared to my local development system*, and as such is currently unusable for any purpose. This project is for the development of the automatic bootstrap system, which will in time become a fully usable development system mirroring the manual setup I have locally.
 
