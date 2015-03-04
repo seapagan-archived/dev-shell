@@ -147,7 +147,7 @@ print "\nStage 10 : Tidy up base system, removing unneeded files.\n\n";
 # note that as of now there is no error checking ...
 
 print "MSYS : ";
-my @unwanted_msys = qw(m.ico msys.bat msys.ico);
+my @unwanted_msys = qw(m.ico msys.bat msys.ico etc/fstab.sample etc/profile);
 # now delete these...
 foreach my $unwanted (@unwanted_msys) {
   unlink $msys_directory."/".$unwanted;
