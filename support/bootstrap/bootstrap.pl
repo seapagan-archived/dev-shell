@@ -94,7 +94,7 @@ my @gcc_filespecs = @$gccfiles;
 
 
 # ------------------------------------------------------------------------------
-print "\nStage 6 : Unpack support utilities.\n\n";
+print "\nStage 6 : Unpack support utilities.\n";
 # Unpack 7za, console, ANSICON etc.
 # ------------------------------------------------
 # : Source path is $package_directory
@@ -106,7 +106,7 @@ $result = unpack_file($package_directory, $support_directory, \@util_filenames, 
 
 
 # ------------------------------------------------------------------------------
-print "\nStage 7 : Unpack MSYS.\n\n";
+print "\nStage 7 : Unpack MSYS.\n";
 # Unpack MSYS distribution.
 # ------------------------------------------------
 # : Source path is $msys_cache
@@ -118,7 +118,7 @@ $result = unpack_file($msys_cache, $msys_directory, \@msys_filenames, \@msys_fil
 
 
 # ------------------------------------------------------------------------------
-print "\nStage 8 : Unpack MinGW.\n\n";
+print "\nStage 8 : Unpack MinGW.\n";
 # Unpack MinGW distribution.
 # ------------------------------------------------
 # : Source path is $mingw_cache
@@ -130,7 +130,7 @@ $result = unpack_file($mingw_cache, $mingw_directory, \@mingw_filenames, \@mingw
 
 
 # ------------------------------------------------------------------------------
-print "\nStage 9 : Unpack GCC Packages.\n\n";
+print "\nStage 9 : Unpack GCC Packages.\n";
 # Unpack GCC distribution.
 # ------------------------------------------------
 # : Source path is $tdm_cache
@@ -256,11 +256,17 @@ sub unpack_file() {
 
   my ($location, $destination, $filenamesref, $filespecsref) = @_;
 
-my @filenames = @$filenamesref;
-my @filespecs = @$filespecsref;
+  my @filenames = @$filenamesref;
+  my @filespecs = @$filespecsref;
 
-# print join("\n", @filenames)."\n";
-# print join("\n", @filespecs)."\n";
+  # set a variable to contain the output length so we can delete it in the next loop invocation.
+  # initially set to zero.
+  my $output_length  = 0;
+
+  # print join("\n", @filenames)."\n";
+  # print join("\n", @filespecs)."\n";
+
+  local $| = 1;
 
   my $count = 0;
   foreach my $file (@filenames) {
@@ -280,7 +286,14 @@ my @filespecs = @$filespecsref;
         my $tarfile = basename(substr($file, 0, -length($ext)));
         `$support_directory/7za x -y $destination/$tarfile -o$destination`;
         if ($? == 0) {
-          print "Package : \"$file\" Unpacked succesfully ($tarfile)\n";
+          my $output_string = " -- Package : \"$file\" Unpacked succesfully.";
+          if ($output_length > 0) {
+            # move cursor to beginning of string and delete the previous data...
+            printf ("\r%s\r$output_string", " " x $output_length);
+          } else {
+            print $output_string;
+          }
+          $output_length = length($output_string);
           # now delete the tar file...
           unlink $destination."/".$tarfile;
         } else {
@@ -292,7 +305,14 @@ my @filespecs = @$filespecsref;
 
         `$base_directory/unzip.exe -j -o $location/$file $filespecs[$count]  -d $destination `;
         if ($? == 0) {
-          print "Package : \"$file\" Unpacked succesfully\n";
+          my $output_string = " -- Package : \"$file\" Unpacked succesfully.";
+          if ($output_length > 0) {
+            # move cursor to beginning of string and delete the previous data...
+            printf ("\r%s\r$output_string", " " x $output_length);
+          } else {
+            print $output_string;
+          }
+          $output_length = length($output_string);
         } else {
           print "\nError when trying to unpack $file, aborting all processing\n";
           exit 1; # error 1, failure to unpack a package.
@@ -306,5 +326,6 @@ my @filespecs = @$filespecsref;
     $count++;
   }
   # if we get here, there must have been no errors, so return TRUE (well, we would if this was not Perl....).
+  printf ("\r%s\r -- Done!", " " x $output_length);
   return 1;
 }
