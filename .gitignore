@@ -34,3 +34,4 @@ support/*.dll
 # Ignore the MSYS dir etc as they will be created from scratch...
 msys/
 mingw32/
+support/bootstrap/.wgetrc
