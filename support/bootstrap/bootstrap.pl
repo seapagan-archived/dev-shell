@@ -262,10 +262,10 @@ sub unpack_file() {
   # set a variable to contain the output length so we can delete it in the next loop invocation.
   # initially set to zero.
   my $output_length  = 0;
+  # variable to hold the filename of the underlying tar file.
+  my $tarfile;
 
-  # print join("\n", @filenames)."\n";
-  # print join("\n", @filespecs)."\n";
-
+  # unbuffer output, otherwise we cant overwrite the previous line...
   local $| = 1;
 
   my $count = 0;
@@ -283,33 +283,31 @@ sub unpack_file() {
         # However 7za.exe does not support reading from a pipe so we need to unpack the envelope, unpack the tar, and then delete the tar.
         # we assume that all files are tar.<whatever> for the moment, checking for this will be added later in case of exceptions.
         `$support_directory/7za x -y $location/$file -o$destination`;
-        my $tarfile = basename(substr($file, 0, -length($ext)));
+        $tarfile = basename(substr($file, 0, -length($ext)));
         `$support_directory/7za x -y $destination/$tarfile -o$destination`;
-        if ($? == 0) {
-          my $output_string = " -- Package : \"$file\" Unpacked succesfully.";
-          $output_length = output_line($output_string, $output_length);
-          # now delete the tar file...
-          unlink $destination."/".$tarfile;
-        } else {
-          print "\nError when trying to unpack $file, aborting all processing\n";
-          exit 1; # error 1, failure to unpack a package.
-        }
       }
       elsif (/zip/) {
-
+        # this is only one stage, since I've never seen a .tar.zip! Therefore we cant use the above unpack
+        # logic, even though 7za.exe can easily unpack zip fies.
         `$base_directory/unzip.exe -j -o $location/$file $filespecs[$count]  -d $destination `;
-        if ($? == 0) {
-          my $output_string = " -- Package : \"$file\" Unpacked succesfully.";
-          $output_length = output_line($output_string, $output_length);
-        } else {
-          print "\nError when trying to unpack $file, aborting all processing\n";
-          exit 1; # error 1, failure to unpack a package.
-        }
       }
       else {
+        # not an extension that we are prepared to handle, so crash out with notification.
         print "$file is an UNSUPPORTED extension!! Aborting until reality is resumed.\n";
         exit 2; # error 2, Unknown archive type.
       }
+    }
+    # check for the last error and abort if not zero.
+    if ($? == 0) {
+      my $output_string = " -- Package : \"$file\" Unpacked succesfully.";
+      $output_length = output_line($output_string, $output_length);
+    } else {
+      print "\nError when trying to unpack $file, aborting all processing\n";
+      exit 1; # error 1, failure to unpack a package.
+    }
+    # delete any remaining tar files if needed..
+    if (-e $destination."/".$tarfile) {
+      unlink $destination."/".$tarfile;
     }
     $count++;
   }
@@ -329,6 +327,6 @@ sub output_line() {
     print $out_string;
   }
   $out_length = length($out_string);
-  # return this so can be fed to us again in the next call...
+  # return this length so can be fed to us again in the next call...
   return $out_length;
 }
