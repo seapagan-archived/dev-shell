@@ -142,11 +142,11 @@ $result = unpack_file($tdm_cache, $mingw_directory, \@gcc_filenames, \@gcc_files
 
 
 # ------------------------------------------------------------------------------
-print "\nStage 10 : Tidy up base system, removing unneeded files.\n\n";
+print "\nStage 10 : Tidy up base system, removing unneeded files.\n";
 # There are a few files in the standard MSYS distro that are not needed in this particular system...
 # note that as of now there is no error checking ...
 
-print "MSYS : ";
+#print " -- MSYS : ";
 my @unwanted_msys = qw(m.ico msys.bat msys.ico etc/fstab.sample etc/profile);
 # now delete these...
 foreach my $unwanted (@unwanted_msys) {
@@ -154,7 +154,7 @@ foreach my $unwanted (@unwanted_msys) {
 }
 # also remove the postinstall directory as we will do this manually ourselves...
 rmtree($msys_directory."/postinstall");
-print "Done.\n";
+print " -- Done\n";
 
 # ------------------------------------------------------------------------------
 # support functions
@@ -326,6 +326,6 @@ sub unpack_file() {
     $count++;
   }
   # if we get here, there must have been no errors, so return TRUE (well, we would if this was not Perl....).
-  printf ("\r%s\r -- Done!", " " x $output_length);
+  printf ("\r%s\r -- Done", " " x $output_length);
   return 1;
 }
