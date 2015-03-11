@@ -43,10 +43,14 @@ print "\nStage 2 : Download assorted support utilities.\n\n";
 # load the Support tools URL's into an array from the file 'msys-urls'...
 my $path_to_urls = $base_directory."/urls/support-urls";
 my ($toolsurls, $toolsfiles) = geturls($path_to_urls);
-
 my @util_filenames = getfiles($package_directory, @$toolsurls);
 my @util_filespecs = @$toolsfiles;
 
+# get the 'extra' files...
+my $path_to_urls = $base_directory."/urls/extras-urls";
+my ($extraurls, $extrafiles) = geturls($path_to_urls);
+my @extra_filenames = getfiles($package_directory, @$extraurls);
+my @extra_filespecs = @$extrafiles;
 
 # ------------------------------------------------------------------------------
 print "\nStage 3 : Download MSYS packages to local cache.\n\n";
