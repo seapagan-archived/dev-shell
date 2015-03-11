@@ -94,7 +94,7 @@ my @gcc_filespecs = @$gccfiles;
 
 
 # ------------------------------------------------------------------------------
-print "\nStage 6 : Unpack support utilities.\n\n";
+print "\nStage 6 : Unpack support utilities.\n";
 # Unpack 7za, console, ANSICON etc.
 # ------------------------------------------------
 # : Source path is $package_directory
@@ -106,7 +106,7 @@ $result = unpack_file($package_directory, $support_directory, \@util_filenames, 
 
 
 # ------------------------------------------------------------------------------
-print "\nStage 7 : Unpack MSYS.\n\n";
+print "\nStage 7 : Unpack MSYS.\n";
 # Unpack MSYS distribution.
 # ------------------------------------------------
 # : Source path is $msys_cache
@@ -118,7 +118,7 @@ $result = unpack_file($msys_cache, $msys_directory, \@msys_filenames, \@msys_fil
 
 
 # ------------------------------------------------------------------------------
-print "\nStage 8 : Unpack MinGW.\n\n";
+print "\nStage 8 : Unpack MinGW.\n";
 # Unpack MinGW distribution.
 # ------------------------------------------------
 # : Source path is $mingw_cache
@@ -130,7 +130,7 @@ $result = unpack_file($mingw_cache, $mingw_directory, \@mingw_filenames, \@mingw
 
 
 # ------------------------------------------------------------------------------
-print "\nStage 9 : Unpack GCC Packages.\n\n";
+print "\nStage 9 : Unpack GCC Packages.\n";
 # Unpack GCC distribution.
 # ------------------------------------------------
 # : Source path is $tdm_cache
@@ -142,11 +142,11 @@ $result = unpack_file($tdm_cache, $mingw_directory, \@gcc_filenames, \@gcc_files
 
 
 # ------------------------------------------------------------------------------
-print "\nStage 10 : Tidy up base system, removing unneeded files.\n\n";
+print "\nStage 10 : Tidy up base system, removing unneeded files.\n";
 # There are a few files in the standard MSYS distro that are not needed in this particular system...
 # note that as of now there is no error checking ...
 
-print "MSYS : ";
+#print " -- MSYS : ";
 my @unwanted_msys = qw(m.ico msys.bat msys.ico etc/fstab.sample etc/profile);
 # now delete these...
 foreach my $unwanted (@unwanted_msys) {
@@ -154,7 +154,7 @@ foreach my $unwanted (@unwanted_msys) {
 }
 # also remove the postinstall directory as we will do this manually ourselves...
 rmtree($msys_directory."/postinstall");
-print "Done.\n";
+print " -- Done\n";
 
 # ------------------------------------------------------------------------------
 # support functions
@@ -256,11 +256,17 @@ sub unpack_file() {
 
   my ($location, $destination, $filenamesref, $filespecsref) = @_;
 
-my @filenames = @$filenamesref;
-my @filespecs = @$filespecsref;
+  my @filenames = @$filenamesref;
+  my @filespecs = @$filespecsref;
 
-# print join("\n", @filenames)."\n";
-# print join("\n", @filespecs)."\n";
+  # set a variable to contain the output length so we can delete it in the next loop invocation.
+  # initially set to zero.
+  my $output_length  = 0;
+  # variable to hold the filename of the underlying tar file.
+  my $tarfile;
+
+  # unbuffer output, otherwise we cant overwrite the previous line...
+  local $| = 1;
 
   my $count = 0;
   foreach my $file (@filenames) {
@@ -277,34 +283,50 @@ my @filespecs = @$filespecsref;
         # However 7za.exe does not support reading from a pipe so we need to unpack the envelope, unpack the tar, and then delete the tar.
         # we assume that all files are tar.<whatever> for the moment, checking for this will be added later in case of exceptions.
         `$support_directory/7za x -y $location/$file -o$destination`;
-        my $tarfile = basename(substr($file, 0, -length($ext)));
+        $tarfile = basename(substr($file, 0, -length($ext)));
         `$support_directory/7za x -y $destination/$tarfile -o$destination`;
-        if ($? == 0) {
-          print "Package : \"$file\" Unpacked succesfully ($tarfile)\n";
-          # now delete the tar file...
-          unlink $destination."/".$tarfile;
-        } else {
-          print "\nError when trying to unpack $file, aborting all processing\n";
-          exit 1; # error 1, failure to unpack a package.
-        }
       }
       elsif (/zip/) {
-
+        # this is only one stage, since I've never seen a .tar.zip! Therefore we cant use the above unpack
+        # logic, even though 7za.exe can easily unpack zip fies.
         `$base_directory/unzip.exe -j -o $location/$file $filespecs[$count]  -d $destination `;
-        if ($? == 0) {
-          print "Package : \"$file\" Unpacked succesfully\n";
-        } else {
-          print "\nError when trying to unpack $file, aborting all processing\n";
-          exit 1; # error 1, failure to unpack a package.
-        }
       }
       else {
+        # not an extension that we are prepared to handle, so crash out with notification.
         print "$file is an UNSUPPORTED extension!! Aborting until reality is resumed.\n";
         exit 2; # error 2, Unknown archive type.
       }
     }
+    # check for the last error and abort if not zero.
+    if ($? == 0) {
+      my $output_string = " -- Package : \"$file\" Unpacked succesfully.";
+      $output_length = output_line($output_string, $output_length);
+    } else {
+      print "\nError when trying to unpack $file, aborting all processing\n";
+      exit 1; # error 1, failure to unpack a package.
+    }
+    # delete any remaining tar files if needed..
+    if (-e $destination."/".$tarfile) {
+      unlink $destination."/".$tarfile;
+    }
     $count++;
   }
   # if we get here, there must have been no errors, so return TRUE (well, we would if this was not Perl....).
+  printf ("\r%s\r -- Done", " " x $output_length);
   return 1;
+}
+
+sub output_line() {
+  # this will output a line to console, on the same line and overwriting the previous.
+  my ($out_string, $out_length) = @_;
+
+  if ($out_length > 0) {
+    # move cursor to beginning of string and delete the previous data...
+    printf ("\r%s\r$out_string", " " x $out_length);
+  } else {
+    print $out_string;
+  }
+  $out_length = length($out_string);
+  # return this length so can be fed to us again in the next call...
+  return $out_length;
 }
