@@ -287,13 +287,7 @@ sub unpack_file() {
         `$support_directory/7za x -y $destination/$tarfile -o$destination`;
         if ($? == 0) {
           my $output_string = " -- Package : \"$file\" Unpacked succesfully.";
-          if ($output_length > 0) {
-            # move cursor to beginning of string and delete the previous data...
-            printf ("\r%s\r$output_string", " " x $output_length);
-          } else {
-            print $output_string;
-          }
-          $output_length = length($output_string);
+          $output_length = output_line($output_string, $output_length);
           # now delete the tar file...
           unlink $destination."/".$tarfile;
         } else {
@@ -306,13 +300,7 @@ sub unpack_file() {
         `$base_directory/unzip.exe -j -o $location/$file $filespecs[$count]  -d $destination `;
         if ($? == 0) {
           my $output_string = " -- Package : \"$file\" Unpacked succesfully.";
-          if ($output_length > 0) {
-            # move cursor to beginning of string and delete the previous data...
-            printf ("\r%s\r$output_string", " " x $output_length);
-          } else {
-            print $output_string;
-          }
-          $output_length = length($output_string);
+          $output_length = output_line($output_string, $output_length);
         } else {
           print "\nError when trying to unpack $file, aborting all processing\n";
           exit 1; # error 1, failure to unpack a package.
@@ -328,4 +316,19 @@ sub unpack_file() {
   # if we get here, there must have been no errors, so return TRUE (well, we would if this was not Perl....).
   printf ("\r%s\r -- Done", " " x $output_length);
   return 1;
+}
+
+sub output_line() {
+  # this will output a line to console, on the same line and overwriting the previous.
+  my ($out_string, $out_length) = @_;
+
+  if ($out_length > 0) {
+    # move cursor to beginning of string and delete the previous data...
+    printf ("\r%s\r$out_string", " " x $out_length);
+  } else {
+    print $out_string;
+  }
+  $out_length = length($out_string);
+  # return this so can be fed to us again in the next call...
+  return $out_length;
 }
