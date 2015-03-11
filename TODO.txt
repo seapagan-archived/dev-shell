@@ -4,6 +4,7 @@ TO-DO and random thought list.
 * [DONE] sort out the support unpack routines to only unpack the files we are needing, and all into the same directory, no subdirs.
 * Further upgrade the above unpack routines to add an 'everything-but' option and options to ignore specific internal directories etc.
 * Provide backup scripts to save specified directories and files before a new run of the bootstrap (envisioned to save CPAN mirrors, downloaded packages etc) 
+* Add functionality to work through a proxy.
 
 After base system complete :
 ----------------------------
