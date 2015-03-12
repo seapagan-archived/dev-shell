@@ -184,6 +184,8 @@ cp($base_directory."/skel/dev.cmd", $root_directory) or die "Failed to copy skel
 cp($base_directory."/skel/console.xml", $support_directory) or die "Failed to copy skeleton files: $!";
 # copy the .bashrc to home directory...
 cp($base_directory."/skel/.bashrc", $root_directory."/home") or die "Failed to copy skeleton files: $!";
+# copy the https certificate store to home directory...
+cp($base_directory."/skel/ca-bundle.crt", $root_directory."/home") or die "Failed to copy skeleton files: $!";
 
 
 print " -- Done\n";
