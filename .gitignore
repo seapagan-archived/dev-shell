@@ -35,3 +35,7 @@ support/*.dll
 msys/
 mingw32/
 support/bootstrap/.wgetrc
+dev.cmd
+support/console.xml
+home/
+local/
