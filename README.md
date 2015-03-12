@@ -2,14 +2,21 @@
 A basic layout and the related support files to bootstrap a complete Windows-based MSYS / MinGW development system from the command line. This will develop into a fully portable GCC development system with Perl, Git, Ruby and similar tools.
 
 ## Description.
+__IMPORTANT__
+
+__There is a current, somewhat major, bug in this project - some of the binary packages taken from the MinGW project were compiled using the DW2 version of GCC and therefore look for that dll on running. This project however uses the SJ/LJ version of GCC and so they fail to run. I have 2 options : either switch over to the DW2 version of TDM (not really my first choice) or to recompile these using the local compiler. Probably the latter will be my final choice.__
+
 This is the development for my boilerplate MinGW/MSYS development system on Windows. It is a custom setup using the standard MSYS, but using the [TDM GCC distribution](http://tdm-gcc.tdragon.net/) instead of the MinGW provided GCC binaries.
 The command-line environment is based around the '[Console2](http://sourceforge.net/projects/console/)' program and also includes [ANSICON](https://github.com/adoxa/ansicon) to provide ANSI escape sequences in the console.
 The major bonus is that the whole system is completely portable and can be used on a USB stick on any windows system, without requiring any special prerequisite tools to be already installed on that system.
 
-*As a major design decision, this will install the __32 BIT version__ of the MinGW compilers.* This was to allow ultimate portability and support for the multitude of libraries already existing. I have no plans to change to 64-bit in the foreseeable future. That being said, it would be trivial to change the download links and make this a 64-bit development system, however all the pre-compiled libraries and similar would need to be recompiled from scratch.
-
+*As a major design decision, this will install the __32 BIT version__ of the MinGW compilers.* This was to allow ultimate portability and support for the multitude of libraries already existing. I have no plans to change to 64-bit in the foreseeable future. That being said, one of the major features of this project is that all the components are taken from url lists, that also contain the unpack specs, so adding extra libraries, converting to 64-bit or even removing unwanted libraries is trivial.
 
 ## Usage.
+1. From a fresh git checkout, simply run the '__bootstrap.cmd__' file in the root of the checkout which will create the full environment automatically without user intervention.
+2. Run the '__dev.cmd__' which which will now be found in the same directory to open the development environment.
+3. Start coding!
+
 In it's current stage this is designed to be used as a boilerplate for anyone wishing easier development on Windows with tools that have been designed to be run under Linux / Unix.
 It will allow the compilation and use of native Perl, Ruby, Git and many more - infact the original design was to enable me to painlessly develop in Ruby on Rails under a windows environment which was completely successful.
 
@@ -42,16 +49,18 @@ There are 5 major directories, each of which is mapped to a specific mount point
     - [x] Download and unpack the TinyPerl packages to enable the Perl-based bootstrap to run.
   - **Perl Script Phase**
     - [x] Download and Unpack the supporting tools.
+    - [ ] Download and Unpack extra files (dmake and cmake currently) - __IN PROGRESS__
     - [x] Download and Unpack the base MSYS installation.
     - [x] Download and Unpack the TDM GCC distribution.
     - [x] Download and Unpack the base MinGW installation.
     - [x] Remove un-needed files from the above unpacked packages.
-    - [ ] Copy over skeleton files, tweak configuration files and finalize base development system.
+    - [x] Copy over skeleton files, tweak configuration files and finalize base development system.
+    - [ ] Add configuration file to tweak certain options - eg for proxy usage etc.
 
 ## TODO.
 See the file [TODO.txt](TODO.txt) in the root of repository for thoughts, plans and progress.
 ## Caveat!
-*This system as it stands on GitHub is __incomplete__ compared to my local development system*, and as such is currently unusable for any purpose. This project is for the development of the automatic bootstrap system, which will in time become a fully usable development system mirroring the manual setup I have locally.
+*This system as it stands on GitHub is __incomplete__ compared to my local development system*, __however is still usable in this basic form__. This project is for the development of the automatic bootstrap system, which will in time become a fully usable development system mirroring the manual setup I have locally.
 
 ## Links.
 Below are some links to software used in this project, in addition to the ones linked above.
