@@ -152,7 +152,7 @@ print "\nStage 10 : Tidy up base system, removing unneeded files.\n";
 # note that as of now there is no error checking ...
 
 #print " -- MSYS : ";
-my @unwanted_msys = qw(m.ico msys.bat msys.ico etc/fstab.sample);
+my @unwanted_msys = qw(m.ico msys.bat msys.ico etc/fstab.sample etc/profile);
 # now delete these...
 foreach my $unwanted (@unwanted_msys) {
   unlink $msys_directory."/".$unwanted;
@@ -166,13 +166,6 @@ print " -- Done\n";
 print "Stage 11 : Finalize Environment - Copy final files.\n";
 # Give us a working system by copying the needed skeleton files and startup batch ...
 
-# copy the  cmd file to start dev system...
-cp($base_directory."/skel/dev.cmd", $root_directory) or die "Failed to copy skeleton files: $!";
-# copy the console2 configuration file...
-cp($base_directory."/skel/console.xml", $support_directory) or die "Failed to copy skeleton files: $!";
-# copy the .bashrc to home directory...
-cp($base_directory."/skel/.bashrc", $root_directory."/home") or die "Failed to copy skeleton files: $!";
-
 # create the home and local directories if not already there ..
 if (!-d $root_directory."/home") {
   mkdir $root_directory."/home" or die "Cannot create Home directory!";
@@ -184,6 +177,15 @@ if (!-d $root_directory."/local") {
 if (!-d $msys_directory."/tmp") {
   mkdir $msys_directory."/tmp" or die "Cannot create tmp directory!";
 }
+
+# copy the  cmd file to start dev system...
+cp($base_directory."/skel/dev.cmd", $root_directory) or die "Failed to copy skeleton files: $!";
+# copy the console2 configuration file...
+cp($base_directory."/skel/console.xml", $support_directory) or die "Failed to copy skeleton files: $!";
+# copy the .bashrc to home directory...
+cp($base_directory."/skel/.bashrc", $root_directory."/home") or die "Failed to copy skeleton files: $!";
+
+
 print " -- Done\n";
 
 # ------------------------------------------------------------------------------
