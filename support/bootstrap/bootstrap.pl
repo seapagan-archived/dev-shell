@@ -177,7 +177,6 @@ if (!-d $root_directory."/local") {
 if (!-d $msys_directory."/tmp") {
   mkdir $msys_directory."/tmp" or die "Cannot create tmp directory!";
 }
-
 # copy the  cmd file to start dev system...
 cp($base_directory."/skel/dev.cmd", $root_directory) or die "Failed to copy skeleton files: $!";
 # copy the console2 configuration file...
@@ -186,8 +185,8 @@ cp($base_directory."/skel/console.xml", $support_directory) or die "Failed to co
 cp($base_directory."/skel/.bashrc", $root_directory."/home") or die "Failed to copy skeleton files: $!";
 # copy the https certificate store to home directory...
 cp($base_directory."/skel/ca-bundle.crt", $root_directory."/home") or die "Failed to copy skeleton files: $!";
-
-
+# copy the modified profile file to etc directory...
+cp($base_directory."/skel/profile", $msys_directory."/etc") or die "Failed to copy skeleton files: $!";
 print " -- Done\n";
 
 # ------------------------------------------------------------------------------
