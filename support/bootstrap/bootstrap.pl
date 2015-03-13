@@ -37,6 +37,8 @@ my $tdm_cache = $package_directory."/tdm";
 # Generic result variable
 my $result;
 
+# read in the file hashes to a perl hash...
+my %hashes = read_hashes();
 
 # ------------------------------------------------------------------------------
 # We need a few support utilities, this will also include Console and ANSICON.
@@ -362,4 +364,25 @@ sub output_line() {
   $out_length = length($out_string);
   # return this length so can be fed to us again in the next call...
   return $out_length;
+}
+
+
+sub read_hashes() {
+  # subroutine that will read the hash values from the 'hashes' file and populate a perl hash containing filename and MD5 hash.
+  # 'hashes' file is CSV, with MD5 followed by bare filename (no paths). Note this fact will be annoying if we ever have files with
+  # identical filenames but in different cache subdirs - lets not do that!
+  my $hash_file = $base_directory."/hashes";
+  # temp storage hash to be returned to main program
+  my %hash = ();
+
+  # read in the file ...
+  open my $handle, '<', $hash_file or die "Cant open hashes file! Please ensure this has been created.\n\n";
+  chomp(my @hash_lines = <$handle>);
+  close $handle;
+  # iterate over all these lines, split on the comma and save as a hash pair...
+  foreach my $line (@hash_lines) {
+    my @values = split(',', $line);
+    $hash{$values[1]} = $values[0];
+  }
+  return %hash;
 }
