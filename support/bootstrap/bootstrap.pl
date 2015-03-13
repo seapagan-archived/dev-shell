@@ -272,8 +272,18 @@ sub getfiles() {
     my $filewithpath = $dest_dir."/".$filename;
     #if this does not exist in cache then we will download. In future versions we will compare to a checksum too...
     if (-e $filewithpath) {
-      print "$filename already exists, skipping.\n";
+      # compare the md5 for this file...
+      my $result = `$support_directory\\md5deep.exe -s -A $hashes{$filename} $filewithpath`;
+      if ($? == 0) {
+        print "$filename already exists (MD5 OK), skipping.\n";
+      } else {
+        # delete the corrupt file
+        unlink ($filewithpath);
+        # and re-download
+        my $result = `$base_directory/wget -q --config=$base_directory/.wgetrc --proxy --show-progress -c $dl_flag --directory-prefix=$dest_dir $url`;
+      }
     } else {
+      # file does not exist, so download it.
       my $result = `$base_directory/wget -q --config=$base_directory/.wgetrc --show-progress -c $dl_flag --directory-prefix=$dest_dir $url`;
     }
   }
