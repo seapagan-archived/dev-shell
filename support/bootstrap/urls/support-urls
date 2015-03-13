@@ -1,3 +1,5 @@
 http://sourceforge.net/projects/sevenzip/files/7-Zip/9.20/7za920.zip/download *+(7za.exe)
 http://sourceforge.net/projects/console/files/console-devel/2.00/Console-2.00b148-Beta_32bit.zip/download *+(Console2\Console.exe:Console2\ConsoleHook.dll:Console2\FreeImage.dll:Console2\FreeImagePlus.dll)
 https://github.com/adoxa/ansicon/releases/download/v1.66/ansi166.zip *+(x86\ANSI32.dll:x86\ansicon.exe)
+#http://download.microsoft.com/download/c/f/4/cf454ae0-a4bb-4123-8333-a1b6737712f7/Windows-KB841290-x86-ENU.exe *+(fciv.exe)
+https://github.com/jessek/hashdeep/releases/download/release-4.4/md5deep-4.4.zip *+(md5deep-4.4\md5deep.exe)
