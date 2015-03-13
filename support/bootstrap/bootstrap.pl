@@ -285,6 +285,12 @@ sub getfiles() {
     } else {
       # file does not exist, so download it.
       my $result = `$base_directory/wget -q --config=$base_directory/.wgetrc --show-progress -c $dl_flag --directory-prefix=$dest_dir $url`;
+      # we really should check the MD5 again with this new file, and bomb out if it is wrong, since something is really messed up somewhere..
+      my $result = `$support_directory\\md5deep.exe -s -A $hashes{$filename} $filewithpath`;
+      if (not $? == 0) {
+        print "Download of $filename fails the Hash check, aborting.\n\n";
+        exit;
+      }
     }
   }
   return @filearray;
