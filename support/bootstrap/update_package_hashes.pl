@@ -16,7 +16,7 @@ my $support_directory = abs_path($base_directory."/..");
 # Run the md5deep program to update all the checksums for the package files.
 # This wil be saved as a CSV file 'hashes' in the current directory.
 print "Re-calculating package hashes for all packages in current cache - ";
-my $result = `$support_directory\\md5deep.exe -r -c -z -b -s -W hashes ../packages`;
+my $result = `$support_directory\\md5deep.exe -r -c -b -s -W hashes ../packages`;
 if ($result == 0) {
   print "Done.\n\n";
 } else {
