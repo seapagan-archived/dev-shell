@@ -3,6 +3,7 @@ use warnings;
 use File::Basename;
 use File::Path 'rmtree';
 use File::Copy 'cp';
+use File::Copy::Recursive 'dircopy';
 use Cwd 'abs_path';
 
 # NOTE : We need to get the base path of the system, but in TinyPerl $0 does not work so it is difficult
@@ -114,7 +115,19 @@ $result = unpack_file($package_directory, $support_directory, \@util_filenames, 
 
 
 # ------------------------------------------------------------------------------
-print "\nStage 7 : Unpack MSYS.\n";
+print "\nStage 7 : Unpack Extra packages into MinGW.\n";
+# Unpack cmake, dmake and others than need to be in MinGW.
+# ------------------------------------------------
+# : Source path is $package_directory
+# : Destination Path will be $mingw_directory
+# : Filenames are stored in @extra_filenames
+# : FileSpecs (those to be unpacked) are stored in @extra_filespecs.
+# ------------------------------------------------
+$result = unpack_file($package_directory, $mingw_directory, \@extra_filenames, \@extra_filespecs);
+
+exit;
+# ------------------------------------------------------------------------------
+print "\nStage 8 : Unpack MSYS.\n";
 # Unpack MSYS distribution.
 # ------------------------------------------------
 # : Source path is $msys_cache
@@ -126,7 +139,7 @@ $result = unpack_file($msys_cache, $msys_directory, \@msys_filenames, \@msys_fil
 
 
 # ------------------------------------------------------------------------------
-print "\nStage 8 : Unpack MinGW.\n";
+print "\nStage 9 : Unpack MinGW.\n";
 # Unpack MinGW distribution.
 # ------------------------------------------------
 # : Source path is $mingw_cache
@@ -138,7 +151,7 @@ $result = unpack_file($mingw_cache, $mingw_directory, \@mingw_filenames, \@mingw
 
 
 # ------------------------------------------------------------------------------
-print "\nStage 9 : Unpack GCC Packages.\n";
+print "\nStage 10 : Unpack GCC Packages.\n";
 # Unpack GCC distribution.
 # ------------------------------------------------
 # : Source path is $tdm_cache
@@ -150,7 +163,7 @@ $result = unpack_file($tdm_cache, $mingw_directory, \@gcc_filenames, \@gcc_files
 
 
 # ------------------------------------------------------------------------------
-print "\nStage 10 : Tidy up base system, removing unneeded files.\n";
+print "\nStage 11 : Tidy up base system, removing unneeded files.\n";
 # There are a few files in the standard MSYS distro that are not needed in this particular system...
 # note that as of now there is no error checking ...
 
@@ -166,7 +179,7 @@ print " -- Done\n";
 
 
 # ------------------------------------------------------------------------------
-print "Stage 11 : Finalize Environment - Copy final files.\n";
+print "Stage 12 : Finalize Environment - Copy final files.\n";
 # Give us a working system by copying the needed skeleton files and startup batch ...
 
 # create the home and local directories if not already there ..
@@ -330,6 +343,8 @@ sub unpack_file() {
     $filespecs[$count] =~ s/^\s+|\s+$//g;
     $filespecs[$count] =~ s/:/ /g;
 
+    my $temp_dir = "";
+
     for ($ext) {
       if (/lzma/ || /xz/ || /bz2/ || /gz/) {
         # Note that so far all non-zip files are tar.lzma (or whatever) so we need a 2-stage operation to unpack them properly
@@ -342,7 +357,34 @@ sub unpack_file() {
       elsif (/zip/) {
         # this is only one stage, since I've never seen a .tar.zip! Therefore we cant use the above unpack
         # logic, even though 7za.exe can easily unpack zip fies.
-        `$base_directory/unzip.exe -j -o $location/$file $filespecs[$count]  -d $destination `;
+        if ($filespecs[$count] eq "^script^") {
+          # this package has specified extra unpack clean up, so we need to :
+          # 1) Unpack to a temporary directory
+          $temp_dir = $package_directory."/tmp-$file";
+          if (!-d $temp_dir) {
+            mkdir $temp_dir or die "Cannot create temporary unpack directory!";
+          }
+          `$base_directory/unzip.exe -o $location/$file -d $temp_dir`;
+          # 2) Call the script to deal with the files, script filename determined by the package filename
+          local @ARGV = ($file, $temp_dir);
+          my $function_name = $file;
+          $function_name =~ s/[.|-]//g;
+          $function_name = 'unpack/'.$function_name.'.pl';
+          if (-e $function_name) {
+            do $function_name;
+          } else {
+            die "Error : Cannot find unpack script $function_name\n\n";
+          }
+          # 3) Copy the remaining files in the temp dir to the required directory
+          dircopy($temp_dir, $destination);
+          # 4) Delete the temp directory.
+          if (-d $temp_dir) {
+            rmtree $temp_dir or die "Cannot delete temporary unpack directory!";
+          }
+        } else {
+          # no script related unpack cleanup, just unpack into the correct directory as normal...
+          `$base_directory/unzip.exe -j -o $location/$file $filespecs[$count]  -d $destination `;
+        }
       }
       else {
         # not an extension that we are prepared to handle, so crash out with notification.
