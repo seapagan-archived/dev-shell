@@ -1,4 +1,5 @@
 use strict;
+use warnings;
 use File::Basename;
 use File::Path 'rmtree';
 use File::Copy 'cp';
