@@ -336,7 +336,7 @@ sub unpack_file() {
         # we assume that all files are tar.<whatever> for the moment, checking for this will be added later in case of exceptions.
         `$support_directory/7za x -y $location/$file -o$destination`;
         $tarfile = basename(substr($file, 0, -length($ext)));
-        `$support_directory/7za x -y $destination/$tarfile -o$destination`;
+        `$support_directory/7za x -y $destination/$tarfile $filespecs[$count] -o$destination`;
       }
       elsif (/zip/) {
         # this is only one stage, since I've never seen a .tar.zip! Therefore we cant use the above unpack
