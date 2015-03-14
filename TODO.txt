@@ -1,10 +1,11 @@
 TO-DO and random thought list.
 ==============================
-* [IN PROGRESS] Add downloads and install for cmake and dmake  programs, used in several package compilations (dmake especially for Perl) - unpack into /mingw directory.
-* [DONE] sort out the support unpack routines to only unpack the files we are needing, and all into the same directory, no subdirs.
-* Further upgrade the above unpack routines to add an 'everything-but' option and options to ignore specific internal directories etc.
+* [IN PROGRESS] Add downloads and install for cmake and dmake  programs, used in several package compilations (dmake especially for Perl) - unpack into /mingw directory (Need to add better unpack spec routines first, as they are a complicated unpack to avoid masses of files).
+* Further upgrade the unpack routines to add an 'everything-but' option and options to ignore specific internal directories etc. Possibly have separate  'plugin' script fragments for each complicated archive unpack, to save the unpack spec becoming too unwieldy?
 * Provide backup scripts to save specified directories and files before a new run of the bootstrap (envisioned to save CPAN mirrors, downloaded packages etc) 
-* Add functionality to work through a proxy.
+* Add functionality to work through a proxy. Different needs for the dev and for the bootstrap - latter just needs entries in the .wgetrc, while former needs full shell support (ENV variables etc).
+* Add configuration file support for the bootstrap scripts first and then for the dev environment itself.
+* Remove all MinGW packages that are compiled with dw2, replace with self-compiled versions.
 
 After base system complete :
 ----------------------------
