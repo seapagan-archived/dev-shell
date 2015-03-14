@@ -1,5 +1,5 @@
 use strict;
-#use warnings;
+use warnings;
 use File::Basename;
 use File::Path 'rmtree';
 use File::Copy 'cp';
@@ -38,21 +38,22 @@ my $tdm_cache = $package_directory."/tdm";
 
 # Generic result variable
 my $result;
+my $path_to_urls;
 
 # read in the file hashes to a perl hash...
 my %hashes = read_hashes();
 
 # ------------------------------------------------------------------------------
 # We need a few support utilities, this will also include Console and ANSICON.
-print "\nStage 2 : Download assorted support utilities.\n\n";
+print "Stage 2 : Download assorted support utilities.\n\n";
 # load the Support tools URL's into an array from the file 'msys-urls'...
-my $path_to_urls = $base_directory."/urls/support-urls";
+$path_to_urls = $base_directory."/urls/support-urls";
 my ($toolsurls, $toolsfiles) = geturls($path_to_urls);
 my @util_filenames = getfiles($package_directory, @$toolsurls);
 my @util_filespecs = @$toolsfiles;
 
 # get the 'extra' files...
-my $path_to_urls = $base_directory."/urls/extras-urls";
+$path_to_urls = $base_directory."/urls/extras-urls";
 my ($extraurls, $extrafiles) = geturls($path_to_urls);
 my @extra_filenames = getfiles($package_directory, @$extraurls);
 my @extra_filespecs = @$extrafiles;
@@ -60,7 +61,7 @@ my @extra_filespecs = @$extrafiles;
 # ------------------------------------------------------------------------------
 print "\nStage 3 : Download MSYS packages to local cache.\n\n";
 # load the MSYS URL's into an array from the file 'msys-urls'...
-my $path_to_urls = $base_directory."/urls/msys-urls";
+$path_to_urls = $base_directory."/urls/msys-urls";
 my ($msysurls, $msysfiles) = geturls($path_to_urls);
 
 # create the MSYS Cache directory if it does not exist...
@@ -75,7 +76,7 @@ my @msys_filespecs = @$msysfiles;
 # ------------------------------------------------------------------------------
 print "\nStage 4 : Download MinGW packages to local cache.\n\n";
 # load the minGW URL's into an array from the file 'mingw-urls'...
-my $path_to_urls = $base_directory."/urls/mingw-urls";
+$path_to_urls = $base_directory."/urls/mingw-urls";
 my ($mingwurls, $mingwfiles) = geturls($path_to_urls);
 
 # create the MinGW Cache directory if it does not exist...
@@ -90,7 +91,7 @@ my @mingw_filespecs = @$mingwfiles;
 # ------------------------------------------------------------------------------
 print "\nStage 5 : Download TDM GCC Compiler packages to local cache.\n\n";
 # load the GCC URL's into an array from the file 'tdm-gcc-urls'...
-my $path_to_urls = $base_directory."/urls/tdm-gcc-urls";
+$path_to_urls = $base_directory."/urls/tdm-gcc-urls";
 my ($gccurls, $gccfiles) = geturls($path_to_urls);
 
 # create the MinGW Cache directory if it does not exist...
@@ -209,7 +210,7 @@ print " -- Done\n";
 # support functions
 # ------------------------------------------------------------------------------
 
-sub geturls() {
+sub geturls {
   # when provided with a file containing URLS, will return 2 arrays.
   # 1 parameter - $path_to_urls, filepath to text file containing the URL's
   # RETURNS : **REFERENCE TO ARRAYS**
@@ -247,7 +248,7 @@ sub geturls() {
 }
 
 
-sub getfiles() {
+sub getfiles {
   # will take an array of URL's and a destination folder and proceed to download them all using wget...
   # Parameter 1 : $dest_dir, directory to store them in.
   # Parameter 2 : @url_list, an array of URL's
@@ -299,9 +300,9 @@ sub getfiles() {
       }
     } else {
       # file does not exist, so download it.
-      my $result = `$base_directory/wget -q --config=$base_directory/.wgetrc --show-progress -c $dl_flag --directory-prefix=$dest_dir $url`;
+      $result = `$base_directory/wget -q --config=$base_directory/.wgetrc --show-progress -c $dl_flag --directory-prefix=$dest_dir $url`;
       # we really should check the MD5 again with this new file, and bomb out if it is wrong, since something is really messed up somewhere..
-      my $result = `$support_directory\\md5deep.exe -s -A $hashes{$filename} $filewithpath`;
+      $result = `$support_directory\\md5deep.exe -s -A $hashes{$filename} $filewithpath`;
       if (not $? == 0) {
         print "Download of $filename fails the Hash check, aborting.\n\n";
         exit;
@@ -312,7 +313,7 @@ sub getfiles() {
 }
 
 
-sub unpack_file() {
+sub unpack_file {
   # will unpack the filenames in the passed array using the correct tool depending on archive type.
   # Parameter 1 : $location, directory to find the packages.
   # Parameter 2 : $destination, where to unpack these files.
@@ -329,7 +330,7 @@ sub unpack_file() {
   # initially set to zero.
   my $output_length  = 0;
   # variable to hold the filename of the underlying tar file.
-  my $tarfile;
+  my $tarfile= "";
 
   # unbuffer output, otherwise we cant overwrite the previous line...
   local $| = 1;
@@ -411,7 +412,7 @@ sub unpack_file() {
   return 1;
 }
 
-sub output_line() {
+sub output_line {
   # this will output a line to console, on the same line and overwriting the previous.
   my ($out_string, $out_length) = @_;
 
@@ -427,7 +428,7 @@ sub output_line() {
 }
 
 
-sub read_hashes() {
+sub read_hashes {
   # subroutine that will read the hash values from the 'hashes' file and populate a perl hash containing filename and MD5 hash.
   # 'hashes' file is CSV, with MD5 followed by bare filename (no paths). Note this fact will be annoying if we ever have files with
   # identical filenames but in different cache subdirs - lets not do that!
