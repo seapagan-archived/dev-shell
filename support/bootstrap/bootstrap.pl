@@ -1,5 +1,5 @@
 use strict;
-use warnings;
+#use warnings;
 use File::Basename;
 use File::Path 'rmtree';
 use File::Copy 'cp';
@@ -125,7 +125,7 @@ print "\nStage 7 : Unpack Extra packages into MinGW.\n";
 # ------------------------------------------------
 $result = unpack_file($package_directory, $mingw_directory, \@extra_filenames, \@extra_filespecs);
 
-exit;
+
 # ------------------------------------------------------------------------------
 print "\nStage 8 : Unpack MSYS.\n";
 # Unpack MSYS distribution.
