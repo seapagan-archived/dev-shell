@@ -201,6 +201,7 @@ sub geturls() {
   # RETURNS : **REFERENCE TO ARRAYS**
     # 1st Array : each URL from the input file.
     # 2nd Array : the list of Files to be unpacked for this URL, if any.
+    #   Note : if the filespec is "^script^" it will get special processing when unpacked.
   my ($path_to_urls) = @_;
 
   open my $handle, '<', $path_to_urls or die "Cant open $path_to_urls";
@@ -215,7 +216,7 @@ sub geturls() {
     # first, if this is a comment then ignore it completely...
     if (not $line =~ /^\s*\#/) {
       # locate out the unpack spec if we have one. We will use the start location to trim the URL out also.
-      if ( $line =~ /\s\*[+|-]\((.*)\)/ ) {
+      if ( $line =~ /\s\*\+\((.*)\)/ ) {
         # there is an unpack spec so we store this in the @unpacklist array...
         $unpacklist[$count]=$1;
         $urls[$count]=substr $line, 0, $-[0];
@@ -325,7 +326,7 @@ sub unpack_file() {
     my ($dir, $name, $ext) = fileparse($file, @exts);
 
     # get the filespec if it exists and replace colon with spaces...
-    $filespecs[$count] =~ s/^\s+|\s+$//g;;
+    $filespecs[$count] =~ s/^\s+|\s+$//g;
     $filespecs[$count] =~ s/:/ /g;
 
     for ($ext) {
