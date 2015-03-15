@@ -2,7 +2,6 @@
 A basic layout and the related support files to bootstrap a complete Windows-based MSYS / MinGW development system from the command line. This will develop into a fully portable GCC development system with Perl, Git, Ruby and similar tools.
 
 ## Description.
-__IMPORTANT__
 
 This is the development for my boilerplate MinGW/MSYS development system on Windows. It is a custom setup using the standard MSYS, but using the [TDM GCC distribution](http://tdm-gcc.tdragon.net/) instead of the MinGW provided GCC binaries.
 The command-line environment is based around the '[Console2](http://sourceforge.net/projects/console/)' program and also includes [ANSICON](https://github.com/adoxa/ansicon) to provide ANSI escape sequences in the console.
@@ -16,13 +15,12 @@ The major bonus is that the whole system is completely portable and can be used 
 3. Start coding!
 
 In it's current stage this is designed to be used as a boilerplate for anyone wishing easier development on Windows with tools that have been designed to be run under Linux / Unix.  
-Note that as it is currently, the libraries provided are very limited, however the standard 'expected' libraries will be added over the next few updates. Any missing you can simply compile yourself!
 This environment will allow the compilation and use of native Perl, Ruby, Git and many more - infact the original design was to enable me to painlessly develop in Ruby on Rails under a windows environment which was completely successful.
 
 When completed, simply cloning this project and then running the bootstrap will download, install and customise the development system without user intervention.
 There will be pre-compiled versions of Perl, Ruby, Git and more automatically downloaded from our [File Repository on SourceForge](https://sourceforge.net/p/devshellbuilds/) or in some cases their own developers.  
 The Bootstrap is a small windows batch file, which then spawns a Perl-based system using the '[TinyPerl](http://tinyperl.sourceforge.net/)' project to create the remaining functionality. The system will re-use already-cached downloads to speed up future rebuilds.  
-As the design progresses, all additional libraries and utilities that are not provided by the MinGW project will be compiled locally and then uploaded to the repository for automatic install in future versions.
+As the design progresses, all additional libraries and utilities that are not provided by the MinGW project will be compiled locally and then uploaded to the repository for automatic install in future versions. Many of the existing default ones will likewise be replaced by locally compiled versions.
 
 ## Directory Layout
 The file / folder layout is quite specific and chosen to allow the most versatility along with easy maintenance and division of standard and additional libraries etc.
