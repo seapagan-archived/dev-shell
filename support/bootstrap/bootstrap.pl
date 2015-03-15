@@ -353,6 +353,13 @@ sub unpack_file {
     $filespecs[$count] =~ s/^\s+|\s+$//g;
     $filespecs[$count] =~ s/:/ /g;
 
+    # sometimes we may not want to unpack a package, during development for example,
+    # just donwload it and ignore for now...
+    if ($filespecs[$count] eq "^ignore^") {
+      # leave this loop, dont try to unpack at this time.
+      next;
+    }
+
     my $temp_dir = "";
 
     for ($ext) {
