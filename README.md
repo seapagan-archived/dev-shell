@@ -4,8 +4,6 @@ A basic layout and the related support files to bootstrap a complete Windows-bas
 ## Description.
 __IMPORTANT__
 
-__There is a current, somewhat major, bug in this project - some of the binary packages taken from the MinGW project were compiled using the DW2 version of GCC and therefore look for that dll on running. This project however uses the SJ/LJ version of GCC and so they fail to run. I have 2 options : either switch over to the DW2 version of TDM (not really my first choice) or to recompile these using the local compiler. Probably the latter will be my final choice.__
-
 This is the development for my boilerplate MinGW/MSYS development system on Windows. It is a custom setup using the standard MSYS, but using the [TDM GCC distribution](http://tdm-gcc.tdragon.net/) instead of the MinGW provided GCC binaries.
 The command-line environment is based around the '[Console2](http://sourceforge.net/projects/console/)' program and also includes [ANSICON](https://github.com/adoxa/ansicon) to provide ANSI escape sequences in the console.
 The major bonus is that the whole system is completely portable and can be used on a USB stick on any windows system, without requiring any special prerequisite tools to be already installed on that system.
@@ -17,12 +15,13 @@ The major bonus is that the whole system is completely portable and can be used 
 2. Run the '__dev.cmd__' which which will now be found in the same directory to open the development environment.
 3. Start coding!
 
-In it's current stage this is designed to be used as a boilerplate for anyone wishing easier development on Windows with tools that have been designed to be run under Linux / Unix.
-It will allow the compilation and use of native Perl, Ruby, Git and many more - infact the original design was to enable me to painlessly develop in Ruby on Rails under a windows environment which was completely successful.
+In it's current stage this is designed to be used as a boilerplate for anyone wishing easier development on Windows with tools that have been designed to be run under Linux / Unix.  
+Note that as it is currently, the libraries provided are very limited, however the standard 'expected' libraries will be added over the next few updates. Any missing you can simply compile yourself!
+This environment will allow the compilation and use of native Perl, Ruby, Git and many more - infact the original design was to enable me to painlessly develop in Ruby on Rails under a windows environment which was completely successful.
 
 When completed, simply cloning this project and then running the bootstrap will download, install and customise the development system without user intervention.
-There will be pre-compiled versions of Perl, Ruby, Git and more automatically downloaded from our [File Repository on SourceForge](https://sourceforge.net/p/devshellbuilds/). The bootstrap system will also be able to re-use already-cached downloads to speed up rebuilds.
-The Bootstrap will initially be a windows batch file, which will then spawn a Perl-based system using the '[TinyPerl](http://tinyperl.sourceforge.net/)' project to create the remaining functionality.
+There will be pre-compiled versions of Perl, Ruby, Git and more automatically downloaded from our [File Repository on SourceForge](https://sourceforge.net/p/devshellbuilds/) or in some cases their own developers.  
+The Bootstrap is a small windows batch file, which then spawns a Perl-based system using the '[TinyPerl](http://tinyperl.sourceforge.net/)' project to create the remaining functionality. The system will re-use already-cached downloads to speed up future rebuilds.  
 As the design progresses, all additional libraries and utilities that are not provided by the MinGW project will be compiled locally and then uploaded to the repository for automatic install in future versions.
 
 ## Directory Layout
