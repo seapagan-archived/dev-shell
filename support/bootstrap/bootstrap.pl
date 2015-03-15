@@ -286,26 +286,35 @@ sub getfiles {
     push(@filearray, $filename);
 
     my $filewithpath = $dest_dir."/".$filename;
-    #if this does not exist in cache then we will download. In future versions we will compare to a checksum too...
+    #if this does not exist in cache (or has a bad checksum) then we will download.
     if (-e $filewithpath) {
       # compare the md5 for this file...
-      my $result = `$support_directory\\md5deep.exe -s -A $hashes{$filename} $filewithpath`;
-      if ($? == 0) {
-        print "$filename already exists (MD5 OK), skipping.\n";
+      if (exists $hashes{$filename}) {
+        $result = `$support_directory\\md5deep.exe -s -A $hashes{$filename} $filewithpath`;
+        if ($? == 0) {
+          print "$filename already exists (MD5 OK), skipping.\n";
+        } else {
+          # delete the corrupt file
+          unlink ($filewithpath);
+          # and re-download
+          $result = `$base_directory/wget -q --config=$base_directory/.wgetrc --proxy --show-progress -c $dl_flag --directory-prefix=$dest_dir $url`;
+        }
       } else {
-        # delete the corrupt file
-        unlink ($filewithpath);
-        # and re-download
-        my $result = `$base_directory/wget -q --config=$base_directory/.wgetrc --proxy --show-progress -c $dl_flag --directory-prefix=$dest_dir $url`;
+        print "$filename already exists, however there is no hash value. Please run \'update_package_hashes.cmd\' from the bootstrap directory. Skipping.\n"
       }
     } else {
       # file does not exist, so download it.
       $result = `$base_directory/wget -q --config=$base_directory/.wgetrc --show-progress -c $dl_flag --directory-prefix=$dest_dir $url`;
       # we really should check the MD5 again with this new file, and bomb out if it is wrong, since something is really messed up somewhere..
-      $result = `$support_directory\\md5deep.exe -s -A $hashes{$filename} $filewithpath`;
-      if (not $? == 0) {
-        print "Download of $filename fails the Hash check, aborting.\n\n";
-        exit;
+      # first check that the checksum exists - may be a new download not yet in the database, so note this visibly...
+      if (exists $hashes{$filename}) {
+        $result = `$support_directory\\md5deep.exe -s -A $hashes{$filename} $filewithpath`;
+        if (not $? == 0) {
+          print "Download of $filename fails the Hash check, aborting.\n\n";
+          exit;
+        }
+      } else {
+         print "There is no hash value for package \'$filename\', please run \'update_package_hashes.cmd\' from the bootstrap directory."
       }
     }
   }
