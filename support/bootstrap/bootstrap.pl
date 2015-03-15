@@ -35,6 +35,7 @@ my $support_directory = abs_path($root_directory."/support");
 my $msys_cache = $package_directory."/msys";
 my $mingw_cache = $package_directory."/mingw";
 my $tdm_cache = $package_directory."/tdm";
+my $local_cache = $package_directory."/local";
 
 # Generic result variable
 my $result;
@@ -104,7 +105,22 @@ my @gcc_filespecs = @$gccfiles;
 
 
 # ------------------------------------------------------------------------------
-print "\nStage 6 : Unpack support utilities.\n";
+print "\nStage 6 : Download Updated packages to local cache.\n\n";
+# load the URL's into an array from the file 'local-urls'...
+$path_to_urls = $base_directory."/urls/local-urls";
+my ($localurls, $localfiles) = geturls($path_to_urls);
+
+# create the Local Cache directory if it does not exist...
+if (!-d $local_cache) {
+  mkdir $local_cache or die "Cannot create Cache directory for Updated Packages!";
+}
+# get all the packages we need...
+my @local_filenames = getfiles($local_cache, @$localurls);
+my @local_filespecs = @$localfiles;
+
+
+# ------------------------------------------------------------------------------
+print "\nStage 7 : Unpack support utilities.\n";
 # Unpack 7za, console, ANSICON etc.
 # ------------------------------------------------
 # : Source path is $package_directory
@@ -116,7 +132,7 @@ $result = unpack_file($package_directory, $support_directory, \@util_filenames, 
 
 
 # ------------------------------------------------------------------------------
-print "\nStage 7 : Unpack Extra packages into MinGW.\n";
+print "\nStage 8 : Unpack Extra packages into MinGW.\n";
 # Unpack cmake, dmake and others than need to be in MinGW.
 # ------------------------------------------------
 # : Source path is $package_directory
@@ -128,7 +144,7 @@ $result = unpack_file($package_directory, $mingw_directory, \@extra_filenames, \
 
 
 # ------------------------------------------------------------------------------
-print "\nStage 8 : Unpack MSYS.\n";
+print "\nStage 9 : Unpack MSYS.\n";
 # Unpack MSYS distribution.
 # ------------------------------------------------
 # : Source path is $msys_cache
@@ -140,7 +156,7 @@ $result = unpack_file($msys_cache, $msys_directory, \@msys_filenames, \@msys_fil
 
 
 # ------------------------------------------------------------------------------
-print "\nStage 9 : Unpack MinGW.\n";
+print "\nStage 10 : Unpack MinGW.\n";
 # Unpack MinGW distribution.
 # ------------------------------------------------
 # : Source path is $mingw_cache
@@ -152,7 +168,7 @@ $result = unpack_file($mingw_cache, $mingw_directory, \@mingw_filenames, \@mingw
 
 
 # ------------------------------------------------------------------------------
-print "\nStage 10 : Unpack GCC Packages.\n";
+print "\nStage 11 : Unpack GCC Packages.\n";
 # Unpack GCC distribution.
 # ------------------------------------------------
 # : Source path is $tdm_cache
@@ -164,7 +180,19 @@ $result = unpack_file($tdm_cache, $mingw_directory, \@gcc_filenames, \@gcc_files
 
 
 # ------------------------------------------------------------------------------
-print "\nStage 11 : Tidy up base system, removing unneeded files.\n";
+print "\nStage 12 : Unpack Updated Packages.\n";
+# Unpack GCC distribution.
+# ------------------------------------------------
+# : Source path is $local_cache
+# : Destination Path will be $mingw_directory
+# : Filenames are stored in @local_filenames
+# : FileSpecs (those to be unpacked) are stored in @local_filespecs.
+# ------------------------------------------------
+$result = unpack_file($local_cache, $mingw_directory, \@local_filenames, \@local_filespecs);
+
+
+# ------------------------------------------------------------------------------
+print "\nStage 13 : Tidy up base system, removing unneeded files.\n";
 # There are a few files in the standard MSYS distro that are not needed in this particular system...
 # note that as of now there is no error checking ...
 
@@ -180,7 +208,7 @@ print " -- Done\n";
 
 
 # ------------------------------------------------------------------------------
-print "Stage 12 : Finalize Environment - Copy final files.\n";
+print "Stage 14 : Finalize Environment - Copy final files.\n";
 # Give us a working system by copying the needed skeleton files and startup batch ...
 
 # create the home and local directories if not already there ..
@@ -414,7 +442,8 @@ sub unpack_file {
       my $output_string = " -- Package : \"$file\" Unpacked succesfully.";
       $output_length = output_line($output_string, $output_length);
     } else {
-      print "\nError when trying to unpack $file, aborting all processing\n";
+      my $error = $? >>8;
+      print "\nError $error when trying to unpack $file, aborting all processing\n";
       exit 1; # error 1, failure to unpack a package.
     }
     # delete any remaining tar files if needed..
