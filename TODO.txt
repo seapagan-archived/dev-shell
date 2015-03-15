@@ -3,14 +3,14 @@ TO-DO and random thought list.
 * Provide backup scripts to save specified directories and files before a new run of the bootstrap (envisioned to save CPAN mirrors, downloaded packages etc)
 * Add functionality to work through a proxy. Different needs for the dev and for the bootstrap - latter just needs entries in the .wgetrc, while former needs full shell support (ENV variables etc).
 * Add configuration file support for the bootstrap scripts first and then for the dev environment itself.
-* Remove all MinGW packages that are compiled with dw2, replace with self-compiled versions.
+* Replace the removed MinGW packages with self-compiled versions.
 
 After base system complete :
 ----------------------------
 + Change over from running the dev system using a cmd file to a compiled TinyPerl script, with configuration file for tweaking -adding env variables and path editions, etc.
 
-User chosen Additions :
+User selected Additions :
 -----------------------
-+ Automatically install pre-compiled versions of perl, ruby, git as required (set from config)
-+ Ruby (if installed) : Option to automatically install a list of standard gems, update system etc. 
++ Automatically install pre-compiled versions of Perl, Ruby & Git as required (chosen in bootstrap config)
++ Ruby (if installed) : Option to automatically install a list of standard gems, update system etc.
 + Perl : Option to automatically update CPAN and install standard modules, start a local cpan mirror and more.
