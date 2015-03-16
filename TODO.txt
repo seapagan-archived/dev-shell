@@ -8,6 +8,8 @@ TO-DO and random thought list.
 After base system complete :
 ----------------------------
 + Change over from running the dev system using a cmd file to a compiled TinyPerl script, with configuration file for tweaking -adding env variables and path editions, etc.
++ Switch bootstrap to run in graphical env using GTK+, still with perl. If can be compiled as option above then so much the better. Would make it much easier to control configuration of bootstrap and dev system.
+* Provide self-extracting installer for the completed bootstrap system.
 
 User selected Additions :
 -----------------------
