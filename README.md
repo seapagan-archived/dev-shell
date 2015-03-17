@@ -7,6 +7,8 @@ This is the development for my boilerplate MinGW/MSYS development system on Wind
 
 __The goal of this project is to be able to make a fully-reproducable and standard development package for MinGW under MS Windows, to reduce errors and frustration caused by contributors to a project using different development bases. It can be set as a development pre-req for project participation.__
 
+A secondary goal is to teach myself Perl programming, this being my first attempt at that language, so please excuse the bad coding, and any suggestions for improvement are more than welcome! :) Note that the '[TinyPerl](http://tinyperl.sourceforge.net/)' in use is a very cut-down version of Perl 5.8.0, so many standard modules are not available.
+
 The command-line environment is based around the '[Console2](http://sourceforge.net/projects/console/)' program and also includes [ANSICON](https://github.com/adoxa/ansicon) to provide ANSI escape sequences in the console.
 The major bonus is that the whole system is completely portable and can be used on a USB stick on any windows system, without requiring any special prerequisite tools to be already installed on that system.
 
