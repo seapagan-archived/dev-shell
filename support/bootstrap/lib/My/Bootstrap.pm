@@ -105,6 +105,7 @@ sub getfiles {
 
     # different wget flags depending on source of package, also remove '/download' from end of SourceForge URL.
     if ( $url =~ /\/download$/) {
+      # FIXME : This assumes that all url's with '/download' on the end are SourceForge, which may not always be the case.
       $filename = basename(substr($url, 0, -9));
       $dl_flag= "--trust-server-names";
     } else {
@@ -200,6 +201,7 @@ sub unpack_file {
         `$dirs{"support"}/7za x -y $location/$file -o$destination`;
         $tarfile = basename(substr($file, 0, -length($ext)));
         `$dirs{"support"}/7za x -y $destination/$tarfile $filespecs[$count] -o$destination`;
+        # FIXME : need to add support for scripted unpacking same as for the zip below.
       }
       elsif (/zip/) {
         # this is only one stage, since I've never seen a .tar.zip! Therefore we cant use the above unpack
@@ -218,6 +220,7 @@ sub unpack_file {
           }
         } else {
           # no script related unpack cleanup, just unpack into the correct directory as normal...
+          # FIXME : This ingores all directories in zip, unpacks all to the same folder. change to only for specific packages. Or remove and make scripted those that need.
           `$dirs{"base"}/unzip.exe -j -o $location/$file $filespecs[$count]  -d $destination `;
         }
       }
