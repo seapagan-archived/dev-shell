@@ -1,0 +1,3 @@
+proxy=off
+http_proxy = http://<addr>:<port>
+https_proxy = http://<addr>:<port>
