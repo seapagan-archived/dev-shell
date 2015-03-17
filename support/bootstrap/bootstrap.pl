@@ -4,6 +4,7 @@ use File::Path 'rmtree';
 use File::Copy::Recursive 'dircopy';
 
 use My::Bootstrap;
+use My::ConfigFile;
 
 # Script currently messy, will be rebased once functional.
 
