@@ -211,15 +211,7 @@ sub unpack_file {
           create_dir($temp_dir);
           `$dirs{"base"}/unzip.exe -o $location/$file -d $temp_dir`;
           # 2) Call the script to deal with the files, script filename determined by the package filename
-          local @ARGV = ($file, $temp_dir);
-          my $function_name = $file;
-          $function_name =~ s/[.|-]//g;
-          $function_name = 'unpack/'.$function_name.'.pl';
-          if (-e $function_name) {
-            do $function_name;
-          } else {
-            die "Error : Cannot find unpack script $function_name\n\n";
-          }
+          scripted_unpack($file, $temp_dir);
           # 3) Copy the remaining files in the temp dir to the required directory
           dircopy($temp_dir, $destination);
           # 4) Delete the temp directory.
@@ -255,6 +247,20 @@ sub unpack_file {
   # if we get here, there must have been no errors, so return TRUE (well, we would if this was not Perl....).
   printf ("\r%s\r -- Done", " " x $output_length);
   return 1;
+}
+
+sub scripted_unpack {
+  # this sub runs an unpack script for the specified filename, script name determined from this.
+  my ($file, $temp_dir) = @_;
+  local @ARGV = ($file, $temp_dir);
+  my $function_name = $file;
+  $function_name =~ s/[.|-]//g;
+  $function_name = 'unpack/'.$function_name.'.pl';
+  if (-e $function_name) {
+    do $function_name;
+  } else {
+    die "Error : Cannot find unpack script $function_name\n\n";
+  }
 }
 
 sub output_line {
