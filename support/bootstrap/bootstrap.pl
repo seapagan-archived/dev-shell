@@ -107,76 +107,76 @@ my @local_filenames = getfiles($local_cache, @$localurls);
 my @local_filespecs = @$localfiles;
 
 
-# ------------------------------------------------------------------------------
-print "\nStage 7 : Unpack support utilities.\n";
-# Unpack 7za, console, ANSICON etc.
-# ------------------------------------------------
-# : Source path is $package_directory
-# : Destination Path will be $support_directory
-# : Filenames are stored in @util_filenames
-# : FileSpecs (those to be unpacked) are stored in @util_filespecs.
-# ------------------------------------------------
-$result = unpack_file($package_directory, $support_directory, \@util_filenames, \@util_filespecs);
-
-
-# ------------------------------------------------------------------------------
-print "\nStage 8 : Unpack Extra packages into MinGW.\n";
-# Unpack cmake, dmake and others than need to be in MinGW.
-# ------------------------------------------------
-# : Source path is $package_directory
-# : Destination Path will be $mingw_directory
-# : Filenames are stored in @extra_filenames
-# : FileSpecs (those to be unpacked) are stored in @extra_filespecs.
-# ------------------------------------------------
-$result = unpack_file($package_directory, $mingw_directory, \@extra_filenames, \@extra_filespecs);
-
-
-# ------------------------------------------------------------------------------
-print "\nStage 9 : Unpack MSYS.\n";
-# Unpack MSYS distribution.
-# ------------------------------------------------
-# : Source path is $msys_cache
-# : Destination Path will be $msys_directory
-# : Filenames are stored in @msys_filenames
-# : FileSpecs (those to be unpacked) are stored in @msys_filespecs.
-# ------------------------------------------------
-$result = unpack_file($msys_cache, $msys_directory, \@msys_filenames, \@msys_filespecs);
-
-
-# ------------------------------------------------------------------------------
-print "\nStage 10 : Unpack MinGW.\n";
-# Unpack MinGW distribution.
-# ------------------------------------------------
-# : Source path is $mingw_cache
-# : Destination Path will be $mingw_directory
-# : Filenames are stored in @mingw_filenames
-# : FileSpecs (those to be unpacked) are stored in @mingw_filespecs.
-# ------------------------------------------------
-$result = unpack_file($mingw_cache, $mingw_directory, \@mingw_filenames, \@mingw_filespecs);
-
-
-# ------------------------------------------------------------------------------
-print "\nStage 11 : Unpack GCC Packages.\n";
-# Unpack GCC distribution.
-# ------------------------------------------------
-# : Source path is $tdm_cache
-# : Destination Path will be $mingw_directory
-# : Filenames are stored in @gcc_filenames
-# : FileSpecs (those to be unpacked) are stored in @gcc_filespecs.
-# ------------------------------------------------
-$result = unpack_file($tdm_cache, $mingw_directory, \@gcc_filenames, \@gcc_filespecs);
-
-
-# ------------------------------------------------------------------------------
-print "\nStage 12 : Unpack Updated Packages.\n";
-# Unpack GCC distribution.
-# ------------------------------------------------
-# : Source path is $local_cache
-# : Destination Path will be $mingw_directory
-# : Filenames are stored in @local_filenames
-# : FileSpecs (those to be unpacked) are stored in @local_filespecs.
-# ------------------------------------------------
-$result = unpack_file($local_cache, $mingw_directory, \@local_filenames, \@local_filespecs);
+# # ------------------------------------------------------------------------------
+# print "\nStage 7 : Unpack support utilities.\n";
+# # Unpack 7za, console, ANSICON etc.
+# # ------------------------------------------------
+# # : Source path is $package_directory
+# # : Destination Path will be $support_directory
+# # : Filenames are stored in @util_filenames
+# # : FileSpecs (those to be unpacked) are stored in @util_filespecs.
+# # ------------------------------------------------
+# $result = unpack_file($package_directory, $support_directory, \@util_filenames, \@util_filespecs);
+#
+#
+# # ------------------------------------------------------------------------------
+# print "\nStage 8 : Unpack Extra packages into MinGW.\n";
+# # Unpack cmake, dmake and others than need to be in MinGW.
+# # ------------------------------------------------
+# # : Source path is $package_directory
+# # : Destination Path will be $mingw_directory
+# # : Filenames are stored in @extra_filenames
+# # : FileSpecs (those to be unpacked) are stored in @extra_filespecs.
+# # ------------------------------------------------
+# $result = unpack_file($package_directory, $mingw_directory, \@extra_filenames, \@extra_filespecs);
+#
+#
+# # ------------------------------------------------------------------------------
+# print "\nStage 9 : Unpack MSYS.\n";
+# # Unpack MSYS distribution.
+# # ------------------------------------------------
+# # : Source path is $msys_cache
+# # : Destination Path will be $msys_directory
+# # : Filenames are stored in @msys_filenames
+# # : FileSpecs (those to be unpacked) are stored in @msys_filespecs.
+# # ------------------------------------------------
+# $result = unpack_file($msys_cache, $msys_directory, \@msys_filenames, \@msys_filespecs);
+#
+#
+# # ------------------------------------------------------------------------------
+# print "\nStage 10 : Unpack MinGW.\n";
+# # Unpack MinGW distribution.
+# # ------------------------------------------------
+# # : Source path is $mingw_cache
+# # : Destination Path will be $mingw_directory
+# # : Filenames are stored in @mingw_filenames
+# # : FileSpecs (those to be unpacked) are stored in @mingw_filespecs.
+# # ------------------------------------------------
+# $result = unpack_file($mingw_cache, $mingw_directory, \@mingw_filenames, \@mingw_filespecs);
+#
+#
+# # ------------------------------------------------------------------------------
+# print "\nStage 11 : Unpack GCC Packages.\n";
+# # Unpack GCC distribution.
+# # ------------------------------------------------
+# # : Source path is $tdm_cache
+# # : Destination Path will be $mingw_directory
+# # : Filenames are stored in @gcc_filenames
+# # : FileSpecs (those to be unpacked) are stored in @gcc_filespecs.
+# # ------------------------------------------------
+# $result = unpack_file($tdm_cache, $mingw_directory, \@gcc_filenames, \@gcc_filespecs);
+#
+#
+# # ------------------------------------------------------------------------------
+# print "\nStage 12 : Unpack Updated Packages.\n";
+# # Unpack GCC distribution.
+# # ------------------------------------------------
+# # : Source path is $local_cache
+# # : Destination Path will be $mingw_directory
+# # : Filenames are stored in @local_filenames
+# # : FileSpecs (those to be unpacked) are stored in @local_filespecs.
+# # ------------------------------------------------
+# $result = unpack_file($local_cache, $mingw_directory, \@local_filenames, \@local_filespecs);
 
 
 # ------------------------------------------------------------------------------
@@ -210,16 +210,22 @@ create_dir($msys_directory."/home");
 create_dir($msys_directory."/usr");
 create_dir($msys_directory."/local");
 
-# copy the  cmd file to start dev system...
-cp($base_directory."/skel/dev.cmd", $root_directory) or die "Failed to copy skeleton files: $!";
-# copy the console2 configuration file...
-cp($base_directory."/skel/console.xml", $support_directory) or die "Failed to copy skeleton files: $!";
-# copy the .bashrc to home directory...
-cp($base_directory."/skel/.bashrc", $root_directory."/home") or die "Failed to copy skeleton files: $!";
-# copy the https certificate store to home directory...
-cp($base_directory."/skel/ca-bundle.crt", $root_directory."/home") or die "Failed to copy skeleton files: $!";
-# copy the modified profile file to etc directory...
-cp($base_directory."/skel/profile", $msys_directory."/etc") or die "Failed to copy skeleton files: $!";
+# copy over assorted skeleton or configuration files to various places...
+dircopy($base_directory."/skel/root/.", $root_directory) or die "Failed to copy skeleton files: $!";
+dircopy($base_directory."/skel/support/.", $support_directory) or die "Failed to copy skeleton files: $!";
+dircopy($base_directory."/skel/home/.", $root_directory."/home") or die "Failed to copy skeleton files: $!";
+dircopy($base_directory."/skel/etc/.", $msys_directory."/etc") or die "Failed to copy skeleton files: $!";
+
+# # copy the  cmd file to start dev system...
+# cp($base_directory."/skel/dev.cmd", $root_directory) or die "Failed to copy skeleton files: $!";
+# # copy the console2 configuration file...
+# cp($base_directory."/skel/console.xml", $support_directory) or die "Failed to copy skeleton files: $!";
+# # copy the .bashrc to home directory...
+# cp($base_directory."/skel/.bashrc", $root_directory."/home") or die "Failed to copy skeleton files: $!";
+# # copy the https certificate store to home directory...
+# cp($base_directory."/skel/ca-bundle.crt", $root_directory."/home") or die "Failed to copy skeleton files: $!";
+# # copy the modified profile file to etc directory...
+# cp($base_directory."/skel/profile", $msys_directory."/etc") or die "Failed to copy skeleton files: $!";
 print " -- Done\n";
 
 # ------------------------------------------------------------------------------
