@@ -296,7 +296,6 @@ sub read_hashes {
 sub create_dir {
   # creates a directory if it does not already exist, bomb with error if cant create.
   # Parameter 1 : $new_dir, directory to create.
-  # RETURNS : Array containing all the sanitized filenames
   my ($new_dir) = @_;
   if (!-d $new_dir) {
     mkdir $new_dir or die "Cannot create directory $new_dir, exiting.";
