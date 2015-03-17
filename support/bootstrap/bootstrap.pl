@@ -1,6 +1,7 @@
 use strict;
 use warnings;
 use File::Path 'rmtree';
+use File::Copy;
 use File::Copy::Recursive 'dircopy';
 
 use My::Bootstrap;
@@ -10,6 +11,15 @@ use My::ConfigFile;
 
 # Generic result variable
 my $result;
+
+# see if we have a configuration file, otherwise copy a neutral skel over..
+if (!-e $dirs{"root"}."/config.ini") {
+  copy ($dirs{"base"}."/skel/config.ini.skel", $dirs{"root"}."/config.ini") or die "cant copy config template.";
+}
+
+# Read in the configuration file...
+our %configuration = read_config($dirs{"root"}."/config.ini");
+do_config(%configuration);
 
 # Cache directories to store MSYS / MinGW packages...
 my $msys_cache = $dirs{"package"}."/msys";
