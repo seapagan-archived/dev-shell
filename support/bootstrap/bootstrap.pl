@@ -196,8 +196,8 @@ print "Stage $stage_counter : Finalize Environment - Copy final files.\n";
 # Give us a working system by copying the needed skeleton files and startup batch ...
 
 # # create the home and local directories if not already there and the tmp ..
-create_dir($dirs{"root"}."/home");
-create_dir($dirs{"root"}."/local");
+create_dir($dirs{"home"});
+create_dir($dirs{"local"});
 create_dir($dirs{"msys"}."/tmp");
 
 # create some blank dirs that will be overmounted -
