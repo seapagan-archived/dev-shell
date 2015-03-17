@@ -1,5 +1,5 @@
 # Configuration module for the dev-shell bootstrap
-package My::ConfigureFile;
+package My::ConfigFile;
 use strict;
 use warnings;
 
