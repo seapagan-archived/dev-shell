@@ -180,8 +180,6 @@ $stage_counter++;
 print "\nStage $stage_counter : Tidy up base system, removing unneeded files.\n";
 # There are a few files in the standard MSYS distro that are not needed in this particular system...
 # note that as of now there is no error checking ...
-
-#print " -- MSYS : ";
 my @unwanted_msys = qw(m.ico msys.bat msys.ico etc/fstab.sample etc/profile);
 # now delete these...
 foreach my $unwanted (@unwanted_msys) {
@@ -211,7 +209,7 @@ create_dir($dirs{"msys"}."/local");
 # copy over assorted skeleton or configuration files to various places...
 dircopy($dirs{"base"}."/skel/root/.", $dirs{"root"}) or die "Failed to copy skeleton files: $!";
 dircopy($dirs{"base"}."/skel/support/.", $dirs{"support"}) or die "Failed to copy skeleton files: $!";
-dircopy($dirs{"base"}."/skel/home/.", $dirs{"root"}."/home") or die "Failed to copy skeleton files: $!";
-dircopy($dirs{"base"}."/skel/etc/.", $dirs{"msys"}."/etc") or die "Failed to copy skeleton files: $!";
+dircopy($dirs{"base"}."/skel/home/.", $dirs{"home"}) or die "Failed to copy skeleton files: $!";
+dircopy($dirs{"base"}."/skel/etc/.", $dirs{"etc"}) or die "Failed to copy skeleton files: $!";
 print " -- Done\n";
 $stage_counter++;

@@ -36,7 +36,9 @@ sub get_paths {
   $dir_hash{"mingw"} = $dir_hash{"root"}."/mingw32";
   $dir_hash{"package"} = $dir_hash{"root"}."/support/packages";
   $dir_hash{"support"} = $dir_hash{"root"}."/support";
-
+  $dir_hash{"home"} = $dir_hash{"root"}."/home";
+  $dir_hash{"etc"} = $dir_hash{"msys"}."/etc";
+  $dir_hash{"local"} = $dir_hash{"root"}."/local";
   return %dir_hash;
 }
 
