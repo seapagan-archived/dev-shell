@@ -207,9 +207,9 @@ create_dir($dirs{"msys"}."/usr");
 create_dir($dirs{"msys"}."/local");
 
 # copy over assorted skeleton or configuration files to various places...
-dircopy($dirs{"base"}."/skel/root/.", $dirs{"root"}) or die "Failed to copy skeleton files: $!";
-dircopy($dirs{"base"}."/skel/support/.", $dirs{"support"}) or die "Failed to copy skeleton files: $!";
-dircopy($dirs{"base"}."/skel/home/.", $dirs{"home"}) or die "Failed to copy skeleton files: $!";
-dircopy($dirs{"base"}."/skel/etc/.", $dirs{"etc"}) or die "Failed to copy skeleton files: $!";
+my @skel_dirs = qw(root support home etc);
+foreach my $skel (@skel_dirs) {
+  dircopy ($dirs{"base"}."/skel/$skel/.", $dirs{$skel}) or die "Failed to copy skeleton files: $!";
+}
 print " -- Done\n";
 $stage_counter++;
