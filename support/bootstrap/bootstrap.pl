@@ -17,13 +17,9 @@ use Cwd 'abs_path';
 my $base_directory = abs_path();
 my $root_directory = abs_path($base_directory."/../..");
 
-# create the MSYS & MinGW directories if they do not exist...
-if (!-d $root_directory."/msys") {
-  mkdir $root_directory."/msys" or die "Cannot create MSYS directory!";
-}
-if (!-d $root_directory."/mingw32") {
-  mkdir $root_directory."/mingw32" or die "Cannot create MinGW directory!";
-}
+# create the MSYS & MinGW directories if they don't exist...
+create_dir($root_directory."/msys");
+create_dir($root_directory."/mingw32");
 
 # Build other useful directories from this...
 my $msys_directory = abs_path($root_directory."/msys");
@@ -66,9 +62,7 @@ $path_to_urls = $base_directory."/urls/msys-urls";
 my ($msysurls, $msysfiles) = geturls($path_to_urls);
 
 # create the MSYS Cache directory if it does not exist...
-if (!-d $msys_cache) {
-  mkdir $msys_cache or die "Cannot create Cache directory for MSYS!";
-}
+create_dir($msys_cache);
 # get all the MSYS packages we need...
 my @msys_filenames = getfiles($msys_cache, @$msysurls);
 my @msys_filespecs = @$msysfiles;
@@ -81,9 +75,7 @@ $path_to_urls = $base_directory."/urls/mingw-urls";
 my ($mingwurls, $mingwfiles) = geturls($path_to_urls);
 
 # create the MinGW Cache directory if it does not exist...
-if (!-d $mingw_cache) {
-  mkdir $mingw_cache or die "Cannot create Cache directory for MinGW!";
-}
+create_dir($mingw_cache);
 # get all the minGW packages we need...
 my @mingw_filenames = getfiles($mingw_cache, @$mingwurls);
 my @mingw_filespecs = @$mingwfiles;
@@ -96,9 +88,7 @@ $path_to_urls = $base_directory."/urls/tdm-gcc-urls";
 my ($gccurls, $gccfiles) = geturls($path_to_urls);
 
 # create the MinGW Cache directory if it does not exist...
-if (!-d $tdm_cache) {
-  mkdir $tdm_cache or die "Cannot create Cache directory for TDM GCC!";
-}
+create_dir($tdm_cache);
 # get all the GCC packages we need...
 my @gcc_filenames = getfiles($tdm_cache, @$gccurls);
 my @gcc_filespecs = @$gccfiles;
@@ -111,9 +101,7 @@ $path_to_urls = $base_directory."/urls/local-urls";
 my ($localurls, $localfiles) = geturls($path_to_urls);
 
 # create the Local Cache directory if it does not exist...
-if (!-d $local_cache) {
-  mkdir $local_cache or die "Cannot create Cache directory for Updated Packages!";
-}
+create_dir($local_cache);
 # get all the packages we need...
 my @local_filenames = getfiles($local_cache, @$localurls);
 my @local_filespecs = @$localfiles;
@@ -211,17 +199,17 @@ print " -- Done\n";
 print "Stage 14 : Finalize Environment - Copy final files.\n";
 # Give us a working system by copying the needed skeleton files and startup batch ...
 
-# create the home and local directories if not already there ..
-if (!-d $root_directory."/home") {
-  mkdir $root_directory."/home" or die "Cannot create Home directory!";
-}
-if (!-d $root_directory."/local") {
-  mkdir $root_directory."/local" or die "Cannot create local directory!";
-}
-# create the tmp directory if not already there ..
-if (!-d $msys_directory."/tmp") {
-  mkdir $msys_directory."/tmp" or die "Cannot create tmp directory!";
-}
+# # create the home and local directories if not already there and the tmp ..
+create_dir($root_directory."/home");
+create_dir($root_directory."/local");
+create_dir($msys_directory."/tmp");
+
+# create some blank dirs that will be overwritten by mounts -
+# otherwise bash shell completion does not work for these dirs.
+create_dir($msys_directory."/home");
+create_dir($msys_directory."/usr");
+create_dir($msys_directory."/local");
+
 # copy the  cmd file to start dev system...
 cp($base_directory."/skel/dev.cmd", $root_directory) or die "Failed to copy skeleton files: $!";
 # copy the console2 configuration file...
@@ -406,9 +394,7 @@ sub unpack_file {
           # this package has specified extra unpack clean up, so we need to :
           # 1) Unpack to a temporary directory
           $temp_dir = $package_directory."/tmp-$file";
-          if (!-d $temp_dir) {
-            mkdir $temp_dir or die "Cannot create temporary unpack directory!";
-          }
+          create_dir($temp_dir);
           `$base_directory/unzip.exe -o $location/$file -d $temp_dir`;
           # 2) Call the script to deal with the files, script filename determined by the package filename
           local @ARGV = ($file, $temp_dir);
@@ -491,4 +477,14 @@ sub read_hashes {
     $hash{$values[1]} = $values[0];
   }
   return %hash;
+}
+
+sub create_dir {
+  # creates a directory if it does not already exist, bomb with error if cant create.
+  # Parameter 1 : $new_dir, directory to create.
+  # RETURNS : Array containing all the sanitized filenames
+  my ($new_dir) = @_;
+  if (!-d $new_dir) {
+    mkdir $new_dir or die "Cannot create directory $new_dir, exiting.";
+  }
 }
