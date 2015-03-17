@@ -3,11 +3,14 @@ A basic layout and the related support files to bootstrap a complete Windows-bas
 
 ## Description.
 
-This is the development for my boilerplate MinGW/MSYS development system on Windows. It is a custom setup using the standard MSYS, but using the [TDM GCC distribution](http://tdm-gcc.tdragon.net/) instead of the MinGW provided GCC binaries.
+This is the development for my boilerplate MinGW/MSYS development system on Windows. It is a custom setup using the standard MSYS, but using the [TDM GCC distribution](http://tdm-gcc.tdragon.net/) instead of the MinGW provided GCC binaries.  
+
+__The goal of this project is to be able to make a fully-reproducable and standard development package for MinGW under MS Windows, to reduce errors and frustration caused by contributors to a project using different development bases. It can be set as a development pre-req for project participation.__
+
 The command-line environment is based around the '[Console2](http://sourceforge.net/projects/console/)' program and also includes [ANSICON](https://github.com/adoxa/ansicon) to provide ANSI escape sequences in the console.
 The major bonus is that the whole system is completely portable and can be used on a USB stick on any windows system, without requiring any special prerequisite tools to be already installed on that system.
 
-*As a major design decision, this will install the __32 BIT version__ of the MinGW compilers.* This was to allow ultimate portability and support for the multitude of libraries already existing. I have no plans to change to 64-bit in the foreseeable future. That being said, one of the major features of this project is that all the components are taken from url lists, that also contain the unpack specs, so adding extra libraries, converting to 64-bit or even removing unwanted libraries is trivial.
+*As a major design decision, this will **currently** install the __32 BIT version__ of the MinGW compilers and libraries.* This was to allow ultimate portability and support for the multitude of libraries already existing. Once the project is mature and stable, a 64-bit branch will be added. That being said, one of the major features of this project is that all the components are taken from url lists, that also contain the unpack specs, so adding extra libraries, converting to 64-bit or even removing unwanted libraries is trivial.
 
 ## Usage.
 1. From a fresh git checkout, simply run the '__bootstrap.cmd__' file in the root of the checkout which will create the full environment automatically without user intervention.
@@ -20,7 +23,7 @@ This environment will allow the compilation and use of native Perl, Ruby, Git an
 When completed, simply cloning this project and then running the bootstrap will download, install and customise the development system without user intervention.
 There will be pre-compiled versions of Perl, Ruby, Git and more automatically downloaded from our [File Repository on SourceForge](https://sourceforge.net/p/devshellbuilds/) or in some cases their own developers.  
 The Bootstrap is a small windows batch file, which then spawns a Perl-based system using the '[TinyPerl](http://tinyperl.sourceforge.net/)' project to create the remaining functionality. The system will re-use already-cached downloads to speed up future rebuilds.  
-As the design progresses, all additional libraries and utilities that are not provided by the MinGW project will be compiled locally and then uploaded to the repository for automatic install in future versions. Many of the existing default ones will likewise be replaced by locally compiled versions.
+As the design progresses, all additional libraries and utilities that are not provided by the MinGW project will be compiled locally and then uploaded to the repository for automatic install in future versions. Many of the existing default ones will likewise be replaced by locally compiled versions. Some of these are not currently the latest versions - as the system stabilizes I will update these to the latest, and endeavor to provide further updates as they are released.
 
 ## Directory Layout
 The file / folder layout is quite specific and chosen to allow the most versatility along with easy maintenance and division of standard and additional libraries etc.
