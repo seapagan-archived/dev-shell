@@ -207,9 +207,7 @@ sub unpack_file {
         if ($filespecs[$count] eq "^script^") {
           # this package has specified extra unpack clean up, so we need to :
           # 1) Unpack to a temporary directory
-          $temp_dir = $dirs{"package"}."/tmp-$file";
-          create_dir($temp_dir);
-          `$dirs{"base"}/unzip.exe -o $location/$file -d $temp_dir`;
+          $temp_dir = unpack_to_temp($file, $location);
           # 2) Call the script to deal with the files, script filename determined by the package filename
           scripted_unpack($file, $temp_dir);
           # 3) Copy the remaining files in the temp dir to the required directory
@@ -247,6 +245,23 @@ sub unpack_file {
   # if we get here, there must have been no errors, so return TRUE (well, we would if this was not Perl....).
   printf ("\r%s\r -- Done", " " x $output_length);
   return 1;
+}
+
+sub unpack_to_temp {
+  # unpack the provided filename into a temp directory.
+  # Parameter 1 : filename of package to unpack
+  # Parameter 2 : location of this package.
+  # Returns : name of tmp directory.
+  my ($file, $location) = @_;
+  my $temp_dir = $dirs{"package"}."/tmp-$file";
+  create_dir($temp_dir);
+  `$dirs{"support"}/7za.exe x -y $location/$file -o$temp_dir`;
+  if ($? ==0) {
+    return $temp_dir;
+  } else {
+    my $error = $? >> 8;
+    die "Cannot unpack $file to tmp directory $temp_dir, Exiting (Error $error).";
+  }
 }
 
 sub scripted_unpack {
