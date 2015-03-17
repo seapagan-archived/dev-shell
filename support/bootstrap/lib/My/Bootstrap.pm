@@ -10,7 +10,7 @@ use Cwd 'abs_path';
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT = qw(geturls getfiles unpack_file output_line read_hashes create_dir %dirs);
+our @EXPORT = qw(geturls getfiles unpack_file create_dir %dirs);
 
 # Generic result variable
 my $result;
