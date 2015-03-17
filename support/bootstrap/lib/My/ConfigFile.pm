@@ -13,9 +13,6 @@ sub read_config {
   # RETURNS : hash containing each setting => value from the file.
   my ($config_file) = @_;
   # read everything into an array...
-  # open my $handle, '<', $config_file or die "Cant open Configuration : $config_file";
-  # chomp(my @config_lines = <$handle>);
-  # close $handle;
   my @config_lines = read_file($config_file);
   my %hash= ();
 
