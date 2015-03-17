@@ -243,7 +243,7 @@ sub unpack_file {
     $count++;
   }
   # if we get here, there must have been no errors, so return TRUE (well, we would if this was not Perl....).
-  printf ("\r%s\r -- Done", " " x $output_length);
+  output_line(" -- Done", $output_length);
   return 1;
 }
 
