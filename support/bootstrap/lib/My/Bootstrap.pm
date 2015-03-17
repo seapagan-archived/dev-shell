@@ -10,36 +10,34 @@ use Cwd 'abs_path';
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT = qw(geturls getfiles unpack_file output_line read_hashes create_dir $base_directory $package_directory $support_directory $root_directory $msys_directory $mingw_directory);
+our @EXPORT = qw(geturls getfiles unpack_file output_line read_hashes create_dir %dirs);
 
 # Generic result variable
 my $result;
 
-# # Get our base path...
-our $base_directory = abs_path();
-our $root_directory = abs_path($base_directory."/../..");
-
-# create the MSYS & MinGW directories if they don't exist...
-create_dir($root_directory."/msys");
-create_dir($root_directory."/mingw32");
-
-# Build other useful directories from this...
-our $msys_directory = abs_path($root_directory."/msys");
-our $mingw_directory = abs_path($root_directory."/mingw32");
-our $package_directory = abs_path($root_directory."/support/packages");
-our $support_directory = abs_path($root_directory."/support");
-
+# get all the needed directories into a hash, this is exported to the main:: script too ...
+our %dirs = get_paths();
 # read in the file hashes to a perl hash...
 my %hashes = read_hashes();
-
-
 
 # ------------------------------------------------------------------------------
 # support functions
 # ------------------------------------------------------------------------------
 sub get_paths {
   # this will get all the paths to various points of the system and return in a hash...
+  my %dir_hash = ();
+  # NOTE : We need to get the base path of the system, but in TinyPerl $0 does not work so it is difficult
+  # to get the proper script location as the usual standard methods will fail.
+  # To get past this when we run this from the standard bootstrap.cmd, first we CD to the bootstrap directory.
+  # This allows us to run the script from its own directory directly for testing.
+  $dir_hash{"base"} = abs_path();
+  $dir_hash{"root"} = abs_path($dir_hash{"base"}."/../..");
+  $dir_hash{"msys"} =  $dir_hash{"root"}."/msys";
+  $dir_hash{"mingw"} = $dir_hash{"root"}."/mingw32";
+  $dir_hash{"package"} = $dir_hash{"root"}."/support/packages";
+  $dir_hash{"support"} = $dir_hash{"root"}."/support";
 
+  return %dir_hash;
 }
 
 sub geturls {
@@ -122,25 +120,25 @@ sub getfiles {
     if (-e $filewithpath) {
       # compare the md5 for this file...
       if (exists $hashes{$filename}) {
-        $result = `$support_directory\\md5deep.exe -s -A $hashes{$filename} $filewithpath`;
+        $result = `$dirs{"support"}\\md5deep.exe -s -A $hashes{$filename} $filewithpath`;
         if ($? == 0) {
           print "$filename already exists (MD5 OK), skipping.\n";
         } else {
           # delete the corrupt file
           unlink ($filewithpath);
           # and re-download
-          $result = `$base_directory/wget -q --config=$base_directory/.wgetrc --proxy --show-progress -c $dl_flag --directory-prefix=$dest_dir $url`;
+          $result = `$dirs{"base"}/wget -q --config=$dirs{"base"}/.wgetrc --proxy --show-progress -c $dl_flag --directory-prefix=$dest_dir $url`;
         }
       } else {
         print "$filename already exists, however there is no hash value. Please run \'update_package_hashes.cmd\' from the bootstrap directory. Skipping.\n"
       }
     } else {
       # file does not exist, so download it.
-      $result = `$base_directory/wget -q --config=$base_directory/.wgetrc --show-progress -c $dl_flag --directory-prefix=$dest_dir $url`;
+      $result = `$dirs{"base"}/wget -q --config=$dirs{"base"}/.wgetrc --show-progress -c $dl_flag --directory-prefix=$dest_dir $url`;
       # we really should check the MD5 again with this new file, and bomb out if it is wrong, since something is really messed up somewhere..
       # first check that the checksum exists - may be a new download not yet in the database, so note this visibly...
       if (exists $hashes{$filename}) {
-        $result = `$support_directory\\md5deep.exe -s -A $hashes{$filename} $filewithpath`;
+        $result = `$dirs{"support"}\\md5deep.exe -s -A $hashes{$filename} $filewithpath`;
         if (not $? == 0) {
           print "Download of $filename fails the Hash check, aborting.\n\n";
           exit;
@@ -199,9 +197,9 @@ sub unpack_file {
         # Note that so far all non-zip files are tar.lzma (or whatever) so we need a 2-stage operation to unpack them properly
         # However 7za.exe does not support reading from a pipe so we need to unpack the envelope, unpack the tar, and then delete the tar.
         # we assume that all files are tar.<whatever> for the moment, checking for this will be added later in case of exceptions.
-        `$support_directory/7za x -y $location/$file -o$destination`;
+        `$dirs{"support"}/7za x -y $location/$file -o$destination`;
         $tarfile = basename(substr($file, 0, -length($ext)));
-        `$support_directory/7za x -y $destination/$tarfile $filespecs[$count] -o$destination`;
+        `$dirs{"support"}/7za x -y $destination/$tarfile $filespecs[$count] -o$destination`;
       }
       elsif (/zip/) {
         # this is only one stage, since I've never seen a .tar.zip! Therefore we cant use the above unpack
@@ -209,9 +207,9 @@ sub unpack_file {
         if ($filespecs[$count] eq "^script^") {
           # this package has specified extra unpack clean up, so we need to :
           # 1) Unpack to a temporary directory
-          $temp_dir = $package_directory."/tmp-$file";
+          $temp_dir = $dirs{"package"}."/tmp-$file";
           create_dir($temp_dir);
-          `$base_directory/unzip.exe -o $location/$file -d $temp_dir`;
+          `$dirs{"base"}/unzip.exe -o $location/$file -d $temp_dir`;
           # 2) Call the script to deal with the files, script filename determined by the package filename
           local @ARGV = ($file, $temp_dir);
           my $function_name = $file;
@@ -230,7 +228,7 @@ sub unpack_file {
           }
         } else {
           # no script related unpack cleanup, just unpack into the correct directory as normal...
-          `$base_directory/unzip.exe -j -o $location/$file $filespecs[$count]  -d $destination `;
+          `$dirs{"base"}/unzip.exe -j -o $location/$file $filespecs[$count]  -d $destination `;
         }
       }
       else {
@@ -279,7 +277,7 @@ sub read_hashes {
   # subroutine that will read the hash values from the 'hashes' file and populate a perl hash containing filename and MD5 hash.
   # 'hashes' file is CSV, with MD5 followed by bare filename (no paths). Note this fact will be annoying if we ever have files with
   # identical filenames but in different cache subdirs - lets not do that!
-  my $hash_file = $base_directory."/hashes";
+  my $hash_file = $dirs{"base"}."/hashes";
   # temp storage hash to be returned to main program
   my %hash = ();
 
