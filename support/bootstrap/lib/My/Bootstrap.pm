@@ -10,7 +10,7 @@ use Cwd 'abs_path';
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT = qw(geturls getfiles unpack_file create_dir %dirs);
+our @EXPORT = qw(geturls getfiles unpack_file create_dir do_config read_file %dirs);
 
 # Generic result variable
 my $result;
@@ -23,6 +23,21 @@ my %hashes = read_hashes();
 # ------------------------------------------------------------------------------
 # support functions
 # ------------------------------------------------------------------------------
+sub do_config {
+  # modify files as required by the config settings.
+  my (%configs) = @_;
+  # individual setup depending on config settings..
+
+}
+
+sub read_file {
+  my ($text_file) = @_;
+  open my $handle, '<', $text_file or die "Cant open $text_file";
+  chomp(my @lines = <$handle>);
+  close $handle;
+  return @lines;
+}
+
 sub get_paths {
   # this will get all the paths to various points of the system and return in a hash...
   my %dir_hash = ();
