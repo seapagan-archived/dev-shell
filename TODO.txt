@@ -3,7 +3,7 @@ TO-DO and random thought list.
 * Provide backup scripts to save specified directories and files before a new run of the bootstrap (envisioned to save CPAN mirrors, downloaded packages etc)
 * Add functionality to work through a proxy. Different needs for the dev and for the bootstrap - latter just needs entries in the .wgetrc, while former needs full shell support (ENV variables etc).
 * Add configuration file support for the bootstrap scripts first and then for the dev environment itself.
-* Replace the removed MinGW packages with self-compiled versions.
+* [IN PROGRESS] Replace the removed MinGW packages with self-compiled versions.
 
 After base system complete :
 ----------------------------
