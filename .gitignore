@@ -37,5 +37,5 @@ mingw32/
 support/bootstrap/.wgetrc
 dev.cmd
 support/console.xml
-home/
-local/
+/home/
+/local/
