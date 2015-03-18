@@ -12,9 +12,15 @@ use My::ConfigFile;
 # Generic result variable
 my $result;
 
-# see if we have a configuration file, otherwise copy a neutral skel over..
+# see if we have a configuration file, otherwise copy a neutral skel over then stop..
 if (!-e $dirs{"base"}."/config.ini") {
   copy ($dirs{"base"}."/skel/config.ini.skel", $dirs{"base"}."/config.ini") or die "cant copy config template.";
+  print "\n----------------------------------------------------------------------------------------\n";
+  print "No 'config.ini' found, so I have copied over a basic blank configuration file for you.\n";
+  print "This can be found at \'".$dirs{"base"}."/config.ini\'\n";
+  print "Once you have edited this if needed, please re-run this script.\n";
+  print "----------------------------------------------------------------------------------------\n\n";
+  exit;
 }
 
 # Read in the configuration file...
