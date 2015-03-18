@@ -30,7 +30,7 @@ As the design progresses, all additional libraries and utilities that are not pr
 ## Directory Layout
 The file / folder layout is quite specific and chosen to allow the most versatility along with easy maintenance and division of standard and additional libraries etc.
 
-There are 5 major directories, each of which is mapped to a specific mount point within the MSYS bash shell system. *Note that the first 4 are not in the git repository, and are created automatically each time by the bootstrap scripts. As a result of this, any customizations to these directories will be __LOST__ after each run of the bootstrap script. There will be functionality to have user-created skeleton files and patches that will be applied each time the bootstrap is run (TODO)*
+There are 5 major directories, 4 of which are mapped to a specific mount point within the MSYS bash shell system. *Note that these 4 are not in the git repository, and are created automatically each time by the bootstrap scripts. As a result of this, any customizations to these directories will be __LOST__ after each run of the bootstrap script. There will be functionality to have user-created skeleton files and patches that will be applied each time the bootstrap is run (TODO)*. The final directory '*support*' is not visible within the MSYS environment.
 
 - **home**
   - This will be the user $HOME directory, mounted under bash as **/home**
@@ -57,7 +57,10 @@ There are 5 major directories, each of which is mapped to a specific mount point
     - [x] Download and Unpack the base MinGW installation.
     - [x] Remove un-needed files from the above unpacked packages.
     - [x] Copy over skeleton files, tweak configuration files and finalize base development system.
-    - [ ] Add configuration file to tweak certain options - eg for proxy usage etc.
+    - [x] Add configuration file to tweak options - eg for proxy usage etc.
+    - [x] Add Proxy support for bootstrap.
+    - [ ] Add Proxy support for Completed development environment.
+- [ ] Replace and augment existing MinGW libraries and packages with locally compiled versions. __IN PROGRESS__
 
 ## TODO.
 See the file [TODO.txt](TODO.txt) in the root of repository for thoughts, plans and progress.
