@@ -13,12 +13,12 @@ use My::ConfigFile;
 my $result;
 
 # see if we have a configuration file, otherwise copy a neutral skel over..
-if (!-e $dirs{"root"}."/config.ini") {
-  copy ($dirs{"base"}."/skel/config.ini.skel", $dirs{"root"}."/config.ini") or die "cant copy config template.";
+if (!-e $dirs{"base"}."/config.ini") {
+  copy ($dirs{"base"}."/skel/config.ini.skel", $dirs{"base"}."/config.ini") or die "cant copy config template.";
 }
 
 # Read in the configuration file...
-our %configuration = read_config($dirs{"root"}."/config.ini");
+our %configuration = read_config($dirs{"base"}."/config.ini");
 do_config(%configuration);
 
 # Cache directories to store MSYS / MinGW packages...

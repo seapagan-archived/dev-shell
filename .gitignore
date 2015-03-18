@@ -39,4 +39,4 @@ support/bootstrap/.wgetrc
 support/console.xml
 /home/
 /local/
-/config.ini
+/support/bootstrap/config.ini
