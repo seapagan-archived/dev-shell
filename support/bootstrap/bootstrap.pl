@@ -2,7 +2,7 @@ use strict;
 use warnings;
 use File::Path 'rmtree';
 use File::Copy;
-use File::Copy::Recursive 'dircopy';
+use File::Copy::Recursive qw(dircopy fcopy);
 
 use My::Bootstrap;
 use My::ConfigFile;
@@ -222,5 +222,11 @@ my @skel_dirs = qw(root support home etc);
 foreach my $skel (@skel_dirs) {
   dircopy ($dirs{"base"}."/skel/$skel/.", $dirs{$skel}) or die "Failed to copy skeleton files: $!";
 }
+
+# copy the Perl configuration library...
+fcopy ($dirs{"base"}."/lib/My/ConfigFile.pm", $dirs{"home"}."/scripts/lib/My/ConfigFile.pm") or die "Failed to copy skeleton files: $!";
+
+# copy the configuration file over to our new home directory...
+copy ($dirs{"base"}."/config.ini", $dirs{"home"})or die "Failed to copy skeleton files: $!";
 print " -- Done\n";
 $stage_counter++;
