@@ -1,5 +1,6 @@
 # Windows-based MinGW/MSYS Development System.
-A basic layout and the related support files to bootstrap a complete Windows-based MSYS / MinGW development system from the command line. This will develop into a fully portable GCC development system with Perl, Git, Ruby and similar tools.
+__*( Version 1.0-beta )*__  
+A basic layout and the related support files to bootstrap a complete Windows-based MSYS / MinGW development system from the command line. This will develop into a fully portable GCC development system with Perl, Git, Ruby and similar tools.  
 
 ## Description.
 
@@ -15,12 +16,13 @@ The major bonus is that the whole system is completely portable and can be used 
 *As a major design decision this script will, __for the moment__, install the __32 BIT version__ of the MinGW compilers and libraries.* This was to allow ultimate portability and support for the multitude of libraries already existing. Once the project is mature and stable, a 64-bit branch will be added. That being said, one of the major features of this project is that all the components are taken from url lists, that also contain the unpack specs, so adding extra libraries, converting to 64-bit or even removing unwanted libraries is trivial.
 
 ## Usage.
-1. From a fresh git checkout, simply run the '__bootstrap.cmd__' file in the root of the checkout which will create the full environment automatically without user intervention.
+1. From a fresh git checkout, simply run the '__bootstrap.cmd__' file in the root of the checkout which will create the full environment automatically without user intervention.  
+The first time you run this, it will create a 'config.ini' file in the 'support/bootstrap' directory then exit. If you have no need to edit the settings (actually the only option at the present is to set a proxy) then you can simply run the 'bootstrap.cmd' file again and it will continue properly. If you need a proxy to access the internet then please set 'proxy=on' in this config.ini and set your proxy servers to the correct location. Once that is done, run the 'bootstrap.cmd' again to start the process.
 2. Run the '__dev.cmd__' which which will now be found in the same directory to open the development environment.
 3. Start coding!
 
 In it's current stage this is designed to be used as a boilerplate for anyone wishing easier development on Windows with tools that have been designed to be run under Linux / Unix.  
-This environment will allow the compilation and use of native Perl, Ruby, Git and many more - infact the original design was to enable me to painlessly develop in Ruby on Rails under a windows environment which was completely successful.
+This environment will (when the remaining libraries are updated or added) allow the compilation and use of native Perl, Ruby, Git and many more - infact the original design was to enable me to painlessly develop in Ruby on Rails under a windows environment.
 
 When completed, simply cloning this project and then running the bootstrap will download, install and customise the development system without user intervention.
 There will be pre-compiled versions of Perl, Ruby, Git and more automatically downloaded from our [File Repository on SourceForge](https://sourceforge.net/p/devshellbuilds/) or in some cases their own developers.  
@@ -59,13 +61,13 @@ There are 5 major directories, 4 of which are mapped to a specific mount point w
     - [x] Copy over skeleton files, tweak configuration files and finalize base development system.
     - [x] Add configuration file to tweak options - eg for proxy usage etc.
     - [x] Add Proxy support for bootstrap.
-    - [ ] Add Proxy support for Completed development environment.
+    - [x] Add Proxy support for Completed development environment.
 - [ ] Replace and augment existing MinGW libraries and packages with locally compiled versions. __IN PROGRESS__
 
 ## TODO.
 See the file [TODO.txt](TODO.txt) in the root of repository for thoughts, plans and progress.
 ## Caveat!
-*This system as it stands on GitHub is __incomplete__ compared to my local development system*, __however is still usable in this basic form__. This project is for the development of the automatic bootstrap system, which will in time become a fully usable development system mirroring the manual setup I have locally.
+*This system as it stands on GitHub is __incomplete__ compared to my local development system*, in that it does not have all the libraries and functionality planned - ie no proper Perl, Ruby or Git. __However is still usable in this basic form to compile most software that is MinGW compatible__. Further functionality and code improvement is in progress.
 
 ## Links.
 Below are some links to software used in this project, in addition to the ones linked above.
