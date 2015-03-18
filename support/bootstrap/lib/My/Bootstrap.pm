@@ -28,6 +28,52 @@ sub do_config {
   my (%configs) = @_;
   # individual setup depending on config settings..
 
+  # proxy settings...
+  if (exists $configs{"proxy"}) {
+    # we have been requested to configure a proxy (on or off).
+    # There is probably a much more elegant way to write this whole routine, but that can wait until the refactoring.
+    my $wgetrc_loc = $dirs{"base"}."/.wgetrc";
+    # FIXME : If .wgetrc exists, but does not contain these variables, they are not written so proxy will not be set.
+    if ($configs{"proxy"} eq "on") {
+      # turn on the proxy settings, removing any # before the line too, just in case.
+      if (-e $wgetrc_loc) {
+        # .wgetrc exists ..
+        open (FILE, "<$wgetrc_loc") or die "Cant open $wgetrc_loc";
+        my @wgetrc=<FILE>;
+        close FILE; # close input file
+
+        open (FILE, ">$wgetrc_loc") or die "Cant open $wgetrc_loc for writing";
+        foreach my $line (@wgetrc) {
+          $line =~ s/^\s*\#*\s*http_proxy\s*=.*/http_proxy=$configs{"http_proxy"}/;
+          $line =~ s/^\s*\#*\s*https_proxy\s*=.*/https_proxy=$configs{"https_proxy"}/;
+          print FILE $line;
+        }
+        close FILE; # close output file
+      } else {
+        # .wgetrc file does not exist so just write out our values to a new file...
+        open (FILE, ">$wgetrc_loc") or die "Cant create $wgetrc_loc";
+        print FILE "http_proxy=".$configs{"http_proxy"}."\n";
+        print FILE "https_proxy=".$configs{"https_proxy"}."\n";
+        close FILE; # close output file
+      }
+    } elsif ($configs{"proxy"} eq "off") {
+      # turn off the proxy settings, simply by commenting them out...
+      # slightly changed regex, to avoid double comments if already commented.
+      if (-e $wgetrc_loc) {
+        open (FILE, "<$wgetrc_loc") or die "Cant open $wgetrc_loc";
+        my @wgetrc=<FILE>;
+        close FILE; # close input file
+
+        open (FILE, ">$wgetrc_loc") or die "Cant open $wgetrc_loc for writing";
+        foreach my $line (@wgetrc) {
+          $line =~ s/^(\s*http_proxy\s*=.*)/\#$1/;
+          $line =~ s/^(\s*https_proxy\s*=.*)/\#$1/;
+          print FILE $line;
+        }
+        close FILE; # close output file
+      } # dont do anything if the file does not exist, as it will then not affect the proxy settings.
+    }
+  }
 }
 
 sub read_file {
