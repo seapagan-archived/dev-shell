@@ -1,3 +1,5 @@
+# proxy settings. Valid options are on or off. All others are ignored.
 proxy=off
+# set your own proxy server here...
 http_proxy = http://<addr>:<port>
 https_proxy = http://<addr>:<port>
