@@ -70,7 +70,7 @@ There are 5 major directories, 4 of which are mapped to a specific mount point w
 - [ ] Replace and augment existing MinGW libraries and packages with locally compiled versions. __IN PROGRESS__
 
 ## TODO.
-See the file [TODO.txt](TODO.txt) in the root of repository for thoughts, plans and progress.
+See the file [TODO.txt](https://raw.githubusercontent.com/seapagan/dev-shell/master/TODO.txt) in the root of repository for thoughts, plans and progress.
 ## Caveat!
 *This system as it stands on GitHub is __incomplete__ compared to my local development system*, in that it does not have all the libraries and functionality planned - ie no proper Perl, Ruby or Git. __However is still usable in this basic form to compile most software that is MinGW compatible__. Further functionality and code improvement is in progress.
 
