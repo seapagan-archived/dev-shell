@@ -1,7 +1,5 @@
 name: "dev-shell"
-description: "this is a test"
-
-paginate: 10
+description: "this is a description"
 
 markdown: kramdown
 highlighter: rouge
