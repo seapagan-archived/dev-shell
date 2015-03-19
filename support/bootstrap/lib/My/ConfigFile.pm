@@ -18,7 +18,7 @@ sub read_config {
 
   foreach my $line (@config_lines) {
     my @tokens = split('=', $line);
-    if (!$tokens[0] =~ /^\s*\#/) { # ignore any comments
+    if (not $tokens[0] =~ /^\s*\#/) { # ignore any comments
       # remove leading and trailing spaces...
       $tokens[0] =~ s/^\s+|\s+$//g;
       $tokens[1] =~ s/^\s+|\s+$//g;
