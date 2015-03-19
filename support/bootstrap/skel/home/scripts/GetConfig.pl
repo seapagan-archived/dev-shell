@@ -33,8 +33,9 @@ sub do_config {
   open (FILE, ">/home/extra_env") or die "Cant open /home/extra_env for writing\n";
 
   print FILE "# /home/extra/env\n";
-  print FILE "# IMPORTANT - This file will be regenerated from scratch each time\n";
-  print FILE "# the environment is started, so DO NOT put any customisations in here or they will be lost!\n";
+  print FILE "# IMPORTANT - This file will be regenerated from scratch each time the environment\n";
+  print FILE "# is started, so DO NOT put any customisations in here or they will be lost!\n";
+  print FILE "\n";
 
   # (1) Proxy Settings.
   # For this we just set the relevant http(s)_proxy environment variables.
