@@ -124,9 +124,13 @@ sub geturls {
     # first, if this is a comment then ignore it completely...
     if (not $line =~ /^\s*\#/) {
       # locate out the unpack spec if we have one. We will use the start location to trim the URL out also.
-      if ( $line =~ /\s\*\+\((.*)\)/ ) {
-        # there is an unpack spec so we store this in the @unpacklist array...
-        $unpacklist[$count]=$1;
+      if ( $line =~ /\s\*\+(f*)\((.*)\)/ ) {
+        # there is an unpack spec so we store this in the @unpacklist array and add a flag to show if we flatten directories...
+        if ($1 eq "f") {
+          $unpacklist[$count]="f|".$2;
+        } else {
+          $unpacklist[$count]=$2;
+        }
         $urls[$count]=substr $line, 0, $-[0];
       } else {
         # there is no unpack spec so just assign an empty string to it and take the whole line as the URL...
@@ -255,6 +259,7 @@ sub unpack_file {
     }
 
     my $temp_dir = "";
+    my $extra_switches = "";
 
     for ($ext) {
       if (/lzma/ || /xz/ || /bz2/ || /gz/) {
@@ -275,7 +280,13 @@ sub unpack_file {
           }
         } else {
         # no script related unpack cleanup, just unpack into the correct directory as normal...
-        `$dirs{"support"}/7za x -y $destination/$tarfile $filespecs[$count] -o$destination`;
+        # get the 'f|' flag from unpack specs if existing and set flag accordingly. Remove this from filespec.
+        if ($filespecs[$count] =~ s/^f\|//) {
+          $extra_switches = "e";
+        } else {
+          $extra_switches = "x";
+        }
+        `$dirs{"support"}/7za $extra_switches -y $destination/$tarfile $filespecs[$count] -o$destination`;
         }
       }
       elsif (/zip/) {
@@ -295,8 +306,14 @@ sub unpack_file {
           }
         } else {
           # no script related unpack cleanup, just unpack into the correct directory as normal...
-          # FIXME : This ingores all directories in zip, unpacks all to the same folder. change to only for specific packages. Or remove and make scripted those that need.
-          `$dirs{"base"}/unzip.exe -j -o $location/$file $filespecs[$count]  -d $destination `;
+          # get the 'f|' flag from unpack specs if existing and set flag accordingly. Remove this from filespec.
+          if ($filespecs[$count] =~ s/^f\|//) {
+            $extra_switches = "-j";
+          } else {
+            $extra_switches = "";
+          }
+          my $unpack_cmd = $dirs{"base"}."/unzip.exe $extra_switches -o $location/$file $filespecs[$count]  -d $destination";
+          `$unpack_cmd`;
         }
       }
       else {
