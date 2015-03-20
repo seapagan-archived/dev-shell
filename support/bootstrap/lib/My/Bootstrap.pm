@@ -263,8 +263,20 @@ sub unpack_file {
         # we assume that all files are tar.<whatever> for the moment, checking for this will be added later in case of exceptions.
         `$dirs{"support"}/7za x -y $location/$file -o$destination`;
         $tarfile = basename(substr($file, 0, -length($ext)));
+        if ($filespecs[$count] eq "^script^") {
+          $temp_dir = unpack_to_temp($file, $location);
+          # 2) Call the script to deal with the files, script filename determined by the package filename
+          scripted_unpack($file, $temp_dir);
+          # 3) Copy the remaining files in the temp dir to the required directory
+          dircopy($temp_dir, $destination);
+          # 4) Delete the temp directory.
+          if (-d $temp_dir) {
+            rmtree $temp_dir or die "Cannot delete temporary unpack directory!";
+          }
+        } else {
+        # no script related unpack cleanup, just unpack into the correct directory as normal...
         `$dirs{"support"}/7za x -y $destination/$tarfile $filespecs[$count] -o$destination`;
-        # FIXME : need to add support for scripted unpacking same as for the zip below.
+        }
       }
       elsif (/zip/) {
         # this is only one stage, since I've never seen a .tar.zip! Therefore we cant use the above unpack
