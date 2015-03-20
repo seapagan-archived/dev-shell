@@ -44,14 +44,19 @@ my $stage_counter = 2;
 
 # ------------------------------------------------------------------------------
 # We need a few support utilities, this will also include Console and ANSICON.
-print "Stage $stage_counter : Download assorted support utilities.\n\n";
+print "Stage $stage_counter : Download assorted support utilities.\n";
 # load the Support tools URL's into an array from the file 'msys-urls'...
 $path_to_urls = $dirs{"base"}."/urls/support-urls";
 my ($toolsurls, $toolsfiles) = geturls($path_to_urls);
 my @util_filenames = getfiles($dirs{"package"}, @$toolsurls);
 my @util_filespecs = @$toolsfiles;
+$stage_counter++;
 
+
+# ------------------------------------------------------------------------------
 # get the 'extra' files...
+# for some bizarre reason that I still have to fathom, the next line below needs an '\n' at the beginning or output is skewed.
+print "\nStage $stage_counter : Download extra utilities to MinGW directory.\n";
 $path_to_urls = $dirs{"base"}."/urls/extras-urls";
 my ($extraurls, $extrafiles) = geturls($path_to_urls);
 my @extra_filenames = getfiles($dirs{"package"}, @$extraurls);
@@ -60,7 +65,7 @@ $stage_counter++;
 
 
 # ------------------------------------------------------------------------------
-print "\nStage $stage_counter : Download MSYS packages to local cache.\n\n";
+print "\nStage $stage_counter : Download MSYS packages to local cache.\n";
 # load the MSYS URL's into an array from the file 'msys-urls'...
 $path_to_urls = $dirs{"base"}."/urls/msys-urls";
 my ($msysurls, $msysfiles) = geturls($path_to_urls);
@@ -74,7 +79,7 @@ $stage_counter++;
 
 
 # ------------------------------------------------------------------------------
-print "\nStage $stage_counter : Download MinGW packages to local cache.\n\n";
+print "\nStage $stage_counter : Download MinGW packages to local cache.\n";
 # load the minGW URL's into an array from the file 'mingw-urls'...
 $path_to_urls = $dirs{"base"}."/urls/mingw-urls";
 my ($mingwurls, $mingwfiles) = geturls($path_to_urls);
@@ -88,7 +93,7 @@ $stage_counter++;
 
 
 # ------------------------------------------------------------------------------
-print "\nStage $stage_counter : Download TDM GCC Compiler packages to local cache.\n\n";
+print "\nStage $stage_counter : Download TDM GCC Compiler packages to local cache.\n";
 # load the GCC URL's into an array from the file 'tdm-gcc-urls'...
 $path_to_urls = $dirs{"base"}."/urls/tdm-gcc-urls";
 my ($gccurls, $gccfiles) = geturls($path_to_urls);
@@ -102,7 +107,7 @@ $stage_counter++;
 
 
 # ------------------------------------------------------------------------------
-print "\nStage $stage_counter : Download Updated packages to local cache.\n\n";
+print "\nStage $stage_counter : Download Updated packages to local cache.\n";
 # load the URL's into an array from the file 'local-urls'...
 $path_to_urls = $dirs{"base"}."/urls/local-urls";
 my ($localurls, $localfiles) = geturls($path_to_urls);

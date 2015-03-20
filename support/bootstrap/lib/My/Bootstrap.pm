@@ -154,6 +154,8 @@ sub getfiles {
   my ($dest_dir, @url_list) = @_;
 
   my @filearray;
+  my $output_length = 0;
+  my $output_string = "";
 
   foreach my $url (@url_list) {
     # get the actual filename from the last part of the URL, removing the SorceForge '/download' text if it exists ...
@@ -190,7 +192,8 @@ sub getfiles {
       if (exists $hashes{$filename}) {
         $result = `$dirs{"support"}\\md5deep.exe -s -A $hashes{$filename} $filewithpath`;
         if ($? == 0) {
-          print "$filename already exists (MD5 OK), skipping.\n";
+          $output_string = "$filename already exists (MD5 OK), skipping.";
+          $output_length = output_line($output_string, $output_length);
         } else {
           # delete the corrupt file
           unlink ($filewithpath);
@@ -198,7 +201,8 @@ sub getfiles {
           $result = `$dirs{"base"}/wget -q --config=$dirs{"base"}/.wgetrc --proxy --show-progress -c $dl_flag --directory-prefix=$dest_dir $url`;
         }
       } else {
-        print "$filename already exists, however there is no hash value. Please run \'update_package_hashes.cmd\' from the bootstrap directory. Skipping.\n"
+        output_line("$filename already exists, however there is no hash value.\n -> Please run \'update_package_hashes.cmd\' from the bootstrap directory. Skipping.\n", $output_length);
+        $output_length= 0 ;
       }
     } else {
       # file does not exist, so download it.
@@ -212,10 +216,12 @@ sub getfiles {
           exit;
         }
       } else {
-         print "There is no hash value for package \'$filename\', please run \'update_package_hashes.cmd\' from the bootstrap directory."
+          output_line("There is no hash value for package \'$filename\'.\n -> Please run \'update_package_hashes.cmd\' from the bootstrap directory.\n", $output_length);
+          $output_length= 0 ;
       }
     }
   }
+  output_line(" -- Done", $output_length);
   return @filearray;
 }
 
