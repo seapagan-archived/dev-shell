@@ -258,9 +258,9 @@ sub unpack_file {
       next;
     }
 
-    my $temp_dir = "";
     my $extra_switches = "";
 
+    # FIXME : There should be a way to combine both the below choices, and then use 7za for both (latter part is easy)
     for ($ext) {
       if (/lzma/ || /xz/ || /bz2/ || /gz/) {
         # Note that so far all non-zip files are tar.lzma (or whatever) so we need a 2-stage operation to unpack them properly
@@ -269,15 +269,7 @@ sub unpack_file {
         `$dirs{"support"}/7za x -y $location/$file -o$destination`;
         $tarfile = basename(substr($file, 0, -length($ext)));
         if ($filespecs[$count] eq "^script^") {
-          $temp_dir = unpack_to_temp($file, $location);
-          # 2) Call the script to deal with the files, script filename determined by the package filename
-          scripted_unpack($file, $temp_dir);
-          # 3) Copy the remaining files in the temp dir to the required directory
-          dircopy($temp_dir, $destination);
-          # 4) Delete the temp directory.
-          if (-d $temp_dir) {
-            rmtree $temp_dir or die "Cannot delete temporary unpack directory!";
-          }
+          do_scripted($file, $location, $destination);
         } else {
         # no script related unpack cleanup, just unpack into the correct directory as normal...
         # get the 'f|' flag from unpack specs if existing and set flag accordingly. Remove this from filespec.
@@ -294,16 +286,7 @@ sub unpack_file {
         # logic, even though 7za.exe can easily unpack zip fies.
         if ($filespecs[$count] eq "^script^") {
           # this package has specified extra unpack clean up, so we need to :
-          # 1) Unpack to a temporary directory
-          $temp_dir = unpack_to_temp($file, $location);
-          # 2) Call the script to deal with the files, script filename determined by the package filename
-          scripted_unpack($file, $temp_dir);
-          # 3) Copy the remaining files in the temp dir to the required directory
-          dircopy($temp_dir, $destination);
-          # 4) Delete the temp directory.
-          if (-d $temp_dir) {
-            rmtree $temp_dir or die "Cannot delete temporary unpack directory!";
-          }
+          do_scripted($file, $location, $destination);
         } else {
           # no script related unpack cleanup, just unpack into the correct directory as normal...
           # get the 'f|' flag from unpack specs if existing and set flag accordingly. Remove this from filespec.
@@ -340,6 +323,24 @@ sub unpack_file {
   # if we get here, there must have been no errors, so return TRUE (well, we would if this was not Perl....).
   output_line(" -- Done", $output_length);
   return 1;
+}
+
+sub do_scripted {
+  # this sub will perform the scripted unpacking.
+  # Parameter 1 : The filename
+  # Parameter 2 : Location of package
+  # Parameter 3 : Destination for unpacked files
+  my ($file, $location, $destination) = @_;
+
+  my $temp_dir = unpack_to_temp($file, $location);
+  # 2) Call the script to deal with the files, script filename determined by the package filename
+  scripted_unpack($file, $temp_dir);
+  # 3) Copy the remaining files in the temp dir to the required directory
+  dircopy($temp_dir, $destination);
+  # 4) Delete the temp directory.
+  if (-d $temp_dir) {
+    rmtree $temp_dir or die "Cannot delete temporary unpack directory!";
+  }
 }
 
 sub unpack_to_temp {
