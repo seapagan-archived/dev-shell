@@ -55,7 +55,6 @@ $stage_counter++;
 
 # ------------------------------------------------------------------------------
 # get the 'extra' files...
-# for some bizarre reason that I still have to fathom, the next line below needs an '\n' at the beginning or output is skewed.
 print "\nStage $stage_counter : Download extra utilities to MinGW directory.\n";
 $path_to_urls = $dirs{"base"}."/urls/extras-urls";
 my ($extraurls, $extrafiles) = geturls($path_to_urls);
