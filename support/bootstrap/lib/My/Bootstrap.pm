@@ -260,6 +260,11 @@ sub unpack_file {
 
     my $extra_switches = "";
 
+    # give an indication that we are working on a file.
+    # otherwise, for long unpacks, especially the scripted ones, it seems we have hung...
+    my $output_string = " -> Unpacking package : \"$file\" ";
+    $output_length = output_line($output_string, $output_length);
+
     # FIXME : There should be a way to combine both the below choices, and then use 7za for both (latter part is easy)
     for ($ext) {
       if (/lzma/ || /xz/ || /bz2/ || /gz/) {
