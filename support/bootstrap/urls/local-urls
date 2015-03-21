@@ -14,3 +14,7 @@ http://sourceforge.net/projects/devshellbuilds/files/openssl-1.0.1j/openssl-1.0.
 http://sourceforge.net/projects/devshellbuilds/files/nettle-3.0/nettle-3.0-mingw32-full.tar.lzma/download
 http://sourceforge.net/projects/devshellbuilds/files/lzo-2.08/lzo-2.08-mingw32-full.tar.lzma/download
 http://sourceforge.net/projects/devshellbuilds/files/libarchive-3.1.2/libarchive-3.1.2-mingw32-full.tar.lzma/download
+http://sourceforge.net/projects/devshellbuilds/files/ncurses-5.9/ncurses-5.9-mingw32-full.tar.lzma/download
+http://sourceforge.net/projects/devshellbuilds/files/readline-6.2/readline-6.2-mingw32-full.tar.lzma/download
+http://sourceforge.net/projects/devshellbuilds/files/gmp-6.0.0/gmp-6.0.0-mingw32-full-SHARED.tar.lzma/download
+#http://sourceforge.net/projects/devshellbuilds/files/gmp-6.0.0/gmp-6.0.0-mingw32-full-STATIC.tar.lzma/download

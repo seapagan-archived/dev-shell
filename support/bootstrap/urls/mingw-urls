@@ -2,8 +2,8 @@ http://sourceforge.net/projects/mingw/files/MinGW/Base/mpc/mpc-1.0.1-2/mpc-1.0.1
 http://sourceforge.net/projects/mingw/files/MinGW/Base/mpc/mpc-1.0.1-2/mpc-1.0.1-2-mingw32-dll.tar.lzma/download
 http://sourceforge.net/projects/mingw/files/MinGW/Base/mpfr/mpfr-3.1.2-2/mpfr-3.1.2-2-mingw32-dll.tar.lzma/download
 http://sourceforge.net/projects/mingw/files/MinGW/Base/mpfr/mpfr-3.1.2-2/mpfr-3.1.2-2-mingw32-dev.tar.lzma/download
-http://sourceforge.net/projects/mingw/files/MinGW/Base/gmp/gmp-5.1.2/gmp-5.1.2-1-mingw32-dev.tar.lzma/download
-http://sourceforge.net/projects/mingw/files/MinGW/Base/gmp/gmp-5.1.2/gmp-5.1.2-1-mingw32-dll.tar.lzma/download
+#http://sourceforge.net/projects/mingw/files/MinGW/Base/gmp/gmp-5.1.2/gmp-5.1.2-1-mingw32-dev.tar.lzma/download
+#http://sourceforge.net/projects/mingw/files/MinGW/Base/gmp/gmp-5.1.2/gmp-5.1.2-1-mingw32-dll.tar.lzma/download
 http://sourceforge.net/projects/mingw/files/MinGW/Base/wsl/wsl-4.0/wsl_rc-4.0-1-mingw32-rc-4-meta.tar.lzma/download
 http://sourceforge.net/projects/mingw/files/MinGW/Extension/dos2unix/dos2unix-7.1-1/dos2unix-7.1-1-mingw32-bin.tar.lzma/download
 http://sourceforge.net/projects/mingw/files/MinGW/Extension/make/make-3.82.90-cvs/make-3.82.90-2-mingw32-cvs-20120902-bin.tar.lzma/download
@@ -41,9 +41,9 @@ http://sourceforge.net/projects/mingw/files/MinGW/Extension/mingw-utils/mingw-ut
 http://sourceforge.net/projects/mingw/files/MinGW/Extension/gendef/gendef-1.0.1346/gendef-1.0.1346-1-mingw32-bin.tar.lzma/download
 http://sourceforge.net/projects/mingw/files/MinGW/Extension/popt/popt-1.15-1/libpopt-1.15-1-mingw32-dll-0.tar.lzma/download
 http://sourceforge.net/projects/mingw/files/MinGW/Extension/popt/popt-1.15-1/libpopt-1.15-1-mingw32-dev.tar.lzma/download
-http://sourceforge.net/projects/mingw/files/MinGW/Contributed/PDCurses/PDCurses-3.4-1/libpdcurses-3.4-1-mingw32-dll.tar.lzma/download
-http://sourceforge.net/projects/mingw/files/MinGW/Contributed/PDCurses/PDCurses-3.4-1/PDCurses-3.4-1-mingw32-bin.tar.lzma/download
-http://sourceforge.net/projects/mingw/files/MinGW/Contributed/PDCurses/PDCurses-3.4-1/libpdcurses-3.4-1-mingw32-dev.tar.lzma/download
+#http://sourceforge.net/projects/mingw/files/MinGW/Contributed/PDCurses/PDCurses-3.4-1/libpdcurses-3.4-1-mingw32-dll.tar.lzma/download
+#http://sourceforge.net/projects/mingw/files/MinGW/Contributed/PDCurses/PDCurses-3.4-1/PDCurses-3.4-1-mingw32-bin.tar.lzma/download
+#http://sourceforge.net/projects/mingw/files/MinGW/Contributed/PDCurses/PDCurses-3.4-1/libpdcurses-3.4-1-mingw32-dev.tar.lzma/download
 #http://sourceforge.net/projects/mingw/files/MinGW/Contributed/libunistring/libunistring-0.9.3-1/libunistring-0.9.3-1-mingw32-dll-0.tar.lzma/download
 #http://sourceforge.net/projects/mingw/files/MinGW/Contributed/libunistring/libunistring-0.9.3-1/libunistring-0.9.3-1-mingw32-dev.tar.lzma/download
 http://sourceforge.net/projects/mingw/files/MinGW/Contributed/tcltk/tcl-8.6.0/tcl-8.6.0-1-mingw32-dll.tar.lzma/download
