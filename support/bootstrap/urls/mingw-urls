@@ -45,11 +45,11 @@ http://sourceforge.net/projects/mingw/files/MinGW/Extension/popt/popt-1.15-1/lib
 #http://sourceforge.net/projects/mingw/files/MinGW/Contributed/PDCurses/PDCurses-3.4-1/libpdcurses-3.4-1-mingw32-dev.tar.lzma/download
 #http://sourceforge.net/projects/mingw/files/MinGW/Contributed/libunistring/libunistring-0.9.3-1/libunistring-0.9.3-1-mingw32-dll-0.tar.lzma/download
 #http://sourceforge.net/projects/mingw/files/MinGW/Contributed/libunistring/libunistring-0.9.3-1/libunistring-0.9.3-1-mingw32-dev.tar.lzma/download
-http://sourceforge.net/projects/mingw/files/MinGW/Contributed/tcltk/tcl-8.6.0/tcl-8.6.0-1-mingw32-dll.tar.lzma/download
-http://sourceforge.net/projects/mingw/files/MinGW/Contributed/tcltk/tcl-8.6.0/tcl-8.6.0-1-mingw32-dev.tar.lzma/download
-http://sourceforge.net/projects/mingw/files/MinGW/Contributed/tcltk/tcl-8.6.0/tcl-8.6.0-1-mingw32-bin.tar.lzma/download
-http://sourceforge.net/projects/mingw/files/MinGW/Contributed/tcltk/tk-8.6.0/tk-8.6.0-1-mingw32-dll.tar.lzma/download
-http://sourceforge.net/projects/mingw/files/MinGW/Contributed/tcltk/tk-8.6.0/tk-8.6.0-1-mingw32-dev.tar.lzma/download
-http://sourceforge.net/projects/mingw/files/MinGW/Contributed/tcltk/tk-8.6.0/tk-8.6.0-1-mingw32-bin.tar.lzma/download
+#http://sourceforge.net/projects/mingw/files/MinGW/Contributed/tcltk/tcl-8.6.0/tcl-8.6.0-1-mingw32-dll.tar.lzma/download
+#http://sourceforge.net/projects/mingw/files/MinGW/Contributed/tcltk/tcl-8.6.0/tcl-8.6.0-1-mingw32-dev.tar.lzma/download
+#http://sourceforge.net/projects/mingw/files/MinGW/Contributed/tcltk/tcl-8.6.0/tcl-8.6.0-1-mingw32-bin.tar.lzma/download
+#http://sourceforge.net/projects/mingw/files/MinGW/Contributed/tcltk/tk-8.6.0/tk-8.6.0-1-mingw32-dll.tar.lzma/download
+#http://sourceforge.net/projects/mingw/files/MinGW/Contributed/tcltk/tk-8.6.0/tk-8.6.0-1-mingw32-dev.tar.lzma/download
+#http://sourceforge.net/projects/mingw/files/MinGW/Contributed/tcltk/tk-8.6.0/tk-8.6.0-1-mingw32-bin.tar.lzma/download
 #http://sourceforge.net/projects/mingw/files/Other/UserContributed/regex/mingw-regex-2.5.1/mingw-libgnurx-2.5.1-dev.tar.gz/download
 #http://sourceforge.net/projects/mingw/files/Other/UserContributed/regex/mingw-regex-2.5.1/mingw-libgnurx-2.5.1-bin.tar.gz/download
