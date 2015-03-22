@@ -1,7 +1,8 @@
 TO-DO and random thought list.
 ==============================
 * Provide backup scripts to save specified directories and files before a new run of the bootstrap (envisioned to save CPAN mirrors, downloaded packages etc)
-* [IN PROGRESS] Replace the removed MinGW packages with self-compiled versions.
+* [IN PROGRESS] Replace the current MinGW packages with self-compiled versions.
+* add existing ssh keys - copy from template to /home if they exist. If none, offer to create these on first run of dev shell.
 
 After base system complete :
 ----------------------------
@@ -13,4 +14,4 @@ User selected Additions :
 -----------------------
 + Automatically install pre-compiled versions of Perl, Ruby & Git as required (chosen in bootstrap config)
 + Ruby (if installed) : Option to automatically install a list of standard gems, update system etc.
-+ Perl : Option to automatically update CPAN and install standard modules, start a local cpan mirror and more.
++ Perl : Option to automatically update CPAN and install standard modules (difficult since so many need manual tweaking on windows), start a local cpan mirror and more.
