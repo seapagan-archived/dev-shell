@@ -7,9 +7,9 @@ scripts/StartupTasks.pl
 source /home/extra_env
 
 # so gcc etc can find the local libraries and headers, when we have any ...
-export CFLAGS="-I/usr/local/include"
-export CPATH=/usr/local/include
-export LIBRARY_PATH=/usr/local/lib
+# export CFLAGS="-I/usr/local/include"
+# export CPATH=/usr/local/include
+# export LIBRARY_PATH=/usr/local/lib
 
 # so openssl can be found...
 export OPENSSL_PREFIX=/mingw
