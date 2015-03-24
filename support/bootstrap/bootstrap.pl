@@ -218,14 +218,14 @@ print "Stage $stage_counter : Finalize Environment - Copy final files.\n";
 
 # # create the home and local directories if not already there and the tmp ..
 create_dir($dirs{"home"});
-create_dir($dirs{"local"});
+#create_dir($dirs{"local"});
 create_dir($dirs{"msys"}."/tmp");
 
 # create some blank dirs that will be overmounted -
 # otherwise bash shell completion does not work for these dirs.
 create_dir($dirs{"msys"}."/home");
 create_dir($dirs{"msys"}."/usr");
-create_dir($dirs{"msys"}."/local");
+#create_dir($dirs{"msys"}."/local");
 
 # copy over assorted skeleton or configuration files to various places...
 my @skel_dirs = qw(root support home etc);
