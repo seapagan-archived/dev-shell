@@ -6,7 +6,7 @@ A basic layout and the related support files to bootstrap a complete Windows-bas
 
 This is the development for my boilerplate MinGW/MSYS development system on Windows. It is a custom setup using the standard MSYS, but using the [TDM GCC distribution](http://tdm-gcc.tdragon.net/) instead of the MinGW provided GCC binaries.  
 
-__The goal of this project is to be able to make a fully-reproducable and standard development package for MinGW under MS Windows, to reduce errors and frustration caused by contributors to a project using different development bases. It can be set as a development pre-req for project participation.__
+__The goal of this project is to be able to make a fully-reproducible and standard development package for MinGW under MS Windows, to reduce errors and frustration caused by contributors to a project using different development bases. It can be set as a development pre-req for project participation.__
 
 A secondary goal is to teach myself Perl programming, this being my first attempt at that language, so please excuse the bad coding, and any suggestions for improvement are more than welcome! :) Note that the '[TinyPerl](http://tinyperl.sourceforge.net/)' in use is a very cut-down version of Perl 5.8.0, so many standard modules are not available.
 
@@ -27,7 +27,7 @@ This environment will (when the remaining libraries are updated or added) allow 
 When completed, simply cloning this project and then running the bootstrap will download, install and customise the development system without user intervention.
 There will be pre-compiled versions of Perl, Ruby, Git and more automatically downloaded from our [File Repository on SourceForge](https://sourceforge.net/p/devshellbuilds/) or in some cases their own developers.  
 The Bootstrap is a small windows batch file, which then spawns a Perl-based system using the '[TinyPerl](http://tinyperl.sourceforge.net/)' project to create the remaining functionality. The system will re-use already-cached downloads to speed up future rebuilds.  
-As the design progresses, all additional libraries and utilities that are not provided by the MinGW project will be compiled locally and then uploaded to the repository for automatic install in future versions. Many of the existing default ones will likewise be replaced by locally compiled versions. Some of these are not currently the latest versions - as the system stabilizes I will update these to the latest, and endeavor to provide further updates as they are released.
+As the design progresses, all additional libraries and utilities that are not provided by the MinGW project will be compiled locally and then uploaded to the repository for automatic install in future versions. Many of the existing default ones will likewise be replaced by locally compiled versions. Some of these are not currently the latest versions - as the system stabilizes I will update these to the latest, and endeavour to provide further updates as they are released.
 
 ## Directory Layout
 The file / folder layout is quite specific and chosen to allow the most versatility along with easy maintenance and division of standard and additional libraries etc.
@@ -59,7 +59,7 @@ There are 5 major directories, 4 of which are mapped to a specific mount point w
     - [x] Download and Unpack the base MinGW installation.
     - [x] Remove un-needed files from the above unpacked packages.
     - [x] Copy over skeleton files, tweak configuration files and finalize base development system.
-    - [x] Add configuration file to tweak options - eg for proxy usage etc.
+    - [x] Add configuration file to tweak options - e.g. for proxy usage etc.
     - [x] Add Proxy support for bootstrap.
     - [x] Add Proxy support for Completed development environment.
 - [ ] Replace and augment existing MinGW libraries and packages with locally compiled versions. __IN PROGRESS__
@@ -73,7 +73,7 @@ See the file [TODO.txt](TODO.txt) in the root of repository for thoughts, plans 
 Below are some links to software used in this project, in addition to the ones linked above.
 
 #### Utilities:
-[A precompiled static version of wget 1.16.1](https://eternallybored.org/misc/wget/) - Used during the original bootstrap until the system was able to compile its own.  
+[A pre-compiled static version of wget 1.16.1](https://eternallybored.org/misc/wget/) - Used during the original bootstrap until the system was able to compile its own.  
 [Unzip 6.0 from info-zip](http://www.info-zip.org/UnZip.html) - Used during bootstrap to unzip the TinyPerl and others. Self-compiled from source using this completed development system.  
 [7za920.zip](http://sourceforge.net/projects/sevenzip/files/7-Zip/9.20/7za920.zip/download) - For the standalone 7-zip utility '7za.exe' which was used to unpack the MSYS / MinGW and TDM distributions along with the project-specific compiles of libraries and executables.  
 [CMake](http://www.cmake.org) - Cross-platform build system needed for the compilation of certain libraries.  
