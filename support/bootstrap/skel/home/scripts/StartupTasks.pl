@@ -6,15 +6,17 @@
 
 use strict;
 use warnings;
+use CPAN;
+use IO::Null;
 
-use lib '/home/scripts/lib';
+use lib $ENV{'HOME'}.'/scripts/lib';
 use My::ConfigFile;
 
 # If there is a configuration file then we should read it...
-if (-e "/home/config.ini") {
+if (-e "$ENV{'HOME'}/config.ini") {
   print "Configuration Found : Setting up Environment";
   # Read in the configuration file...
-  my %configuration = read_config("/home/config.ini");
+  my %configuration = read_config("$ENV{'HOME'}/config.ini");
   do_config(%configuration);
   print " : Done.\n\n";
 }
@@ -24,15 +26,16 @@ sub do_config {
   # deal with the configuration settings. This will mainly just set some environment variables
   # into the '/home/extra_env' file that will be sourced by the local .bashrc
   # so we delete any existing file...
-  if (-e "/home/extra_env") {
-    unlink ("/home/extra_env");
+  if (-e $ENV{'HOME'}."/extra_env") {
+    unlink ($ENV{'HOME'}."/extra_env");
   }
   # get parameter - %hash with configuration values...
   my (%configs) = @_;
 
-  open (FILE, ">/home/extra_env") or die "Cant open /home/extra_env for writing\n";
+  open (FILE, ">$ENV{'HOME'}/extra_env") or die "Cant open $ENV{'HOME'}/extra_env for writing\n";
 
-  print FILE "# /home/extra/env\n";
+  # Header for the file
+  print FILE "# /home/extra_env\n";
   print FILE "# IMPORTANT - This file will be regenerated from scratch each time the environment\n";
   print FILE "# is started, so DO NOT put any customisations in here or they will be lost!\n";
   print FILE "\n";
@@ -44,4 +47,7 @@ sub do_config {
     print FILE "export HTTPS_PROXY=".$configs{"https_proxy"}."\n";
   }
   close FILE; # close output file
+
+ 
+  }
 }
