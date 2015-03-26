@@ -1,5 +1,5 @@
 # Windows-based MinGW/MSYS Development System.
-__*( Version 1.0-beta )*__  
+__*( Version 1.0-beta.3 )*__  
 A basic layout and the related support files to bootstrap a complete Windows-based MSYS / MinGW development system from the command line. This will develop into a fully portable GCC development system with Perl, Git, Ruby and similar tools.  
 
 ## Description.
@@ -63,11 +63,14 @@ There are 5 major directories, 4 of which are mapped to a specific mount point w
     - [x] Add Proxy support for bootstrap.
     - [x] Add Proxy support for Completed development environment.
 - [ ] Replace and augment existing MinGW libraries and packages with locally compiled versions. __IN PROGRESS__
+- [x] Add [Perl](http://www.perl.org/) 5.20.2 with fully updated CPAN and extra modules, compiled from source.
+- [ ] Add latest [Ruby](http://www.ruby-lang.org/)
+- [ ] Add [git]() scm.
 
 ## TODO.
 See the file [TODO.txt](TODO.txt) in the root of repository for thoughts, plans and progress.
 ## Caveat!
-*This system as it stands on GitHub is __incomplete__ compared to my local development system*, in that it does not have all the libraries and functionality planned - ie no proper Perl, Ruby or Git. __However is still usable in this basic form to compile most software that is MinGW compatible__. Further functionality and code improvement is in progress.
+*This system as it stands on GitHub is __incomplete__ compared to my local development system*, in that it does not have all the libraries and functionality planned - ie no  Ruby or Git. However, it is still usable in this basic form to compile most software that is MinGW compatible (for example the full Perl package was compiled using this). Further functionality and code improvement is in progress.
 
 ## Links.
 Below are some links to software used in this project, in addition to the ones linked above.
@@ -80,4 +83,5 @@ Below are some links to software used in this project, in addition to the ones l
 [dmake](http://search.cpan.org/dist/dmake/) - Another cross-platform build system, specifically used for building Perl and it's modules.
 
 #### Perl Modules :
-[File::Copy::Recursive](http://search.cpan.org/~dmuey/File-Copy-Recursive-0.38/Recursive.pm) - extended move / copy functions.
+[File::Copy::Recursive](http://search.cpan.org/~dmuey/File-Copy-Recursive-0.38/Recursive.pm) - extended move / copy functions.  
+[Portable](http://search.cpan.org/~kmx/Portable-1.22/) - used to make the Perl portable, automatically adjusting paths as needed.
