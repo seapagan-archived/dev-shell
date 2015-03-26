@@ -73,7 +73,7 @@ See the file [TODO.txt](TODO.txt) in the root of repository for thoughts, plans 
 Below are some links to software used in this project, in addition to the ones linked above.
 
 #### Utilities:
-[A pre-compiled static version of wget 1.16.1](https://eternallybored.org/misc/wget/) - Used during the original bootstrap until the system was able to compile its own.  
+[A pre-compiled static version of wget 1.16.3](https://eternallybored.org/misc/wget/) - Used during the original bootstrap until the system was able to compile its own.  
 [Unzip 6.0 from info-zip](http://www.info-zip.org/UnZip.html) - Used during bootstrap to unzip the TinyPerl and others. Self-compiled from source using this completed development system.  
 [7za920.zip](http://sourceforge.net/projects/sevenzip/files/7-Zip/9.20/7za920.zip/download) - For the standalone 7-zip utility '7za.exe' which was used to unpack the MSYS / MinGW and TDM distributions along with the project-specific compiles of libraries and executables.  
 [CMake](http://www.cmake.org) - Cross-platform build system needed for the compilation of certain libraries.  
