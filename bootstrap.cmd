@@ -1,6 +1,6 @@
 @echo off
 rem *********************************************************************************
-rem * dev-shell Bootstrap v1.0-beta.2                                                      *
+rem * dev-shell Bootstrap v1.0-beta.3                                                      *
 rem *                                                                               *
 rem * This command script will bootstrap the checked out git source into a complete *
 rem * development system for MinGW / MSYS.                                          *
@@ -10,7 +10,7 @@ rem ****************************************************************************
 
 rem note that there is limited error checking or idiot-proofing in the file at this time.
 
-echo dev-shell bootstrap v1.0-beta.2 (c) seapagan 2015
+echo dev-shell bootstrap v1.0-beta.3 (c) seapagan 2015
 echo.
 echo Stage 1 : Download and unpack some required packages ...
 rem tinyperl ...
