@@ -7,7 +7,6 @@
 use strict;
 use warnings;
 use CPAN;
-use IO::Null;
 
 use lib $ENV{'HOME'}.'/scripts/lib';
 use My::ConfigFile;
@@ -47,7 +46,4 @@ sub do_config {
     print FILE "export HTTPS_PROXY=".$configs{"https_proxy"}."\n";
   }
   close FILE; # close output file
-
- 
-  }
 }
