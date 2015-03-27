@@ -38,3 +38,4 @@ Note that the packages can also be used in a standard MinGW / MSYS setup, and ev
  - [libssh2-1.4.3](http://sourceforge.net/projects/devshellbuilds/files/libssh2-1.4.3/libssh2-1.4.3-mingw32-full.tar.lzma/download)
  - [curl-7.40.0](http://sourceforge.net/projects/devshellbuilds/files/curl-7.40.0/curl-7.40.0-mingw32-full.tar.lzma/download)
  - [libcroco-0.6.8](http://sourceforge.net/projects/devshellbuilds/files/libcroco-0.6.8/libcroco-0.6.8-mingw32-full.tar.lzma/download)
+ - [Perl-5.20.2](http://sourceforge.net/projects/devshellbuilds/files/perl-5.20.2/perl-5.20.2-1-mingw32.tar.lzma/download)
