@@ -1,5 +1,6 @@
 name: "dev-shell"
 description: "this is a description"
 
-markdown: kramdown
-highlighter: rouge
+markdown: redcarpet
+encoding: UTF-8                
+highlighter: pygments         
