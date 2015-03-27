@@ -20,8 +20,8 @@ minicpan:
   local: repo/CPAN
   exact_mirror: 1
 HomeDir:
-  my_home: .
-  my_data: .
+  my_home: data
+  my_data: data
 Config:
   archlib: perl/lib
   archlibexp: perl/lib
