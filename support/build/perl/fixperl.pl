@@ -5,13 +5,13 @@
 # this script is to be run after succesful compilation of Perl, to fix some problems :
 # 1) we need to create the plan Perl scripts from the Batch files
 # 2) The existing batch files have dodgy !# lines. We want the raw perl scripts to have a proper #! /perlpath/perl shebang.
-
-# note that the following needs to be done AFTER the perl config has been edited for new locations...
-
 use strict;
 use warnings;
+
 use File::Basename;
 use Cwd;
+use Config;
+use File::Slurp;
 
 #-------------------------------------------------------------------------------
 
@@ -24,8 +24,6 @@ fix_scripts($dir);
 # (2) fix the shebangs...
 fix_shebang($dir);
 #-------------------------------------------------------------------------------
-
-
 
 
 sub fix_scripts {
@@ -51,6 +49,8 @@ sub fix_scripts {
   # change directory pack to original
   chdir $orig_dir;
 }
+
+#-------------------------------------------------------------------------------
 
 sub fix_shebang {
   # goes through scripts in perl bin dir and changes the shebang to current perl location, if '#!' and 'perl' is on that line
