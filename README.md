@@ -64,13 +64,13 @@ There are 5 major directories, 4 of which are mapped to a specific mount point w
     - [x] Add Proxy support for Completed development environment.
 - [ ] Replace and augment existing MinGW libraries and packages with locally compiled versions. __IN PROGRESS__
 - [x] Add [Perl](http://www.perl.org/) 5.20.2 with fully updated CPAN and extra modules, compiled from source.
-- [ ] Add latest [Ruby](http://www.ruby-lang.org/)
+- [x] Add latest [Ruby](http://www.ruby-lang.org/) 2.2.1p85 Currenty this is taken un-altered from the [RubyInstaller](rubyinstaller.org) project.
 - [ ] Add [git]() scm.
 
 ## TODO.
 See the file [TODO.txt](TODO.txt) in the root of repository for thoughts, plans and progress.
 ## Caveat!
-*This system as it stands on GitHub is __incomplete__ compared to my local development system*, in that it does not have all the libraries and functionality planned - ie no  Ruby or Git. However, it is still usable in this basic form to compile most software that is MinGW compatible (for example the full Perl package was compiled using this). Further functionality and code improvement is in progress.
+*This system as it stands on GitHub is __incomplete__ compared to my local development system*, in that it does not have all the libraries and functionality planned - ie there is no Git. However, it is still usable in this form to compile most software that is MinGW compatible (for example the full Perl package was compiled using this). Further functionality and code improvement is in progress.
 
 ## Links.
 Below are some links to software used in this project, in addition to the ones linked above.
