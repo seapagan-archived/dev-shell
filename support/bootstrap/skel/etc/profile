@@ -1,12 +1,20 @@
 # set up the path ...
 
 #export PATH=".:/usr/local/bin:/mingw/bin:/bin:$PATH"
-export PATH=".:/mingw/bin:/bin:$PATH"
+export PATH="/mingw/bin:/bin:$PATH"
+
+# check if Ruby has been installed...
+if [ -e ~/ruby/bin/ruby.exe ]; then
+	export PATH="/home/ruby/bin:$PATH"
+fi
 
 # check if Perl has been installed...
 if [ -e ~/perl/bin/perl.exe ]; then
 	export PATH="/home/perl/bin:$PATH"
 fi
+
+# add the current dir back to the start of the path...
+export PATH=".:$PATH"
 
 if [ -z "$USERNAME" ]; then
   LOGNAME="`id -un`"
