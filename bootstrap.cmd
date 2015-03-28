@@ -1,6 +1,6 @@
 @echo off
 rem *********************************************************************************
-rem * dev-shell Bootstrap v1.0-beta.3                                                      *
+rem * dev-shell Bootstrap v1.0-beta.4                                                      *
 rem *                                                                               *
 rem * This command script will bootstrap the checked out git source into a complete *
 rem * development system for MinGW / MSYS.                                          *
