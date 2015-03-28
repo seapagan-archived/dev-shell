@@ -120,15 +120,15 @@ $stage_counter++;
 
 
 # ------------------------------------------------------------------------------
-print "\nStage $stage_counter : Download Perl.\n";
+print "\nStage $stage_counter : Download Perl & Ruby.\n";
 # load the URL's into an array from the file 'local-urls'...
 $path_to_urls = $dirs{"base"}."/urls/lang-urls";
-my  ($perlurl, $perlfiles) = geturls($path_to_urls);
+my  ($langurl, $langfiles) = geturls($path_to_urls);
 
 
 # get all the package...
-my @perl_filenames = getfiles($dirs{"package"}, @$perlurl);
-my @perl_filespecs = @$perlfiles; # will not be used though, Perl is straight unpack.
+my @lang_filenames = getfiles($dirs{"package"}, @$langurl);
+my @lang_filespecs = @$langfiles;
 $stage_counter++;
 
 
@@ -210,7 +210,7 @@ $result = unpack_file($local_cache, $dirs{"mingw"}, \@local_filenames, \@local_f
 $stage_counter++;
 
 # ------------------------------------------------------------------------------
-print "\nStage $stage_counter : Unpack Perl.\n";
+print "\nStage $stage_counter : Unpack Perl, Ruby.\n";
 # Unpack Perl distribution.
 # ------------------------------------------------
 # : Source path is $local_cache
@@ -218,7 +218,7 @@ print "\nStage $stage_counter : Unpack Perl.\n";
 # : Filenames are stored in @local_filenames
 # : FileSpecs (those to be unpacked) are stored in @local_filespecs.
 # ------------------------------------------------
-$result = unpack_file($dirs{"package"}, $dirs{"home"}, \@perl_filenames, \@perl_filespecs);
+$result = unpack_file($dirs{"package"}, $dirs{"home"}, \@lang_filenames, \@lang_filespecs);
 $stage_counter++;
 
 # ------------------------------------------------------------------------------
