@@ -1,2 +1,4 @@
 #[perl]
 http://sourceforge.net/projects/devshellbuilds/files/perl-5.20.2/perl-5.20.2-1-mingw32.tar.lzma/download
+#[ruby]
+http://dl.bintray.com/oneclick/rubyinstaller/ruby-2.2.1-i386-mingw32.7z *+(^script^)
