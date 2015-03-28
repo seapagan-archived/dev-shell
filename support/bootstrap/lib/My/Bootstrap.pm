@@ -250,7 +250,7 @@ sub unpack_file {
 
   my $count = 0;
   foreach my $file (@filenames) {
-    my @exts = qw(.lzma .xz .zip .bz2 .gz);
+    my @exts = qw(.lzma .xz .zip .bz2 .gz .7z);
     my ($dir, $name, $ext) = fileparse($file, @exts);
 
     # get the filespec if it exists and replace colon with spaces...
@@ -271,25 +271,32 @@ sub unpack_file {
     my $output_string = " -> Unpacking package : \"$file\" ";
     $output_length = output_line($output_string, $output_length);
 
+    my $unpackfile = "";
+
     # FIXME : There should be a way to combine both the below choices, and then use 7za for both (latter part is easy)
     for ($ext) {
-      if (/lzma/ || /xz/ || /bz2/ || /gz/) {
+      if (/lzma/ || /xz/ || /bz2/ || /gz/ || /7z/) {
         # Note that so far all non-zip files are tar.lzma (or whatever) so we need a 2-stage operation to unpack them properly
         # However 7za.exe does not support reading from a pipe so we need to unpack the envelope, unpack the tar, and then delete the tar.
         # we assume that all files are tar.<whatever> for the moment, checking for this will be added later in case of exceptions.
-        `$dirs{"support"}/7za x -y $location/$file -o$destination`;
-        $tarfile = basename(substr($file, 0, -length($ext)));
+        if ( $file =~ /\.tar\./ ) {
+          `$dirs{"support"}/7za x -y $location/$file -o$destination`;
+          $tarfile = basename(substr($file, 0, -length($ext)));
+          $unpackfile = $destination."/".$tarfile;
+        } else {
+          $unpackfile = $location."/".$file;
+        }
         if ($filespecs[$count] eq "^script^") {
           do_scripted($file, $location, $destination);
         } else {
-        # no script related unpack cleanup, just unpack into the correct directory as normal...
-        # get the 'f|' flag from unpack specs if existing and set flag accordingly. Remove this from filespec.
-        if ($filespecs[$count] =~ s/^f\|//) {
-          $extra_switches = "e";
-        } else {
-          $extra_switches = "x";
-        }
-        `$dirs{"support"}/7za $extra_switches -y $destination/$tarfile $filespecs[$count] -o$destination`;
+          # no script related unpack cleanup, just unpack into the correct directory as normal...
+          # get the 'f|' flag from unpack specs if existing and set flag accordingly. Remove this from filespec.
+          if ($filespecs[$count] =~ s/^f\|//) {
+            $extra_switches = "e";
+          } else {
+            $extra_switches = "x";
+          }
+          `$dirs{"support"}/7za $extra_switches -y $unpackfile $filespecs[$count] -o$destination`;
         }
       }
       elsif (/zip/) {
