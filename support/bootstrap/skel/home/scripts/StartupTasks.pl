@@ -20,13 +20,21 @@ my ($file, $dir, $ext) = fileparse($^X);
 # fix all the shebang lines in the bin directory.
 fix_shebang($dir);
 
+
+
 # If there is a configuration file then we should read it...
 if (-e "$ENV{'HOME'}/config.ini") {
   # Read in the configuration file...
   my %configuration = read_config("$ENV{'HOME'}/config.ini");
   do_config(%configuration);
 }
-print " : Done.\n\n";
+print " : Done.\n";
+
+# sort out the Ruby shebangs ...
+print "Fixing Ruby paths in GEM Stubs";
+system("gem pristine --all --only-executables --env-shebang > nul");
+print " : Done.\n";
+
 
 # ------------------------------------------------------------------------------
 # Subroutines
