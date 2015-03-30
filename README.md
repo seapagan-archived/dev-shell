@@ -36,10 +36,8 @@ There are 5 major directories, 4 of which are mapped to a specific mount point w
 
 - **home**
   - This will be the user $HOME directory, mounted under bash as **/home**
-- **local**
-  - Mounted as **/usr/local**. This will be used to contain other user-compiled software that is not part of the main MinGW packages. Originally this will include all the user-compiled libraries etc, which will be moved to /mingw as they are deemed stable and promoted to part of the standard system.
 - **mingw32**
-  - Mounted as **/mingw**. This contains the GCC compiler system and standard MinGW binaries. Will also be populated with the completed self-compiled libraries once they are deemed stable.
+  - Mounted as **/mingw**. This contains the GCC compiler system and standard MinGW binaries. Will also be populated with the completed self-compiled libraries once they are deemed stable. The version of MinGW currently used is mingw-w64, 32-bit.
 - **msys**
   - Contains the standard MSYS structure and bash shell. This will be the root of the filesystem as viewable within the bash shell, and the other directories above are mounted in relation to this. mounted as both **/** and **/usr** as in a standard MSYS installation.
 - **support**
