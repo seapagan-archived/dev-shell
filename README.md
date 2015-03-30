@@ -8,7 +8,7 @@ This is the development for my boilerplate MinGW/MSYS development system on Wind
 
 __The goal of this project is to be able to make a fully-reproducible and standard development package for MinGW under MS Windows, to reduce errors and frustration caused by contributors to a project using different development bases. It can be set as a development pre-req for project participation.__
 
-A secondary goal is to teach myself Perl programming, this being my first attempt at that language, so please excuse the bad coding, and any suggestions for improvement are more than welcome! :) Note that the '[TinyPerl](http://tinyperl.sourceforge.net/)' in use is a very cut-down version of Perl 5.8.0, so many standard modules are not available.
+A secondary goal is to teach myself Perl programming, this being my first attempt at that language, so please excuse the bad coding, and any suggestions for improvement are more than welcome! :) Note that the '[TinyPerl](http://tinyperl.sourceforge.net/)' in use during the build process is a very cut-down version of Perl 5.8.0, so many standard modules are not available.
 
 The command-line environment is based around the '[Console2](http://sourceforge.net/projects/console/)' program and also includes [ANSICON](https://github.com/adoxa/ansicon) to provide ANSI escape sequences in the console.
 The major bonus is that the whole system is completely portable and can be used on a USB stick on any windows system, without requiring any special prerequisite tools to be already installed on that system.
@@ -22,7 +22,7 @@ The first time you run this, it will create a 'config.ini' file in the 'support/
 3. Start coding!
 
 In it's current stage this is designed to be used as a boilerplate for anyone wishing easier development on Windows with tools that have been designed to be run under Linux / Unix.  
-This environment will (when the remaining libraries are updated or added) allow the compilation and use of native Perl, Ruby, Git and many more - infact the original design was to enable me to painlessly develop in Ruby on Rails under a windows environment.
+This environment contains the Perl & Ruby interpreters, and will in the future include Git and more - infact the original design was to enable me to painlessly develop in Ruby on Rails under a windows environment. I have used this completed system to install and develop fully for Rails and Jekyll on Windows.
 
 When completed, simply cloning this project and then running the bootstrap will download, install and customise the development system without user intervention.
 There will be pre-compiled versions of Perl, Ruby, Git and more automatically downloaded from our [File Repository on SourceForge](https://sourceforge.net/p/devshellbuilds/) or in some cases their own developers.  
