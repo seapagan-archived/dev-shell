@@ -181,12 +181,21 @@ sub getfiles {
       $filename = basename($url);
       $dl_flag= "--no-check-certificate";
     }
+    # add a further flag if the .wgetrc exists ..
+    my $wgetrc =  $dirs{base}."/.wgetrc";
+    if (-e $wgetrc) {
+      $wgetrc = "--config=$wgetrc";
+    } else {
+      $wgetrc = "";
+    }
+
 
     # Add the filename to the array we will return...
     push(@filearray, $filename);
 
     my $filewithpath = $dest_dir."/".$filename;
     #if this does not exist in cache (or has a bad checksum) then we will download.
+    print "wgetrc = $wgetrc";
     if (-e $filewithpath) {
       # compare the md5 for this file...
       if (exists $hashes{$filename}) {
@@ -198,7 +207,7 @@ sub getfiles {
           # delete the corrupt file
           unlink ($filewithpath);
           # and re-download
-          $result = `$dirs{"base"}/wget -q --config=$dirs{"base"}/.wgetrc --proxy --show-progress -c $dl_flag --directory-prefix=$dest_dir $url`;
+          $result = `$dirs{"base"}/wget -q $wgetrc --proxy --show-progress -c $dl_flag --directory-prefix=$dest_dir $url`;
         }
       } else {
         output_line("$filename already exists, however there is no hash value.\n -> Please run \'update_package_hashes.cmd\' from the bootstrap directory. Skipping.\n", $output_length);
@@ -206,7 +215,7 @@ sub getfiles {
       }
     } else {
       # file does not exist, so download it.
-      $result = `$dirs{"base"}/wget -q --config=$dirs{"base"}/.wgetrc --show-progress -c $dl_flag --directory-prefix=$dest_dir $url`;
+      $result = `$dirs{"base"}/wget -q $wgetrc --show-progress -c $dl_flag --directory-prefix=$dest_dir $url`;
       # we really should check the MD5 again with this new file, and bomb out if it is wrong, since something is really messed up somewhere..
       # first check that the checksum exists - may be a new download not yet in the database, so note this visibly...
       if (exists $hashes{$filename}) {
