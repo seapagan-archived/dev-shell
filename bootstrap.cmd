@@ -21,6 +21,7 @@ if NOT EXIST %~dp0support\packages\tinyperl-2.0-580-win32.zip (
 )
 rem md5deep ...
 if NOT EXIST %~dp0support\packages\md5deep-4.4.zip (
+  %~dp0support\bootstrap\wget  -q --no-check-certificate --show-progress -c --directory-prefix=%~dp0support\packages https://github.com/jessek/hashdeep/releases/download/release-4.4/md5deep-4.4.zip
 ) ELSE (
 	ECHO MD5Deep package already exists, skipping download.
 )
