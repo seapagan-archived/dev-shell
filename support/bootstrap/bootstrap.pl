@@ -251,6 +251,7 @@ create_dir($dirs{"msys"}."/tmp");
 # otherwise bash shell completion does not work for these dirs.
 create_dir($dirs{"msys"}."/home");
 create_dir($dirs{"msys"}."/usr");
+create_dir($dirs{"msys"}."/mingw");
 #create_dir($dirs{"msys"}."/local");
 
 # copy over assorted skeleton or configuration files to various places...
