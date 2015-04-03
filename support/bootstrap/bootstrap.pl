@@ -260,15 +260,15 @@ foreach my $skel (@skel_dirs) {
 }
 
 # copy the Perl configuration library...
-fcopy ($dirs{"base"}."/lib/My/ConfigFile.pm", $dirs{"home"}."/scripts/lib/My/ConfigFile.pm") or die "Failed to copy skeleton files: $!";
+fcopy ($dirs{"base"}."/lib/My/ConfigFile.pm", $dirs{"home"}."/scripts/lib/My/ConfigFile.pm") or die "Failed to copy skeleton ConfigFile.pm: $!";
 
 # copy over wget (for now) to the mingw32 directory
-fcopy ($dirs{"base"}."/wget.exe", $dirs{"mingw"}."/bin") or die "Failed to copy skeleton files: $!";
-if (!-e $dirs{"base"}."/.wgetrc") {
-  fcopy ($dirs{"base"}."/.wgetrc", $dirs{"home"}) or die "Failed to copy skeleton files: $!";
+fcopy ($dirs{"base"}."/wget.exe", $dirs{"mingw"}."/bin") or die "Failed to copy wget.exe: $!";
+if (-e $dirs{"base"}."/.wgetrc") {
+  fcopy ($dirs{"base"}."/.wgetrc", $dirs{"home"}) or die "Failed to copy skeleton .wgetrc: $!";
 }
 
 # copy the configuration file over to our new home directory...
-copy ($dirs{"base"}."/config.ini", $dirs{"home"})or die "Failed to copy skeleton files: $!";
+copy ($dirs{"base"}."/config.ini", $dirs{"home"})or die "Failed to copy skeleton config.ini: $!";
 print " -- Done\n";
 $stage_counter++;
