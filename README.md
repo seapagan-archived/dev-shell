@@ -4,7 +4,7 @@ A basic layout and the related support files to bootstrap a complete Windows-bas
 
 ## Description.
 
-This is the development for my boilerplate MinGW/MSYS development system on Windows. It is a custom setup using the standard MSYS, but using the [TDM GCC distribution](http://tdm-gcc.tdragon.net/) instead of the MinGW provided GCC binaries.  
+This is the repository for my custom MinGW/MSYS development system on Windows. It is a custom setup using the standard MSYS, but using the [MinGW-w64 GCC distribution](http://mingw-w64.yaxm.org/doku.php) instead of the MinGW provided GCC binaries.  
 
 __The goal of this project is to be able to make a fully-reproducible and standard development package for MinGW under MS Windows, to reduce errors and frustration caused by contributors to a project using different development bases. It can be set as a development pre-req for project participation.__
 
