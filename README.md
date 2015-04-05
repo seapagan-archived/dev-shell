@@ -22,7 +22,7 @@ The first time you run this, it will create a 'config.ini' file in the 'support/
 3. Start coding!
 
 In it's current stage this is designed to be used as a boilerplate for anyone wishing easier development on Windows with tools that have been designed to be run under Linux / Unix.  
-This environment will (when the remaining libraries are updated or added) allow the compilation and use of native Perl, Ruby, Git and many more - infact the original design was to enable me to painlessly develop in Ruby on Rails under a windows environment.
+This environment contains the Perl & Ruby interpreters, and will in the future include Git and more - infact the original design was to enable me to painlessly develop in Ruby on Rails under a windows environment. I have used this completed system to install and develop fully for Rails and Jekyll on Windows.
 
 When completed, simply cloning this project and then running the bootstrap will download, install and customise the development system without user intervention.
 There will be pre-compiled versions of Perl, Ruby, Git and more automatically downloaded from our [File Repository on SourceForge](https://sourceforge.net/p/devshellbuilds/) or in some cases their own developers.  
@@ -37,7 +37,7 @@ There are 4 major directories, 3 of which are mapped to a specific mount point w
 - **home**
   - This will be the user $HOME directory, mounted under bash as **/home**
 - **mingw32**
-  - Mounted as **/mingw**. This contains the GCC compiler system, standard MinGW binaries and other self-compiled libraries once they are deemed stable.
+  - Mounted as **/mingw**. This contains the GCC compiler system, standard MinGW binaries and other self-compiled libraries once they are deemed stable. The version of MinGW currently in use is mingw-w64, 32-bit.
 - **msys**
   - Contains the standard MSYS structure and bash shell. This will be the root of the filesystem as viewable within the bash shell, and the other directories above are mounted in relation to this. mounted as both **/** and **/usr** as in a standard MSYS installation.
 - **support**
