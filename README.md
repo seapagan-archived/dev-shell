@@ -8,11 +8,7 @@ This is the development for my boilerplate MinGW/MSYS development system on Wind
 
 __The goal of this project is to be able to make a fully-reproducible and standard development package for MinGW under MS Windows, to reduce errors and frustration caused by contributors to a project using different development bases. It can be set as a development pre-req for project participation.__
 
-<<<<<<< HEAD
-A secondary goal is to teach myself Perl programming, this being my first attempt at that language, so please excuse the bad coding, and any suggestions for improvement are more than welcome! :) Note that the '[TinyPerl](http://tinyperl.sourceforge.net/)' in use during the build process is a very cut-down version of Perl 5.8.0, so many standard modules are not available.
-=======
 A secondary goal is to teach myself Perl programming, this being my first attempt at that language, so please excuse the bad coding, and any suggestions for improvement are more than welcome! :) Note that the '[TinyPerl](http://tinyperl.sourceforge.net/)' in use during the bootstap phase is a very cut-down version of Perl 5.8.0, so many standard modules are not available. The full Perl 5.20.2 is available to the completed system however.
->>>>>>> master
 
 The command-line environment is based around the '[Console2](http://sourceforge.net/projects/console/)' program and also includes [ANSICON](https://github.com/adoxa/ansicon) to provide ANSI escape sequences in the console.
 The major bonus is that the whole system is completely portable and can be used on a USB stick on any windows system, without requiring any special prerequisite tools to be already installed on that system.
@@ -42,9 +38,13 @@ There are 4 major directories, 3 of which are mapped to a specific mount point w
   - This will be the user $HOME directory, mounted under bash as **/home**
 - **mingw32**
 <<<<<<< HEAD
+<<<<<<< HEAD
   - Mounted as **/mingw**. This contains the GCC compiler system and standard MinGW binaries. Will also be populated with the completed self-compiled libraries once they are deemed stable. The version of MinGW currently used is mingw-w64, 32-bit.
 =======
   - Mounted as **/mingw**. This contains the GCC compiler system, standard MinGW binaries and other self-compiled libraries once they are deemed stable.
+>>>>>>> master
+=======
+  - Mounted as **/mingw**. This contains the GCC compiler system, standard MinGW binaries and other self-compiled libraries once they are deemed stable. The version of MinGW currently in use is mingw-w64, 32-bit.
 >>>>>>> master
 - **msys**
   - Contains the standard MSYS structure and bash shell. This will be the root of the filesystem as viewable within the bash shell, and the other directories above are mounted in relation to this. mounted as both **/** and **/usr** as in a standard MSYS installation.
