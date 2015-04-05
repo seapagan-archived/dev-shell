@@ -4,7 +4,7 @@ A basic layout and the related support files to bootstrap a complete Windows-bas
 
 ## Description.
 
-This is the development for my boilerplate MinGW/MSYS development system on Windows. It is a custom setup using the standard MSYS, but using the [TDM GCC distribution](http://tdm-gcc.tdragon.net/) instead of the MinGW provided GCC binaries.  
+This is the repository for my custom MinGW/MSYS development system on Windows. It is a custom setup using the standard MSYS, but using the [MinGW-w64 GCC distribution](http://mingw-w64.yaxm.org/doku.php) instead of the MinGW provided GCC binaries.  
 
 __The goal of this project is to be able to make a fully-reproducible and standard development package for MinGW under MS Windows, to reduce errors and frustration caused by contributors to a project using different development bases. It can be set as a development pre-req for project participation.__
 
@@ -37,7 +37,7 @@ There are 4 major directories, 3 of which are mapped to a specific mount point w
 - **home**
   - This will be the user $HOME directory, mounted under bash as **/home**
 - **mingw32**
-  - Mounted as **/mingw**. This contains the GCC compiler system, standard MinGW binaries and other self-compiled libraries once they are deemed stable. The version of MinGW currently in use is mingw-w64, 32-bit.
+  - Mounted as **/mingw**. This contains the GCC compiler system and standard MinGW binaries. Will also be populated with the completed self-compiled libraries once they are deemed stable. The version of MinGW currently used is mingw-w64, 32-bit.
 - **msys**
   - Contains the standard MSYS structure and bash shell. This will be the root of the filesystem as viewable within the bash shell, and the other directories above are mounted in relation to this. mounted as both **/** and **/usr** as in a standard MSYS installation.
 - **support**
