@@ -30,7 +30,7 @@ do_config(%configuration);
 # Cache directories to store MSYS / MinGW packages...
 my $msys_cache = $dirs{"package"}."/msys";
 my $mingw_cache = $dirs{"package"}."/mingw";
-my $tdm_cache = $dirs{"package"}."/tdm";
+my $gcc_cache = $dirs{"package"}."/gcc";
 my $local_cache = $dirs{"package"}."/local";
 
 my $path_to_urls;
@@ -92,15 +92,15 @@ $stage_counter++;
 
 
 # ------------------------------------------------------------------------------
-print "\nStage $stage_counter : Download TDM GCC Compiler packages to local cache.\n";
+print "\nStage $stage_counter : Download GCC Compiler packages to local cache.\n";
 # load the GCC URL's into an array from the file 'tdm-gcc-urls'...
-$path_to_urls = $dirs{"base"}."/urls/tdm-gcc-urls";
+$path_to_urls = $dirs{"base"}."/urls/gcc-urls";
 my ($gccurls, $gccfiles) = geturls($path_to_urls);
 
 # create the MinGW Cache directory if it does not exist...
-create_dir($tdm_cache);
+create_dir($gcc_cache);
 # get all the GCC packages we need...
-my @gcc_filenames = getfiles($tdm_cache, @$gccurls);
+my @gcc_filenames = getfiles($gcc_cache, @$gccurls);
 my @gcc_filespecs = @$gccfiles;
 $stage_counter++;
 
@@ -188,12 +188,12 @@ $stage_counter++;
 print "\nStage $stage_counter : Unpack GCC Packages.\n";
 # Unpack GCC distribution.
 # ------------------------------------------------
-# : Source path is $tdm_cache
+# : Source path is $gcc_cache
 # : Destination Path will be $dirs{"mingw"}
 # : Filenames are stored in @gcc_filenames
 # : FileSpecs (those to be unpacked) are stored in @gcc_filespecs.
 # ------------------------------------------------
-$result = unpack_file($tdm_cache, $dirs{"mingw"}, \@gcc_filenames, \@gcc_filespecs);
+$result = unpack_file($gcc_cache, $dirs{"mingw"}, \@gcc_filenames, \@gcc_filespecs);
 $stage_counter++;
 
 
@@ -209,6 +209,7 @@ print "\nStage $stage_counter : Unpack Updated Packages.\n";
 $result = unpack_file($local_cache, $dirs{"mingw"}, \@local_filenames, \@local_filespecs);
 $stage_counter++;
 
+
 # ------------------------------------------------------------------------------
 print "\nStage $stage_counter : Unpack Perl, Ruby.\n";
 # Unpack Perl distribution.
@@ -220,6 +221,7 @@ print "\nStage $stage_counter : Unpack Perl, Ruby.\n";
 # ------------------------------------------------
 $result = unpack_file($dirs{"package"}, $dirs{"home"}, \@lang_filenames, \@lang_filespecs);
 $stage_counter++;
+
 
 # ------------------------------------------------------------------------------
 print "\nStage $stage_counter : Tidy up base system, removing unneeded files.\n";
@@ -249,6 +251,7 @@ create_dir($dirs{"msys"}."/tmp");
 # otherwise bash shell completion does not work for these dirs.
 create_dir($dirs{"msys"}."/home");
 create_dir($dirs{"msys"}."/usr");
+create_dir($dirs{"msys"}."/mingw");
 #create_dir($dirs{"msys"}."/local");
 
 # copy over assorted skeleton or configuration files to various places...
@@ -258,15 +261,15 @@ foreach my $skel (@skel_dirs) {
 }
 
 # copy the Perl configuration library...
-fcopy ($dirs{"base"}."/lib/My/ConfigFile.pm", $dirs{"home"}."/scripts/lib/My/ConfigFile.pm") or die "Failed to copy skeleton files: $!";
+fcopy ($dirs{"base"}."/lib/My/ConfigFile.pm", $dirs{"home"}."/scripts/lib/My/ConfigFile.pm") or die "Failed to copy skeleton ConfigFile.pm: $!";
 
 # copy over wget (for now) to the mingw32 directory
-fcopy ($dirs{"base"}."/wget.exe", $dirs{"mingw"}."/bin") or die "Failed to copy skeleton files: $!";
-if (!-e $dirs{"base"}."/.wgetrc") {
-  fcopy ($dirs{"base"}."/.wgetrc", $dirs{"home"}) or die "Failed to copy skeleton files: $!";
+fcopy ($dirs{"base"}."/wget.exe", $dirs{"mingw"}."/bin") or die "Failed to copy wget.exe: $!";
+if (-e $dirs{"base"}."/.wgetrc") {
+  fcopy ($dirs{"base"}."/.wgetrc", $dirs{"home"}) or die "Failed to copy skeleton .wgetrc: $!";
 }
 
 # copy the configuration file over to our new home directory...
-copy ($dirs{"base"}."/config.ini", $dirs{"home"})or die "Failed to copy skeleton files: $!";
+copy ($dirs{"base"}."/config.ini", $dirs{"home"})or die "Failed to copy skeleton config.ini: $!";
 print " -- Done\n";
 $stage_counter++;

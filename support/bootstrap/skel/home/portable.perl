@@ -61,8 +61,8 @@ Config:
   installvendorscript: 'perl/bin'
   ld: g++.exe
   _libpthfix_part1: ../mingw32/lib
-  _libpthfix_part2: ../mingw32/mingw32/lib
-  _libpthfix_part3: ../mingw32/lib/gcc/mingw32/4.9.2
+  _libpthfix_part2: ../mingw32/i686-w64-mingw32/lib
+  _libpthfix_part3: ../mingw32/lib/gcc/i686-w64-mingw32/4.9.2
   lddlflags: '-mdll -s -L"$archlib\CORE" -L"$_libpthfix_part1"'
   ldflags: '-s -L"$archlib\CORE" -L"$_libpthfix_part1"'
   ldflags_nolargefiles: '-s -L"$archlib\CORE" -L"$_libpthfix_part1"'

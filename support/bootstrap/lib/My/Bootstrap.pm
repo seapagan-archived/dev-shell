@@ -195,7 +195,6 @@ sub getfiles {
 
     my $filewithpath = $dest_dir."/".$filename;
     #if this does not exist in cache (or has a bad checksum) then we will download.
-    print "wgetrc = $wgetrc";
     if (-e $filewithpath) {
       # compare the md5 for this file...
       if (exists $hashes{$filename}) {
