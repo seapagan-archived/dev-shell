@@ -35,6 +35,11 @@ print "Fixing Ruby paths in GEM Stubs";
 system("gem pristine --all --only-executables --env-shebang > nul");
 print " : Done.\n";
 
+# update the .minicpanrc, create if it doesn't exist ...
+open (FILE, ">$ENV{'HOME'}/.minicpanrc");
+  print FILE "local: $ENV{'HOME'}/Repo/CPAN\n";
+  print FILE "exact_mirror: 1\n";
+close FILE;
 
 # ------------------------------------------------------------------------------
 # Subroutines
