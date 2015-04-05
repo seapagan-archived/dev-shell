@@ -37,7 +37,7 @@ There are 4 major directories, 3 of which are mapped to a specific mount point w
 - **home**
   - This will be the user $HOME directory, mounted under bash as **/home**
 - **mingw32**
-  - Mounted as **/mingw**. This contains the GCC compiler system and standard MinGW binaries. Will also be populated with the completed self-compiled libraries once they are deemed stable. The version of MinGW currently used is mingw-w64, 32-bit.
+  - Mounted as **/mingw**. This contains the GCC compiler system, standard MinGW binaries and other self-compiled libraries once they are deemed stable. The version of MinGW currently in use is mingw-w64, 32-bit.
 - **msys**
   - Contains the standard MSYS structure and bash shell. This will be the root of the filesystem as viewable within the bash shell, and the other directories above are mounted in relation to this. mounted as both **/** and **/usr** as in a standard MSYS installation.
 - **support**
@@ -67,6 +67,7 @@ There are 4 major directories, 3 of which are mapped to a specific mount point w
 
 ## TODO.
 See the file [TODO.txt](TODO.txt) in the root of repository for thoughts, plans and progress.
+
 ## Caveat!
 *This system as it stands on GitHub is __incomplete__ compared to my local development system*, in that it does not have all the libraries and functionality planned - ie there is no Git. However, it is still usable in this form to compile most software that is MinGW compatible (for example the full Perl and Ruby packages were compiled using this at the current code level). Further functionality and code improvement is in progress.
 
