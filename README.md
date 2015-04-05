@@ -1,5 +1,5 @@
 # Windows-based MinGW/MSYS Development System.
-__*( Version 1.0-beta.4 )*__  
+__*( Version 1.0-beta.5 )*__  
 A basic layout and the related support files to bootstrap a complete Windows-based MSYS / MinGW development system from the command line. This will develop into a fully portable GCC development system with Perl, Git, Ruby and similar tools.  
 
 ## Description.
@@ -8,12 +8,12 @@ This is the development for my boilerplate MinGW/MSYS development system on Wind
 
 __The goal of this project is to be able to make a fully-reproducible and standard development package for MinGW under MS Windows, to reduce errors and frustration caused by contributors to a project using different development bases. It can be set as a development pre-req for project participation.__
 
-A secondary goal is to teach myself Perl programming, this being my first attempt at that language, so please excuse the bad coding, and any suggestions for improvement are more than welcome! :) Note that the '[TinyPerl](http://tinyperl.sourceforge.net/)' in use is a very cut-down version of Perl 5.8.0, so many standard modules are not available.
+A secondary goal is to teach myself Perl programming, this being my first attempt at that language, so please excuse the bad coding, and any suggestions for improvement are more than welcome! :) Note that the '[TinyPerl](http://tinyperl.sourceforge.net/)' in use during the bootstap phase is a very cut-down version of Perl 5.8.0, so many standard modules are not available. The full Perl 5.20.2 is available to the completed system however.
 
 The command-line environment is based around the '[Console2](http://sourceforge.net/projects/console/)' program and also includes [ANSICON](https://github.com/adoxa/ansicon) to provide ANSI escape sequences in the console.
 The major bonus is that the whole system is completely portable and can be used on a USB stick on any windows system, without requiring any special prerequisite tools to be already installed on that system.
 
-*As a major design decision this script will, __for the moment__, install the __32 BIT version__ of the MinGW compilers and libraries.* This was to allow ultimate portability and support for the multitude of libraries already existing. Once the project is mature and stable, a 64-bit branch will be added. That being said, one of the major features of this project is that all the components are taken from url lists, that also contain the unpack specs, so adding extra libraries, converting to 64-bit or even removing unwanted libraries is trivial.
+*As a major design decision this script will, __for the moment__, install the __32 BIT version__ of the MinGW compilers and libraries, Perl and Ruby.* This was to allow ultimate portability and support for the multitude of libraries already existing. Once the project is mature and stable, a 64-bit branch will be added. That being said, one of the features of this project is that all the components are taken from url lists, that also contain the unpack specs, so adding extra libraries, converting to 64-bit or even removing unwanted libraries is trivial.
 
 ## Usage.
 1. From a fresh git checkout, simply run the '__bootstrap.cmd__' file in the root of the checkout which will create the full environment automatically without user intervention.  
@@ -32,14 +32,12 @@ As the design progresses, all additional libraries and utilities that are not pr
 ## Directory Layout
 The file / folder layout is quite specific and chosen to allow the most versatility along with easy maintenance and division of standard and additional libraries etc.
 
-There are 5 major directories, 4 of which are mapped to a specific mount point within the MSYS bash shell system. *Note that these 4 are not in the git repository, and are created automatically each time by the bootstrap scripts. As a result of this, any customizations to these directories will be __LOST__ after each run of the bootstrap script. There will be functionality to have user-created skeleton files and patches that will be applied each time the bootstrap is run (TODO)*. The final directory '*support*' is not visible within the MSYS environment.
+There are 4 major directories, 3 of which are mapped to a specific mount point within the MSYS bash shell system. *Note that these 4 are not in the git repository, and are created automatically each time by the bootstrap scripts. As a result of this, any customizations to these directories will be __LOST__ after each run of the bootstrap script. There will be functionality to have user-created skeleton files and patches that will be applied each time the bootstrap is run (TODO)*. The final directory '*support*' is not visible within the MSYS environment.
 
 - **home**
   - This will be the user $HOME directory, mounted under bash as **/home**
-- **local**
-  - Mounted as **/usr/local**. This will be used to contain other user-compiled software that is not part of the main MinGW packages. Originally this will include all the user-compiled libraries etc, which will be moved to /mingw as they are deemed stable and promoted to part of the standard system.
 - **mingw32**
-  - Mounted as **/mingw**. This contains the GCC compiler system and standard MinGW binaries. Will also be populated with the completed self-compiled libraries once they are deemed stable.
+  - Mounted as **/mingw**. This contains the GCC compiler system, standard MinGW binaries and other self-compiled libraries once they are deemed stable.
 - **msys**
   - Contains the standard MSYS structure and bash shell. This will be the root of the filesystem as viewable within the bash shell, and the other directories above are mounted in relation to this. mounted as both **/** and **/usr** as in a standard MSYS installation.
 - **support**
@@ -64,13 +62,18 @@ There are 5 major directories, 4 of which are mapped to a specific mount point w
     - [x] Add Proxy support for Completed development environment.
 - [ ] Replace and augment existing MinGW libraries and packages with locally compiled versions. __IN PROGRESS__
 - [x] Add [Perl](http://www.perl.org/) 5.20.2 with fully updated CPAN and extra modules, compiled from source.
-- [x] Add latest [Ruby](http://www.ruby-lang.org/) 2.2.1p85 Currenty this is taken un-altered from the [RubyInstaller](rubyinstaller.org) project.
+- [x] Add latest [Ruby](http://www.ruby-lang.org/) 2.2.1, compiled from source.
 - [ ] Add [git]() scm.
 
 ## TODO.
 See the file [TODO.txt](TODO.txt) in the root of repository for thoughts, plans and progress.
 ## Caveat!
-*This system as it stands on GitHub is __incomplete__ compared to my local development system*, in that it does not have all the libraries and functionality planned - ie there is no Git. However, it is still usable in this form to compile most software that is MinGW compatible (for example the full Perl package was compiled using this). Further functionality and code improvement is in progress.
+*This system as it stands on GitHub is __incomplete__ compared to my local development system*, in that it does not have all the libraries and functionality planned - ie there is no Git. However, it is still usable in this form to compile most software that is MinGW compatible (for example the full Perl and Ruby packages were compiled using this at the current code level). Further functionality and code improvement is in progress.
+
+- __Perl.__
+  - Please note that the existing MSYS Perl at /bin/perl is still present, as it is needed for certain of the MSYS scripts. Perl 5.20.2 is first in the search path though.
+-  __Ruby.__
+  - This is compiled from the unpatched source and no Gem updates have been performed. I will release an updated download later with extra Gems pre-installed and updated to the latest versions.
 
 ## Links.
 Below are some links to software used in this project, in addition to the ones linked above.
