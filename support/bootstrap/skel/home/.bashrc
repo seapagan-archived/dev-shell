@@ -8,10 +8,10 @@ if [  -e /home/extra_env ]; then
 	source /home/extra_env
 fi
 
-# so gcc etc can find the local libraries and headers, when we have any ...
-# export CFLAGS="-I/usr/local/include"
-# export CPATH=/usr/local/include
-# export LIBRARY_PATH=/usr/local/lib
+# so gcc etc can find the libraries and headers, some (eg Ruby) have problems finding otherwise ...
+export CFLAGS="-I/mingw/include"
+export CPATH=/mingw/include
+export LIBRARY_PATH=/mingw/lib
 
 # so openssl can be found...
 export OPENSSL_PREFIX=/mingw
