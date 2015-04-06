@@ -31,9 +31,8 @@ if (-e "$ENV{'HOME'}/config.ini") {
 print " : Done.\n";
 
 # sort out the Ruby shebangs ...
-print "Fixing Ruby paths in GEM Stubs";
-system("gem pristine --all --only-executables --env-shebang > nul");
-print " : Done.\n";
+print "Fixing Ruby paths in GEM Stubs ";
+print ": Done.\n";
 
 # update the .minicpanrc, create if it doesn't exist ...
 open (FILE, ">$ENV{'HOME'}/.minicpanrc");
