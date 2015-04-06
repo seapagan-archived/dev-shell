@@ -39,3 +39,6 @@ Note that the packages can also be used in a standard MinGW / MSYS setup, and ev
  - [curl-7.40.0](http://sourceforge.net/projects/devshellbuilds/files/curl-7.40.0/curl-7.40.0-mingw32-full.tar.lzma/download)
  - [libcroco-0.6.8](http://sourceforge.net/projects/devshellbuilds/files/libcroco-0.6.8/libcroco-0.6.8-mingw32-full.tar.lzma/download)
  - [Perl-5.20.2](http://sourceforge.net/projects/devshellbuilds/files/perl-5.20.2/perl-5.20.2-1-mingw32.tar.lzma/download)
+ - [bzip2.1.0.6](http://sourceforge.net/projects/devshellbuilds/files/bzip2.1.0.6/bzip2-1.0.6-1-mingw32.full.tar.lzma/download)
+ - [ruby-2.2.1](http://sourceforge.net/projects/devshellbuilds/files/ruby-2.2.1/ruby-2.2.1p85-1-i386-mingw32.tar.lzma/download)
+ - [libffi-3.2.1](http://sourceforge.net/projects/devshellbuilds/files/libffi-3.2.1/libffi-3.2.1-mingw32-full.tar.lzma/download)

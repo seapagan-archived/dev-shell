@@ -69,12 +69,14 @@ There are 4 major directories, 3 of which are mapped to a specific mount point w
 See the file [TODO.txt](TODO.txt) in the root of repository for thoughts, plans and progress.
 
 ## Caveat!
-*This system as it stands on GitHub is __incomplete__ compared to my local development system*, in that it does not have all the libraries and functionality planned - ie there is no Git. However, it is still usable in this form to compile most software that is MinGW compatible (for example the full Perl and Ruby packages were compiled using this at the current code level). Further functionality and code improvement is in progress.
+*This system as it stands on GitHub is __incomplete__ compared to my local development system*, in that it does not have all the libraries and functionality planned - ie there is no Git. However, it is still usable in this form to compile most software that is MinGW compatible (for example the full Perl and Ruby packages were compiled using this at the current code level). Further functionality and code improvement is in progress.  
+
+__Important :__ These versions of Perl and Ruby have been compiled for use with THIS system, and as such do not themselves contain any of the required shared dlls, so will fail to run for example from a straight cmd prompt. In addition, the batch conversions of pl and rb commands are not present. If you need standalone versions of Ruby or Perl see [Rubyinstaller](http://rubyinstaller.org) or [Strawberry Perl](http://strawberryperl.com/) respectively.
 
 - __Perl.__
   - Please note that the existing MSYS Perl at /bin/perl is still present, as it is needed for certain of the MSYS scripts. Perl 5.20.2 is first in the search path though.
 -  __Ruby.__
-  - This is compiled from the unpatched source and no Gem updates have been performed. I will release an updated download later with extra Gems pre-installed and updated to the latest versions.
+  - This is compiled from the unpatched source. Per-installed gems have been updated to the latest versions as of 6th April 2015 and in addition the Rails, Jekyll and Github-pages gems have been installed.
 
 ## Links.
 Below are some links to software used in this project, in addition to the ones linked above.
