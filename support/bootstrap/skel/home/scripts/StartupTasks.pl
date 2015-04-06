@@ -32,6 +32,7 @@ print " : Done.\n";
 
 # sort out the Ruby shebangs ...
 print "Fixing Ruby paths in GEM Stubs ";
+system("ruby $ENV{'HOME'}/ruby/bin/gem pristine --all --only-executables --env-shebang > nul");
 print ": Done.\n";
 
 # update the .minicpanrc, create if it doesn't exist ...
