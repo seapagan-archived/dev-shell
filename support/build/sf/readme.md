@@ -4,7 +4,7 @@ _( Version 1.0-beta )_
 
 This repository contains the compiled binary program and library packages used by the [dev-shell](https://github.com/seapagan/dev-shell) project on GitHub.  
 
-'dev-shell' is a boilerplate MinGW/MSYS development system on Windows. It is a custom setup using the standard MSYS, but using the [TDM GCC distribution](http://tdm-gcc.tdragon.net/) instead of the MinGW provided GCC binaries. It also has some other benefits including a tabbed interface, ANSI code compatibility and more.
+'dev-shell' is a MinGW/MSYS development system on Windows. It is a custom setup using the standard MSYS, but using the [MinGW-w64 GCC distribution](http://mingw-w64.yaxm.org/doku.php) instead of the MinGW provided GCC binaries.
 
 The goal of the project is to be able to make a fully-reproducible and standard development package for MinGW under MS Windows, to reduce errors and frustration caused by contributors to a project using different development bases. It can be set as a development pre-req for project participation.
 
