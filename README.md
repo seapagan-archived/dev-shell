@@ -76,7 +76,7 @@ __Important :__ These versions of Perl and Ruby have been compiled for use with 
 - __Perl.__
   - Please note that the existing MSYS Perl at /bin/perl is still present, as it is needed for certain of the MSYS scripts. Perl 5.20.2 is first in the search path though.
 -  __Ruby.__
-  - This is compiled from the unpatched source. Per-installed gems have been updated to the latest versions as of 6th April 2015 and in addition the Rails, Jekyll and Github-pages gems have been installed.
+  - This is compiled from the unpatched source, and no gem updates have been performed, nor additional gems installed. This version is compatible with Rail, Jekyll and many more. Indeed, I use this as my windows-based development system for both these.
 
 ## Links.
 Below are some links to software used in this project, in addition to the ones linked above.
