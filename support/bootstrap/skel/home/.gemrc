@@ -6,4 +6,5 @@
 - http://gems.github.com
 :update_sources: true
 :verbose: true
-gem: "--env-shebang"
+gem: "--env-shebang --platform=ruby"
+
