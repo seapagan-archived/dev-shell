@@ -42,3 +42,4 @@ Note that the packages can also be used in a standard MinGW / MSYS setup, and ev
  - [bzip2.1.0.6](http://sourceforge.net/projects/devshellbuilds/files/bzip2.1.0.6/bzip2-1.0.6-1-mingw32.full.tar.lzma/download)
  - [ruby-2.2.1](http://sourceforge.net/projects/devshellbuilds/files/ruby-2.2.1/ruby-2.2.1p85-2-i386-mingw32.tar.lzma/download)
  - [libffi-3.2.1](http://sourceforge.net/projects/devshellbuilds/files/libffi-3.2.1/libffi-3.2.1-mingw32-full.tar.lzma/download)
+ - [sqlite-3.8.9](http://sourceforge.net/projects/devshellbuilds/files/sqlite3.8.9/sqlite3.8.9-1-i386-mingw32.tar.lzma/download)
