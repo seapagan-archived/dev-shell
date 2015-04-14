@@ -258,7 +258,7 @@ sub unpack_file {
 
   my $count = 0;
   foreach my $file (@filenames) {
-    my @exts = qw(.lzma .xz .zip .bz2 .gz .7z);
+    my @exts = qw(.lzma .xz .zip .bz2 .gz .7z .exe);
     my ($dir, $name, $ext) = fileparse($file, @exts);
 
     # get the filespec if it exists and replace colon with spaces...
@@ -283,7 +283,7 @@ sub unpack_file {
 
     # FIXME : There should be a way to combine both the below choices, and then use 7za for both (latter part is easy)
     for ($ext) {
-      if (/lzma/ || /xz/ || /bz2/ || /gz/ || /7z/) {
+      if (/lzma/ || /xz/ || /bz2/ || /gz/ || /7z/ || /exe/) {
         # Note that so far all non-zip files are tar.lzma (or whatever) so we need a 2-stage operation to unpack them properly
         # However 7za.exe does not support reading from a pipe so we need to unpack the envelope, unpack the tar, and then delete the tar.
         # we assume that all files are tar.<whatever> for the moment, checking for this will be added later in case of exceptions.
