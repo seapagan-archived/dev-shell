@@ -13,6 +13,9 @@ export CFLAGS="-I/mingw/include"
 export CPATH=/mingw/include
 export LIBRARY_PATH=/mingw/lib
 
+# set default editor to 'nano', used by git commit
+export EDITOR="nano"
+
 # so openssl can be found...
 export OPENSSL_PREFIX=/mingw
 
