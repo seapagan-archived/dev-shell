@@ -43,3 +43,5 @@ Note that the packages can also be used in a standard MinGW / MSYS setup, and ev
  - [ruby-2.2.1](http://sourceforge.net/projects/devshellbuilds/files/ruby-2.2.1/ruby-2.2.1p85-2-i386-mingw32.tar.lzma/download)
  - [libffi-3.2.1](http://sourceforge.net/projects/devshellbuilds/files/libffi-3.2.1/libffi-3.2.1-mingw32-full.tar.lzma/download)
  - [sqlite-3.8.9](http://sourceforge.net/projects/devshellbuilds/files/sqlite3.8.9/sqlite3.8.9-1-i386-mingw32.tar.lzma/download)
+ - [libtasn1-4.4](http://sourceforge.net/projects/devshellbuilds/files/libtasn1-4.4/libtasn1-4.4-i386-mingw32.tar.lzma/download)
+ - [libidn-1.30](http://sourceforge.net/projects/devshellbuilds/files/libidn-1.30/libidn-1.30-i386-mingw32.tar.lzma/download)
