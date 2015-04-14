@@ -133,6 +133,18 @@ $stage_counter++;
 
 
 # ------------------------------------------------------------------------------
+print "\nStage $stage_counter : Download Git.\n";
+# load the URL's into an array from the file 'git-urls'...
+$path_to_urls = $dirs{"base"}."/urls/git-urls";
+my  ($giturl, $gitfiles) = geturls($path_to_urls);
+
+# get all the package...
+my @git_filenames = getfiles($dirs{"package"}, @$giturl);
+my @git_filespecs = @$gitfiles;
+$stage_counter++;
+
+
+# ------------------------------------------------------------------------------
 print "\nStage $stage_counter : Unpack support utilities.\n";
 # Unpack 7za, console, ANSICON etc.
 # ------------------------------------------------
@@ -220,6 +232,21 @@ print "\nStage $stage_counter : Unpack Perl, Ruby.\n";
 # : FileSpecs (those to be unpacked) are stored in @local_filespecs.
 # ------------------------------------------------
 $result = unpack_file($dirs{"package"}, $dirs{"home"}, \@lang_filenames, \@lang_filespecs);
+$stage_counter++;
+
+
+# ------------------------------------------------------------------------------
+print "\nStage $stage_counter : Unpack Git.\n";
+# Unpack Git distribution.
+# ------------------------------------------------
+# : Source path is $local_cache
+# : Destination Path will be $dirs{"mingw"}/git
+# : Filenames are stored in @git_filenames
+# : FileSpecs (those to be unpacked) are stored in @git_filespecs.
+# ------------------------------------------------
+my $git_dest = $dirs{"home"}."/git";
+create_dir ($git_dest);
+$result = unpack_file($dirs{"package"}, $git_dest, \@git_filenames, \@git_filespecs);
 $stage_counter++;
 
 
