@@ -269,7 +269,7 @@ $stage_counter++;
 print "Stage $stage_counter : Finalize Environment - Copy final files.\n";
 # Give us a working system by copying the needed skeleton files and startup batch ...
 
-# # create the home and local directories if not already there and the tmp ..
+# # create the home and other needed directories if not already there and the tmp ..
 create_dir($dirs{"home"});
 #create_dir($dirs{"local"});
 create_dir($dirs{"msys"}."/tmp");
@@ -285,6 +285,14 @@ create_dir($dirs{"msys"}."/mingw");
 my @skel_dirs = qw(root support home etc);
 foreach my $skel (@skel_dirs) {
   dircopy ($dirs{"base"}."/skel/$skel/.", $dirs{$skel}) or die "Failed to copy skeleton files: $!";
+}
+
+# we need to copy the automake / autoconf files into more generic filenames...
+my @files = qw(aclocal-1.11 automake-1.11 autoconf-2.68 autoheader-2.68 autom4te-2.68 autoreconf-2.68 autoscan-2.68 autoupdate-2.68 ifnames-2.68);
+foreach my $file (@files) {
+  my $search_file = $dirs{"mingw"}."/bin/".$file;
+  my $replace_file = substr($search_file, 0, -5);
+  fcopy ($search_file, $replace_file) or die "Failed to rename automake / autoconf files : $!";
 }
 
 # copy the Perl configuration library...
