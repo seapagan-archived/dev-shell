@@ -3,6 +3,7 @@ use warnings;
 use File::Path 'rmtree';
 use File::Copy;
 use File::Copy::Recursive qw(dircopy fcopy);
+use Cwd;
 
 use My::Bootstrap;
 use My::ConfigFile;
@@ -20,6 +21,7 @@ if (!-e $dirs{"base"}."/config.ini") {
   print "This can be found at \'".$dirs{"base"}."/config.ini\'\n";
   print "Once you have edited this if needed, please re-run this script.\n";
   print "----------------------------------------------------------------------------------------\n\n";
+  cwd ($dirs{"root"});
   exit;
 }
 
@@ -240,7 +242,7 @@ print "\nStage $stage_counter : Unpack Git.\n";
 # Unpack Git distribution.
 # ------------------------------------------------
 # : Source path is $local_cache
-# : Destination Path will be $dirs{"mingw"}/git
+# : Destination Path will be $dirs{"home"}/git
 # : Filenames are stored in @git_filenames
 # : FileSpecs (those to be unpacked) are stored in @git_filespecs.
 # ------------------------------------------------
