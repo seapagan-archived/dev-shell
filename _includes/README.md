@@ -35,7 +35,7 @@ The file / folder layout is quite specific and chosen to allow the most versatil
 There are 4 major directories, 3 of which are mapped to a specific mount point within the MSYS bash shell system. *Note that these 4 are not in the git repository, and are created automatically each time by the bootstrap scripts. As a result of this, any customizations to these directories will be __LOST__ after each run of the bootstrap script. There will be functionality to have user-created skeleton files and patches that will be applied each time the bootstrap is run (TODO)*. The final directory '*support*' is not visible within the MSYS environment.
 
 - **home**
-  - This will be the user $HOME directory, mounted under bash as **/home**
+  - This will be the user $HOME directory, mounted under bash as **/home**. The installation directories of Ruby, Perl and Git are also located here to keep separate from MinGW and ease updating.
 - **mingw32**
   - Mounted as **/mingw**. This contains the GCC compiler system and standard MinGW binaries. Will also be populated with the completed self-compiled libraries once they are deemed stable. The version of MinGW currently used is mingw-w64, 32-bit.
 - **msys**
@@ -46,7 +46,7 @@ There are 4 major directories, 3 of which are mapped to a specific mount point w
 ## Progress.
 - [x] Populate the basic folder structure and support files.
 - [x] Set up the SourceForge repository to store compiled binaries and libraries
-- [ ] Set up the bootstrap to create the base system.
+- [x] Set up the bootstrap to create the base system.
   - **CMD File Phase.**
     - [x] Download and unpack the TinyPerl packages to enable the Perl-based bootstrap to run.
   - **Perl Script Phase**
@@ -63,29 +63,35 @@ There are 4 major directories, 3 of which are mapped to a specific mount point w
 - [ ] Replace and augment existing MinGW libraries and packages with locally compiled versions. __IN PROGRESS__
 - [x] Add [Perl](http://www.perl.org/) 5.20.2 with fully updated CPAN and extra modules, compiled from source.
 - [x] Add latest [Ruby](http://www.ruby-lang.org/) 2.2.1, compiled from source.
-- [ ] Add [git]() scm.
+- [x] Add [Git](https://git-for-windows.github.io/) scm.
 
 ## TODO.
 See the file [TODO.txt](TODO.txt) in the root of repository for thoughts, plans and progress.
 
 ## Caveat!
-*This system as it stands on GitHub is __incomplete__ compared to my local development system*, in that it does not have all the libraries and functionality planned - ie there is no Git. However, it is still usable in this form to compile most software that is MinGW compatible (for example the full Perl and Ruby packages were compiled using this at the current code level). Further functionality and code improvement is in progress.
+*This system as it stands on GitHub is __incomplete__ compared to my local development system*, in that some of the functionality (Git for example) is under testing. However, it is still usable in this form to compile most software that is MinGW compatible (for example the full Perl and Ruby packages were compiled using this at the current code level). Further functionality and code improvement is in progress.  
+
+__Important :__ These versions of Perl and Ruby have been compiled for use with THIS system, and as such do not themselves contain any of the required shared dlls, so will fail to run for example from a straight cmd prompt. In addition, the batch conversions of pl and rb commands are not present. If you need standalone versions of Ruby or Perl see [Rubyinstaller](http://rubyinstaller.org) or [Strawberry Perl](http://strawberryperl.com/) respectively.
 
 - __Perl.__
   - Please note that the existing MSYS Perl at /bin/perl is still present, as it is needed for certain of the MSYS scripts. Perl 5.20.2 is first in the search path though.
 -  __Ruby.__
-  - This is compiled from the unpatched source and no Gem updates have been performed. I will release an updated download later with extra Gems pre-installed and updated to the latest versions.
+  - This is compiled from the unpatched source, and no gem updates have been performed, nor additional gems installed. This version is compatible with Rail, Jekyll and many more. Indeed, I use this as my windows-based development system for both these.
 
 ## Links.
 Below are some links to software used in this project, in addition to the ones linked above.
 
 #### Utilities:
-[A pre-compiled static version of wget 1.16.3](https://eternallybored.org/misc/wget/) - Used during the original bootstrap until the system was able to compile its own.  
+[A pre-compiled static version of wget 1.16.3](https://eternallybored.org/misc/wget/) - Used during the original bootstrap and copied to the completed system.  
 [Unzip 6.0 from info-zip](http://www.info-zip.org/UnZip.html) - Used during bootstrap to unzip the TinyPerl and others. Self-compiled from source using this completed development system.  
 [7za920.zip](http://sourceforge.net/projects/sevenzip/files/7-Zip/9.20/7za920.zip/download) - For the standalone 7-zip utility '7za.exe' which was used to unpack the MSYS / MinGW and TDM distributions along with the project-specific compiles of libraries and executables.  
 [CMake](http://www.cmake.org) - Cross-platform build system needed for the compilation of certain libraries.  
-[dmake](http://search.cpan.org/dist/dmake/) - Another cross-platform build system, specifically used for building Perl and it's modules.
+[dmake](http://search.cpan.org/dist/dmake/) - Another cross-platform build system, specifically used for building Perl and it's modules.  
+[Git for Windows](https://git-for-windows.github.io/) - Their project and compilation system was used to create the Git packaged in dev-shell.
 
 #### Perl Modules :
 [File::Copy::Recursive](http://search.cpan.org/~dmuey/File-Copy-Recursive-0.38/Recursive.pm) - extended move / copy functions.  
 [Portable](http://search.cpan.org/~kmx/Portable-1.22/) - used to make the Perl portable, automatically adjusting paths as needed.
+
+#### Ruby Gems :
+[rb-readline](https://github.com/ConnorAtherton/rb-readline) - Pure ruby replacement for the 'readline' functionality which is broken on Windows.
