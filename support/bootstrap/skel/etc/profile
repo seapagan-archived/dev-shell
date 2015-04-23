@@ -4,8 +4,8 @@
 
 # want to make sure Git is way back in the path search order, as contains a lot of duplicate libraries ...
 # check if Git has been installed...
-if [ -e ~/git/mingw32/bin/git.exe ]; then
-	export PATH="/home/git/mingw32/bin:$PATH"
+if [ -e ~/git/bin/git.exe ]; then
+	export PATH="/home/git/bin:$PATH"
 fi
 
 export PATH="/mingw/bin:/bin:$PATH"
