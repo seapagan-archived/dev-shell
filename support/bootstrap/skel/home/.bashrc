@@ -3,6 +3,7 @@ if [ -e /home/scripts/git-completion.bash ]; then
 	source /home/scripts/git-completion.bash
 fi
 # source in the git-prompt bash script if exists otherwise use std prompt ...
+# no longer using this script but leave for future tweaking
 if [ -e /home/scripts/git-prompt.sh ]; then
 	. /home/scripts/git-prompt.sh
 	export PS1="[\[\033[32m\[\u@Development \[\033[33m\]\W$(__git_ps1 " (%s)")]\[\033[0m\]\$ "
@@ -33,6 +34,3 @@ alias ls='ls --color -h'
 alias ll='ls -Al'
 alias cdh='cd $HOME'
 alias clear='cls'
-
-# Run twolfson/sexy-bash-prompt
-. ~/scripts/.bash_prompt
