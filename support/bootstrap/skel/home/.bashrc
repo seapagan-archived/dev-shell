@@ -1,5 +1,14 @@
-# set the prompt to useful and a bit of colour...
-export PS1="[\[\033[32m\[\u@Development \[\033[33m\]\W]\[\033[0m\]\$ "
+# source in the git-completion bash script if exists ...
+if [ -e /home/scripts/git-completion.bash ]; then
+	source /home/scripts/git-completion.bash
+fi
+# source in the git-prompt bash script if exists otherwise use std prompt ...
+if [ -e /home/scripts/git-prompt.sh ]; then
+	. /home/scripts/git-prompt.sh
+	export PS1="[\[\033[32m\[\u@Development \[\033[33m\]\W$(__git_ps1 " (%s)")]\[\033[0m\]\$ "
+else
+	export PS1="[\[\033[32m\[\u@Development \[\033[33m\]\W]\[\033[0m\]\$ "
+fi
 
 # Deal with the config file and any other required startup tasks...
 scripts/StartupTasks.pl
