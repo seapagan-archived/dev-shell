@@ -246,9 +246,7 @@ print "\nStage $stage_counter : Unpack Git.\n";
 # : Filenames are stored in @git_filenames
 # : FileSpecs (those to be unpacked) are stored in @git_filespecs.
 # ------------------------------------------------
-my $git_dest = $dirs{"home"}."/git";
-create_dir ($git_dest);
-$result = unpack_file($dirs{"package"}, $git_dest, \@git_filenames, \@git_filespecs);
+$result = unpack_file($dirs{"package"}, $dirs{"home"}, \@git_filenames, \@git_filespecs);
 $stage_counter++;
 
 
