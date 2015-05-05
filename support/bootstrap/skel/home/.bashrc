@@ -11,7 +11,7 @@ else
 fi
 
 # Deal with the config file and any other required startup tasks...
-scripts/StartupTasks.pl
+/home/scripts/StartupTasks.pl
 # source in the environment variables from config if it exists ...
 if [  -e /home/extra_env ]; then
 	source /home/extra_env
@@ -33,3 +33,6 @@ alias ls='ls --color -h'
 alias ll='ls -Al'
 alias cdh='cd $HOME'
 alias clear='cls'
+
+# Run twolfson/sexy-bash-prompt
+. ~/scripts/.bash_prompt
