@@ -1,7 +1,7 @@
 #!perl
 # This script will read the config.ini in /home and adapt settings as needed.
 # Uses the same ConfigFile package as the bootstrap which is copied over during creation.
-# It will also adjust paths and shebangs as the physical location changes for Perl and (soon) Ruby.
+# It will also adjust paths and shebangs as the physical location changes for Perl and Ruby.
 # (ie if we are on a USB stick and the drive changes from PC to PC)
 use strict;
 use warnings;
@@ -20,26 +20,34 @@ my ($file, $dir, $ext) = fileparse($^X);
 # fix all the shebang lines in the bin directory.
 fix_shebang($dir);
 
-
-
 # If there is a configuration file then we should read it...
 if (-e "$ENV{'HOME'}/config.ini") {
   # Read in the configuration file...
   my %configuration = read_config("$ENV{'HOME'}/config.ini");
   do_config(%configuration);
 }
-print " : Done.\n";
 
 # sort out the Ruby shebangs ...
-print "Fixing Ruby paths in GEM Stubs ";
 system("ruby $ENV{'HOME'}/ruby/bin/gem pristine --all --only-executables --env-shebang > nul");
-print ": Done.\n";
 
 # update the .minicpanrc, create if it doesn't exist ...
 open (FILE, ">$ENV{'HOME'}/.minicpanrc");
   print FILE "local: $ENV{'HOME'}/Repo/CPAN\n";
   print FILE "exact_mirror: 1\n";
 close FILE;
+
+# update path in the gitconfig file ...
+if (-e "$ENV{'HOME'}/git/etc/gitconfig") {
+  my @lines = read_file("$ENV{'HOME'}/git/etc/gitconfig");
+  foreach my $line (@lines) {
+	if ($line =~ /sslCAinfo/) {
+	  $line = "\tsslCAinfo = "."$ENV{'HOME'}/git/ssl/certs/ca-bundle.crt\n";
+	}
+  }
+  write_file ("$ENV{'HOME'}/git/etc/gitconfig", @lines);
+}
+
+print ": Done.\n";
 
 # ------------------------------------------------------------------------------
 # Subroutines
