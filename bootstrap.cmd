@@ -15,7 +15,7 @@ echo.
 echo Stage 1 : Download and unpack some required packages ...
 rem tinyperl ...
 if NOT EXIST %~dp0support\packages\tinyperl-2.0-580-win32.zip (
-  %~dp0support\bootstrap\wget -q --show-progress -c --trust-server-names --directory-prefix=%~dp0support\packages http://sourceforge.net/projects/tinyperl/files/tinyperl/2.0/tinyperl-2.0-580-win32.zip/download
+  %~dp0support\bootstrap\wget -q --show-progress -c --no-check-certificate --trust-server-names --directory-prefix=%~dp0support\packages http://sourceforge.net/projects/tinyperl/files/tinyperl/2.0/tinyperl-2.0-580-win32.zip/download
 ) ELSE (
 	ECHO TinyPerl package already exists, skipping download.
 )
