@@ -1,4 +1,7 @@
 # Windows-based MinGW/MSYS Development System.
+
+**NOTE: This repository is now Archived and no further work expected to be done on it. The MSys/MinGW ecosystem is now very stable with it's own package manager and no longer requires extra builds.**
+
 __*( Version 1.0-beta.5 )*__  
 A basic layout and the related support files to bootstrap a complete Windows-based MSYS / MinGW development system from the command line. This will develop into a fully portable GCC development system with Perl, Git, Ruby and similar tools.  
 
